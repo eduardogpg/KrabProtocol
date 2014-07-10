@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="282.0" prefWidth="304.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="krabprotocol.FXMLDocumentController">
+    <children>
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <Button fx:id="button" layoutX="92.0" layoutY="219.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="25.0" prefWidth="69.0" text="Sign in" />
+      <Label layoutX="19.0" layoutY="132.0" text="User">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="19.0" layoutY="175.0" text="Password">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="password" layoutX="88.0" layoutY="171.0" />
+      <Separator layoutX="69.0" layoutY="119.0" prefWidth="200.0" />
+      <TextField fx:id="userName" layoutX="87.0" layoutY="129.0" />
+      <ImageView fitHeight="71.0" fitWidth="140.0" layoutX="88.0" layoutY="32.0" opacity="0.12" pickOnBounds="true" preserveRatio="true" />
+    </children>
+</AnchorPane>
