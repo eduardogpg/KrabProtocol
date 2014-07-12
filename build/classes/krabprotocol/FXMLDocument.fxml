@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
+<GridPane fx:controller="krabprotocol.FXMLDocumentController" xmlns:fx="http://javafx.com/fxml"
+		  alignment="center" hgap="10" vgap="10" styleClass="root">
+		  <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+		  
+		  <Text id= "welcome-text" text = "Welcome"
+		  	GridPane.columnIndex="0" GridPane.rowIndex="1"
+		  	GridPane.columnSpan ="2"/>
+		  	
+		  <Label text="Username: "
+		  	GridPane.columnIndex ="0" GridPane.rowIndex="2"/>
+		  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+		  
+		  <Label text="Password: "
+		  	GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+		  <PasswordField fx:id="passwordField"
+		  	GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+<<<<<<< HEAD
+		<HBox spacing="10" alignment="bottom_right"
+			GridPane.columnIndex="1" GridPane.rowIndex="4">
+			<Button text="Sign In"
+                            fx:id="signInButton"
+                            onAction="#signIn" />
+		</HBox>
+		<Text fx:id="actionTarget"
+			GridPane.columnIndex="0" GridPane.columnSpan="2"
+			GridPane.halignment="RIGHT" GridPane.rowIndex="6"/>
+			
+		<stylesheets><URL value="@application.css"/></stylesheets>
+		
+</GridPane>
+=======
 <AnchorPane id="AnchorPane" prefHeight="282.0" prefWidth="304.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="krabprotocol.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
@@ -28,3 +59,4 @@
       <ImageView fitHeight="71.0" fitWidth="140.0" layoutX="88.0" layoutY="32.0" opacity="0.12" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>
+>>>>>>> origin

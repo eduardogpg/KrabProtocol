@@ -27,14 +27,26 @@ public class KrabProtocol extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
-        Scene scene = new Scene(root);
+        Scene scene= new Scene(root);
         
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }
 
+<<<<<<< HEAD
     
     public static void main(String[] args)  {
+=======
+   @Override
+   public void stop() throws Exception{
+       super.stop();
+   }
+    
+    public static void main(String[] args) {
+        Application.launch(KrabProtocol.class, args);
+        //launch(args);
+>>>>>>> 4b68c05b1159fc5061020f14f9dce81f213a59be
         
         triggerChat t = new triggerChat();
         t.start();
