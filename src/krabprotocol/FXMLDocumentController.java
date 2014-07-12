@@ -1,39 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package krabprotocol;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-/**
- *
- * @author 1020142461
- */
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentController {
+    
+    
+    private KrabProtocol application;
+   
+    public void setApp(KrabProtocol application){
+        this.application = application;
+    }
     
     @FXML
-    private Label label;
-    private TextField userName = new TextField();
-    private PasswordField password;
-    
-    @FXML
-    private void SignIn(ActionEvent event) {
+    private void signIn(ActionEvent event) throws IOException {
+        
+        //application.openContactWindow(event);
+        
+        //Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+        
+        //Parent root = FXMLLoader.load(getClass().getResource("FXMLContacWindow.fxml"));
+        Parent root = (Parent) loader.load();
+        //loader.getController();
+        Scene scene = new Scene(root);
+            
+        Stage secondStage = new Stage();
+        secondStage.setTitle("Nueva Ventana");
+        secondStage.setScene(scene);
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+        secondStage.show();
+        //FXMLContactWindowController controller = loader.getController();
+        //controller.cargar();
+        
        
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
     
 }
