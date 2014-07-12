@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -7,8 +8,68 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="298.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="krabprotocol.FXMLRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="357.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="krabprotocol.FXMLRegisterController">
    <children>
-      <Button fx:id="send" layoutX="23.0" layoutY="403.0" mnemonicParsing="false" onAction="#registry" text="Send" />
+      <Button fx:id="send" layoutX="37.0" layoutY="411.0" mnemonicParsing="false" onAction="#registry" text="Send">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Separator layoutX="13.0" layoutY="32.0" orientation="VERTICAL" prefHeight="365.0" prefWidth="7.0" />
+      <CheckBox layoutX="102.0" layoutY="418.0" mnemonicParsing="false" text="Accept terms and conditions" />
+      <Label layoutX="144.0" layoutY="12.0" text="Register">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="83.0" text="User Name :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="116.0" text="Name : ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="151.0" text="Last Name :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="187.0" text="Password :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="222.0" text="Repeat Password :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="254.0" text="Email :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="290.0" text="Cell Number :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="324.0" text="Institution :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="79.0" layoutY="59.0" prefWidth="200.0" />
+      <PasswordField fx:id="password" layoutX="179.0" layoutY="185.0" />
+      <PasswordField fx:id="repeatPassword" layoutX="179.0" layoutY="220.0" />
+      <TextField fx:id="lastName" layoutX="179.0" layoutY="149.0" />
+      <TextField fx:id="name" layoutX="179.0" layoutY="114.0" />
+      <TextField fx:id="userName" layoutX="179.0" layoutY="81.0" />
+      <TextField fx:id="email" layoutX="179.0" layoutY="252.0" />
+      <TextField fx:id="cellNumber" layoutX="179.0" layoutY="288.0" />
+      <TextField fx:id="institution" layoutX="179.0" layoutY="322.0" />
    </children>
 </AnchorPane>
