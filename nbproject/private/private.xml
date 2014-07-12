@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/1020142461/Documents/NetBeansProjects/KrabProtocol/src/krabprotocol/KrabProtocol.java</file>
-            <file>file:/C:/Users/1020142461/Documents/NetBeansProjects/KrabProtocol/src/help/DataBaseConnection.java</file>
+            <file>file:/C:/Users/1020142461/Documents/NetBeansProjects/krabProtocol/nbproject/jfx-impl.xml</file>
+            <file>file:/C:/Users/1020142461/Documents/NetBeansProjects/krabProtocol/src/help/DataBaseConnection.java</file>
+            <file>file:/C:/Users/1020142461/Documents/NetBeansProjects/krabProtocol/src/krabprotocol/FXMLRegistryForm.fxml</file>
+            <file>file:/C:/Users/1020142461/Documents/NetBeansProjects/krabProtocol/src/krabprotocol/FXMLRegistryFormController.java</file>
+            <file>file:/C:/Users/1020142461/Documents/NetBeansProjects/krabProtocol/src/krabprotocol/FXMLDocumentController.java</file>
         </group>
     </open-files>
 </project-private>

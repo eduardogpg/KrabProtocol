@@ -52,6 +52,14 @@ public class FXMLDocumentController {
         }
     }
     
+    @FXML
+    public void register(ActionEvent event) throws IOException {
+        
+            
+            
+            
+    }
+    
     
     private boolean isValid(String name, String password){
         DataBaseConnection myConnection = new DataBaseConnection();
