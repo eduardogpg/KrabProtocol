@@ -11,7 +11,7 @@
 <AnchorPane id="AnchorPane" prefHeight="282.0" prefWidth="304.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="krabprotocol.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <Button fx:id="button" layoutX="92.0" layoutY="219.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="25.0" prefWidth="69.0" text="Sign in" />
+      <Button fx:id="button" layoutX="92.0" layoutY="219.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="25.0" prefWidth="69.0" text="Log in" />
       <Label layoutX="19.0" layoutY="132.0" text="User">
          <font>
             <Font size="14.0" />
