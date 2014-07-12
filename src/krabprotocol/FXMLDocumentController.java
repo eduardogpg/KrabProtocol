@@ -21,6 +21,7 @@ public class FXMLDocumentController {
    
    @FXML
    private TextField userName;
+   @FXML
    private PasswordField password;
 
 
@@ -29,7 +30,8 @@ public class FXMLDocumentController {
         
         if (this.isValid( userName.getText() , "xxpesar")){ //coloco aqui el password a mano por que no se como obtener el valor del paswordfield
             //application.openContactWindow(event);
-        
+            
+            //System.out.println(userName.getText() +"  " +password.getText());
             //Parent root;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
 
@@ -43,8 +45,6 @@ public class FXMLDocumentController {
             secondStage.setScene(scene);
             ((Node)(event.getSource())).getScene().getWindow().hide();
             secondStage.show();
-            //FXMLContactWindowController controller = loader.getController();
-            //controller.cargar();
         
         }else{   
             userName.setText("");
