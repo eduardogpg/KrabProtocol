@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="354.0" prefWidth="629.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="krabprotocol.ChatWindowController">
+   <children>
+      <Pane prefHeight="354.0" prefWidth="637.0">
+         <children>
+            <TextArea layoutX="14.0" layoutY="39.0" prefHeight="229.0" prefWidth="464.0" />
+            <TextField layoutX="14.0" layoutY="291.0" prefHeight="37.0" prefWidth="362.0" />
+            <Button layoutX="394.0" layoutY="287.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="84.0" text="Send" />
+            <ImageView fitHeight="118.0" fitWidth="124.0" layoutX="494.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../Pictures/Nyan-Cat-dancing-with-Pusheen-the-Cat-nyan-cat-25051166-400-289_large.gif" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="124.0" layoutX="497.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../Pictures/Nyan-Cat-dancing-with-Pusheen-the-Cat-nyan-cat-25051166-400-289_large.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
