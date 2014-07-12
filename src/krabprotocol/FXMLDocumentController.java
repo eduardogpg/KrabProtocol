@@ -28,7 +28,7 @@ public class FXMLDocumentController {
     @FXML
     private void signIn(ActionEvent event) throws IOException {
         
-        if (this.isValid( userName.getText() , "xxpesar")){ //coloco aqui el password a mano por que no se como obtener el valor del paswordfield
+        if (this.isValid( userName.getText() , password.getText())){ //coloco aqui el password a mano por que no se como obtener el valor del paswordfield
             //application.openContactWindow(event);
             
             //System.out.println(userName.getText() +"  " +password.getText());

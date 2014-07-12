@@ -11,13 +11,8 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-<<<<<<< HEAD
-    <jar href="KrabProtocol.jar" size="25812" download="eager" />
-    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="860446" download="eager" />
-=======
-    <jar href="KrabProtocol.jar" size="23750" download="eager" />
-    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="860447" download="eager" />
->>>>>>> 3b9f3cca23562310616a6b305ffda2a18da4a324
+    <jar href="KrabProtocol.jar" size="23686" download="eager" />
+    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="860449" download="eager" />
   </resources>
 <security>
   <all-permissions/>
