@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package krabprotocol;
 
@@ -18,6 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import chat.triggerChat;
+
 /**
  *
  * @author 1020142461
@@ -34,17 +33,15 @@ public class KrabProtocol extends Application {
         stage.show();
     }
 
-    /**
-     * The main() method is ignored in correctly deployed JavaFX application.
-     * main() serves only as fallback in case the application can not be
-     * launched through deployment artifacts, e.g., in IDEs with limited FX
-     * support. NetBeans ignores main().
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        //launch(args);
+    
+    public static void main(String[] args)  {
         
+        triggerChat t = new triggerChat();
+        t.start();
+        
+        launch(args);
+        
+        /* Prueba de que la base de datos funciona 
         DataBaseConnection ci = new DataBaseConnection();
         ResultSet myResultSet = ci.searchUser("eduardo78d");
             
@@ -58,7 +55,13 @@ public class KrabProtocol extends Application {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
                 
-    }
+        }*/
+        
+        /*
+            Pruebas de RMI
+        */
+
+              
     }
     
 }
