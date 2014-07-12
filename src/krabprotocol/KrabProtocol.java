@@ -12,6 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import help.DataBaseConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author 1020142461
@@ -36,6 +42,22 @@ public class KrabProtocol extends Application {
     
     public static void main(String[] args) {
         Application.launch(KrabProtocol.class, args);
+        //launch(args);
+        
+        DataBaseConnection ci = new DataBaseConnection();
+        ResultSet myResultSet = ci.searchUser("eduardo78d");
+            
+            if (myResultSet == null)//No Existe el usuario
+              System.out.println("nada");
+            else{
+            try {
+                String DBPassword =myResultSet.getString("password");
+                System.out.println(DBPassword);
+            } catch (SQLException ex) {
+                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+    }
     }
     
 }
