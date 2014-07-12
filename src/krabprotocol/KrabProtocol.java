@@ -1,5 +1,4 @@
 
-
 package krabprotocol;
 
 import javafx.application.Application;
@@ -8,12 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import help.DataBaseConnection;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import chat.triggerChat;
 
@@ -45,12 +39,9 @@ public class KrabProtocol extends Application {
     */
     public static void main(String[] args) {
        
-        triggerChat tServerChat = new triggerChat(); 
-        tServerChat.start(); //executes the chat server
-        
-   
-        /* Prueba de que la base de datos funciona */
-        
+        //triggerChat tServerChat = new triggerChat(); 
+        //tServerChat.start(); //executes the chat server
+             
         launch(args);
         Application.launch(KrabProtocol.class, args); //Para que sirve esto?
 

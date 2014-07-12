@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
@@ -7,32 +8,38 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:controller="krabprotocol.FXMLDocumentController" xmlns:fx="http://javafx.com/fxml"
-		  alignment="center" hgap="10" vgap="10" styleClass="root">
-		  <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-		  
-		  <Text id= "welcome-text" text = "Welcome"
-		  	GridPane.columnIndex="0" GridPane.rowIndex="1"
-		  	GridPane.columnSpan ="2"/>
-		  	
-		  <Label text="Username: "
-		  	GridPane.columnIndex ="0" GridPane.rowIndex="2"/>
-		  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-		  
-		  <Label text="Password: "
-		  	GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-		  <PasswordField fx:id="passwordField"
-		  	GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-		<HBox spacing="10" alignment="bottom_right"
-			GridPane.columnIndex="1" GridPane.rowIndex="4">
-			<Button text="Sign In"
-                            fx:id="signInButton"
-                            onAction="#signIn" />
-		</HBox>
-		<Text fx:id="actionTarget"
-			GridPane.columnIndex="0" GridPane.columnSpan="2"
-			GridPane.halignment="RIGHT" GridPane.rowIndex="6"/>
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="krabprotocol.FXMLDocumentController">
+		  <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+   <children>
+   		  
+   		  <Text id="welcome-text" text="Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+   		  	
+   		  <Label text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
+   		  <TextField fx:id="userName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   		  
+   		  <Label text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="3" />
+   		  <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   		<HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <children>
+      			<Button fx:id="signInButton" onAction="#signIn" text="Sign In" />
+      </children>
+   		</HBox>
+   		<Text fx:id="actionTarget" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+   </children>
 			
-		<stylesheets><URL value="@application.css"/></stylesheets>
+		<stylesheets><URL value="@application.css" /></stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 		
 </GridPane>
