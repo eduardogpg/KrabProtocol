@@ -79,9 +79,10 @@ public class FXMLDocumentController {
         if (myResult == null)
              return false;
         else try {
-            if(myResult.getString("password").equals(password) )
+            if(myResult.getString("password").equals(password) ){
+               myConnection.closConnection();
                 return true;
-            else
+            }else
                 return false;
         } catch (SQLException ex) {
             System.out.println(ex);

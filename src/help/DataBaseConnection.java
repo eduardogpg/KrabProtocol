@@ -11,6 +11,8 @@ import com.mysql.jdbc.Statement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,5 +56,25 @@ public class DataBaseConnection {
         }
      }
       
+     public void closConnection(){
+        try {
+            this.myConnection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
+     
+     public boolean insert(String userName, String name,String lastName ,String password,String cellNumber, String email, String institution){
+         String currentlyDate = "2014-07-12";
+         
+         try{
+           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+password+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentlyDate+"')"); 
+           return true;
+         }catch(SQLException ex){
+            System.out.println("A problem was accurred " + ex.getMessage());
+            return false;
+        }
+      
+     }
       
 }
