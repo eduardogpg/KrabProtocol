@@ -41,7 +41,7 @@ public class FXMLDocumentController {
             Scene scene = new Scene(root);
 
             Stage secondStage = new Stage();
-            secondStage.setTitle("Nueva Ventana");
+            secondStage.setTitle("Main");
             secondStage.setScene(scene);
             ((Node)(event.getSource())).getScene().getWindow().hide();
             secondStage.show();
@@ -55,7 +55,8 @@ public class FXMLDocumentController {
     @FXML
     public void register(ActionEvent event) throws IOException {
         
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLRegister.fxml"));
+            //FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLRegister.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
 
             //Parent root = FXMLLoader.load(getClass().getResource("FXMLContacWindow.fxml"));
             Parent root = (Parent) loader.load();
@@ -63,7 +64,7 @@ public class FXMLDocumentController {
             Scene scene = new Scene(root);
 
             Stage secondStage = new Stage();
-            secondStage.setTitle("Nueva Ventana");
+            secondStage.setTitle("Main");
             secondStage.setScene(scene);
             ((Node)(event.getSource())).getScene().getWindow().hide();
             secondStage.show();

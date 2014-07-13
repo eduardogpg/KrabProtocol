@@ -69,14 +69,11 @@ public class FXMLRegisterController implements Initializable {
     public void registry(ActionEvent event) throws IOException {
         
         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-            System.out.println("a gurdar") ;
             if (c.insert(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-                 
+                 c.closConnection();
+                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
-
-                //Parent root = FXMLLoader.load(getClass().getResource("FXMLContacWindow.fxml"));
                 Parent root = (Parent) loader.load();
-                //loader.getController();
                 Scene scene = new Scene(root);
 
                 Stage secondStage = new Stage();

@@ -7,14 +7,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="354.0" prefWidth="629.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="krabprotocol.ChatWindowController">
+<AnchorPane id="AnchorPane" prefHeight="354.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="krabprotocol.ChatWindowController">
    <children>
       <Pane prefHeight="354.0" prefWidth="637.0">
          <children>
-            <TextArea layoutX="14.0" layoutY="39.0" prefHeight="229.0" prefWidth="464.0" />
-            <TextField layoutX="14.0" layoutY="291.0" prefHeight="37.0" prefWidth="362.0" />
-            <Button layoutX="394.0" layoutY="287.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="84.0" text="Send" />
+            <TextArea fx:id="conversation" layoutX="14.0" layoutY="39.0" prefHeight="229.0" prefWidth="464.0" />
+            <TextField fx:id="message" layoutX="14.0" layoutY="291.0" prefHeight="37.0" prefWidth="362.0" />
+            <Button fx:id="send" layoutX="394.0" layoutY="287.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="37.0" prefWidth="84.0" text="Send" />
             <ImageView fitHeight="118.0" fitWidth="124.0" layoutX="494.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../Pictures/Nyan-Cat-dancing-with-Pusheen-the-Cat-nyan-cat-25051166-400-289_large.gif" />

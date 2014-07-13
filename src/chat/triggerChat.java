@@ -23,7 +23,7 @@ public class triggerChat extends Thread{
             chatCommunication myChat = new serverChat();
             
             try {
-                Naming.rebind("rmi://localhost:1099/saludo", myChat);
+                Naming.rebind("rmi://localhost:1099/message", myChat);
                 System.out.println("Server onLine ...");
             } catch (MalformedURLException ex) {
                System.err.println(ex);
