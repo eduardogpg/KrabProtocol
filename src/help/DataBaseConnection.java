@@ -13,7 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import Cipher.*;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 /**
  *
  * @author 1020142461
@@ -66,9 +69,32 @@ public class DataBaseConnection {
      
      public boolean insert(String userName, String name,String lastName ,String password,String cellNumber, String email, String institution){
          String currentlyDate = "2014-07-12";
-         
+               // generar llaves y encriptar pass
+        
+         Cipher c=new Cipher();
+         Keys k=new Keys();
+         byte[] Encripted;
+         String Encriptedpass;
+        try {
+            System.out.println("Generating keys...");
+            k.generatekeys(name);
+            PublicKey pub=k.getPubKey(name);
+            Encripted=c.PubEncrypt(password, pub);
+            Encriptedpass=new String(Encripted);
+            
+            
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Failed to Generate Keys");
+            ex.printStackTrace();
+            return false;
+        } catch (IOException ex) {
+            System.out.println("Failed to Generate Files");
+            ex.printStackTrace();
+            return false;
+        }
+//         generar llaves y encriptar pass
          try{
-           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+password+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentlyDate+"')"); 
+           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+Encriptedpass+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentlyDate+"')"); 
            return true;
          }catch(SQLException ex){
             System.out.println("A problem was accurred " + ex.getMessage());

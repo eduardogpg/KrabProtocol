@@ -16,7 +16,6 @@ import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.*;
-import java.util.Properties;
 
 /**
  *
@@ -60,7 +59,7 @@ public class Keys {
        try{
          File Dir= new File(dir);
          if(!Dir.exists()){
-             if(Dir.mkdirs()){System.out.println("Created");}
+             if(Dir.mkdirs()){System.out.println(dir+" Created");}
              else{System.out.println("Failed to create");return false;}
          }
        }catch(Exception e){e.printStackTrace();}
