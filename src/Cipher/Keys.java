@@ -25,11 +25,12 @@ public class Keys {
     
     
     
-    public void generatekeys(String name) throws NoSuchAlgorithmException, IOException{
+    public boolean generatekeys(String name) throws NoSuchAlgorithmException, IOException{
         PrivateKey privateKey;PublicKey publicKey;
         String pubfile=getpubfile(name);
         String privfile=getprivfile(name);
-        String dir="Keys/"+name;
+        String user=System.getProperties().getProperty("user.name");
+        String dir="C:\\Users\\"+user+"\\Documents\\Krab\\Keys\\"+name;
         try {
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
             keyGen.initialize(1024);
@@ -43,33 +44,39 @@ public class Keys {
             BigInteger PubExponent=rsaPubKeySpec.getPublicExponent();
             BigInteger PrivModulus=rsaPrivKeySpec.getModulus();
             BigInteger PrivExponent=rsaPrivKeySpec.getPrivateExponent();
-            this.storekeys(dir,pubfile,PubModulus,PubExponent);
-            this.storekeys(dir,privfile,PrivModulus,PrivExponent);
+            boolean s1=this.storekeys(dir,pubfile,PubModulus,PubExponent);
+            boolean s2=this.storekeys(dir,privfile,PrivModulus,PrivExponent);
+          //  this.CipherPrivKey();
+            if(s1==true&&s2==true){return true;}
+            else{return false;}
         } catch (InvalidKeySpecException ex) {
-           ex.printStackTrace();
+           ex.printStackTrace();return false;
         }
     }
-    public void storekeys(String dir,String fileName,BigInteger Mod,BigInteger Exp) throws IOException{
+    private boolean storekeys(String dir,String fileName,BigInteger Mod,BigInteger Exp) throws IOException{
        FileOutputStream Fios = null;  
        ObjectOutputStream Obos = null;  
        try{
          File Dir= new File(dir);
-         if(!Dir.exists()){Dir.mkdir();}
-         else{System.out.println("Already Exist");}
-         System.exit(0);
+         if(!Dir.exists()){
+             if(Dir.mkdirs()){System.out.println(dir+" Created");}
+             else{System.out.println("Failed to create");return false;}
+         }
        }catch(Exception e){e.printStackTrace();}
        
        try {  
          Fios = new FileOutputStream(fileName);  
          Obos = new ObjectOutputStream(new BufferedOutputStream(Fios));  
          Obos.writeObject(Mod);  
-         Obos.writeObject(Exp);     
+         Obos.writeObject(Exp); 
+         return true;
         }catch (Exception e) {  
-            e.printStackTrace();  
+            e.printStackTrace(); 
+            return false;
         }finally{  
          if(Obos != null&&Fios!=null){  
            Obos.close();Fios.close();  }}       
-   
+          
     
     }
     
@@ -124,13 +131,19 @@ public class Keys {
          oi.close();fi.close();  }}        
         }
     
-    public String getpubfile(String name){
-        String pubfile="Keys/"+name+"/"+name+"Kpub.cb";
+    private String getpubfile(String name){
+        String user=System.getProperties().getProperty("user.name");
+        String pubfile="C:\\Users\\"+user+"\\Documents\\Krab\\Keys\\"+name+"\\Kpub.cb";
     return pubfile;
     }
-    public String getprivfile(String name){
-        String privfile="Keys/"+name+"/"+name+"Kpriv.cb";
+    private String getprivfile(String name){
+        String user=System.getProperties().getProperty("user.name");
+        String privfile="C:\\Users\\"+user+"\\Documents\\Krab\\Keys\\"+name+"\\Kpriv.cb";
     return privfile;
+    }
+
+    private void CipherPrivKey() {
+        
     }
     
     }
