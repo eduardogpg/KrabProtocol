@@ -11,6 +11,7 @@ import com.mysql.jdbc.Statement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,7 +66,9 @@ public class DataBaseConnection {
      }
      
      public boolean insert(String userName, String name,String lastName ,String password,String cellNumber, String email, String institution){
-         String currentlyDate = "2014-07-12";
+         Calendar cal1 = Calendar.getInstance();
+         
+         String currentlyDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
          
          try{
            this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+password+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentlyDate+"')"); 
