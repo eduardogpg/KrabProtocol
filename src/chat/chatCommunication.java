@@ -16,5 +16,5 @@ import java.rmi.RemoteException;
 public interface chatCommunication extends Remote{
     
     public void getMessage(String message) throws RemoteException;
-    
+    public boolean setConversation(String userName, String ip)throws RemoteException;
 }

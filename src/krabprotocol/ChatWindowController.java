@@ -25,7 +25,8 @@ import javafx.scene.control.TextArea;
  */
 public class ChatWindowController implements Initializable {
     
-    String remoteName;
+    private String remoteName;
+    private boolean messageStart;
     
     @FXML
     Button send;
@@ -43,18 +44,39 @@ public class ChatWindowController implements Initializable {
     
     @FXML
     public void sendMessage(ActionEvent event) throws IOException {
+        
         if(!this.message.getText().equals("")){
-          
-            try{
-                chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteName);
-                newMessage.getMessage(this.message.getText());
-                this.conversation.setText( this.conversation.getText() + "\nYou: "+ this.message.getText()+ " ");
-                this.message.setText("");
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+            if (this.messageStart == false){
+                this.newConversation();
+                this.sendNewMessage();
+            }else
+                this.sendNewMessage();
         }
+          
+    }
+    
+    private void newConversation(){
+                
+                try{
+                    chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteName);
+                    this.messageStart = newMessage.setConversation("Eduardo", "192.168.1.10");
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                
+    }
+    
+    private void sendNewMessage(){
+                try{
+                    chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteName);
+                    newMessage.getMessage(this.message.getText());
+                    this.conversation.setText( this.conversation.getText() + "\nYou: "+ this.message.getText()+ " ");
+                    this.message.setText("");
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
     }
     
 }
