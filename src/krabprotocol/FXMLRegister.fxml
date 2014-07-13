@@ -7,16 +7,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="357.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="krabprotocol.FXMLRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="krabprotocol.FXMLRegisterController">
    <children>
-      <Button fx:id="send" layoutX="37.0" layoutY="411.0" mnemonicParsing="false" onAction="#registry" text="Send">
+      <Button fx:id="send" layoutX="41.0" layoutY="382.0" mnemonicParsing="false" onAction="#registry" text="Send">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
       <Separator layoutX="13.0" layoutY="32.0" orientation="VERTICAL" prefHeight="365.0" prefWidth="7.0" />
-      <CheckBox layoutX="102.0" layoutY="418.0" mnemonicParsing="false" text="Accept terms and conditions" />
+      <CheckBox layoutX="103.0" layoutY="389.0" mnemonicParsing="false" text="Accept terms and conditions" />
       <Label layoutX="144.0" layoutY="12.0" text="Register">
          <font>
             <Font size="25.0" />
@@ -71,5 +70,25 @@
       <TextField fx:id="email" layoutX="179.0" layoutY="252.0" />
       <TextField fx:id="cellNumber" layoutX="179.0" layoutY="288.0" />
       <TextField fx:id="institution" layoutX="179.0" layoutY="322.0" />
+      <Label layoutX="339.0" layoutY="83.0" text="x" textFill="#bc1717" fx:id="xUserName">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="336.0" layoutY="188.0" text="x" textFill="#bc1717" fx:id="xPassword">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="336.0" layoutY="223.0" text="x" textFill="#bc1717" fx:id="xRepeatPassword">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="336.0" layoutY="291.0" text="x" textFill="#bc1717" fx:id="xCellNumber">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

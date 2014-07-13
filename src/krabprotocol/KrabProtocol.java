@@ -29,10 +29,7 @@ public class KrabProtocol extends Application {
     }
 
     public static void main(String[] args) {
-       
-        triggerChat tServerChat = new triggerChat(); 
-        tServerChat.start(); //executes the chat server
-             
+     
         launch(args);
         Application.launch(KrabProtocol.class, args); //Para que sirve esto?
 

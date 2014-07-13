@@ -6,6 +6,7 @@
 
 package krabprotocol;
 
+import chat.triggerChat;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,7 @@ import javafx.util.Callback;
 
 public class FXMLContactWindowController implements Initializable {
 
+    
     @FXML
     private TreeView treev;
     
@@ -51,6 +53,8 @@ public class FXMLContactWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        
+   
     }
     
     public void cargar(){
