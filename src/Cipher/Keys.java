@@ -25,7 +25,7 @@ public class Keys {
     
     
     
-    public boolean generatekeys(String name) throws NoSuchAlgorithmException, IOException{
+    public boolean generatekeys(String name,String pass) throws NoSuchAlgorithmException, IOException{
         PrivateKey privateKey;PublicKey publicKey;
         String pubfile=getpubfile(name);
         String privfile=getprivfile(name);
@@ -143,20 +143,6 @@ public class Keys {
     private void CipherPrivKey() {
         
     }
-    public StringBuffer getmd5pass(String name,String pass) throws IOException, NoSuchAlgorithmException{
-            
-            String key=name+pass;
-            StringBuffer md5pass =new StringBuffer();
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(key.getBytes());
-            byte[] digest = md.digest();
-           
-            for (byte b : digest) {
-               md5pass.append(String.format("%02x", b & 0xff));
-		}
-            //System.out.println(md5pass);
-        return md5pass;
     
-    }
     
     }

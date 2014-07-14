@@ -49,7 +49,9 @@ public class DataBaseConnection {
       public ResultSet Loggin(String name,String pass) throws IOException, NoSuchAlgorithmException{
         try{
             Keys k=new Keys();
-            StringBuffer md5pass=k.getmd5pass(name,pass);
+            Cipher c=new Cipher();
+            String key=name+pass;
+            StringBuffer md5pass=c.getmd5(key);
             //System.out.println(name+" "+md5pass);
             ResultSet result = this.statemen.executeQuery("SELECT password FROM users WHERE userName='"+name+"'&&"
                     + "password='"+md5pass+"'");
@@ -96,13 +98,12 @@ public class DataBaseConnection {
         
          Cipher c=new Cipher();
          Keys k=new Keys();
-         StringBuffer md5pass = new StringBuffer();
-          
+         StringBuffer md5pass = new StringBuffer();  
         try {
             System.out.println("Generating keys...");
-            k.generatekeys(name);
-            md5pass=k.getmd5pass(userName, password);
-            
+            k.generatekeys(name,password);
+            String key=userName+password;
+            md5pass=c.getmd5(key);
         } catch (NoSuchAlgorithmException ex) {
             System.out.println("Failed to Generate Keys");
             ex.printStackTrace();
