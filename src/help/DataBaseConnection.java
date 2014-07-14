@@ -50,6 +50,7 @@ public class DataBaseConnection {
         try{
             Keys k=new Keys();
             StringBuffer md5pass=k.getmd5pass(name,pass);
+            //System.out.println(name+" "+md5pass);
             ResultSet result = this.statemen.executeQuery("SELECT password FROM users WHERE userName='"+name+"'&&"
                     + "password='"+md5pass+"'");
             if(!result.next()){
@@ -100,7 +101,7 @@ public class DataBaseConnection {
         try {
             System.out.println("Generating keys...");
             k.generatekeys(name);
-            md5pass=k.getmd5pass(name, password);
+            md5pass=k.getmd5pass(userName, password);
             
         } catch (NoSuchAlgorithmException ex) {
             System.out.println("Failed to Generate Keys");
