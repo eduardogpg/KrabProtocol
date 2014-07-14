@@ -98,7 +98,6 @@ public class Keys {
        return publicKey;  
         
           } catch (Exception e) {  
-             e.printStackTrace();
              return null;
         }finally{
       if(oi != null&&fi!=null){  
@@ -124,7 +123,6 @@ public class Keys {
        return privateKey;  
         
           } catch (Exception e) {  
-             e.printStackTrace();
              return null;
         }finally{
       if(oi != null&&fi!=null){  
@@ -144,6 +142,21 @@ public class Keys {
 
     private void CipherPrivKey() {
         
+    }
+    public StringBuffer getmd5pass(String name,String pass) throws IOException, NoSuchAlgorithmException{
+            
+            String key=name+pass;
+            StringBuffer md5pass =new StringBuffer();
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(key.getBytes());
+            byte[] digest = md.digest();
+           
+            for (byte b : digest) {
+               md5pass.append(String.format("%02x", b & 0xff));
+		}
+            //System.out.println(md5pass);
+        return md5pass;
+    
     }
     
     }

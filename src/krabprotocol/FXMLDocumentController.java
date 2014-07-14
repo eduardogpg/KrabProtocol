@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import help.DataBaseConnection;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,7 +28,7 @@ public class FXMLDocumentController {
    
   
     @FXML
-    private void signIn(ActionEvent event) throws IOException {
+    private void signIn(ActionEvent event) throws IOException, NoSuchAlgorithmException {
         
         if (this.isValid( userName.getText() , password.getText())){ //coloco aqui el password a mano por que no se como obtener el valor del paswordfield
             triggerChat tServerChat = new triggerChat(); 
@@ -76,19 +77,16 @@ public class FXMLDocumentController {
     }
     
     
-    private boolean isValid(String name, String password){
+    private boolean isValid(String name, String password) throws IOException, NoSuchAlgorithmException{
         DataBaseConnection myConnection = new DataBaseConnection();
-        ResultSet myResult = myConnection.searchUser(name);
+        ResultSet myResult = myConnection.Loggin(name,password);
         
         if (myResult == null)
              return false;
         else try {
-            if(myResult.getString("password").equals(password) ){
-               myConnection.closConnection();
-                return true;
-            }else
-                return false;
-        } catch (SQLException ex) {
+            myConnection.closConnection();
+            return true;
+        } catch (Exception  ex) {
             System.out.println(ex);
             return false;
         }

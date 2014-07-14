@@ -46,6 +46,23 @@ public class DataBaseConnection {
         
     }
     
+      public ResultSet Loggin(String name,String pass) throws IOException, NoSuchAlgorithmException{
+        try{
+            Keys k=new Keys();
+            StringBuffer md5pass=k.getmd5pass(name,pass);
+            ResultSet result = this.statemen.executeQuery("SELECT password FROM users WHERE userName='"+name+"'&&"
+                    + "password='"+md5pass+"'");
+            if(!result.next()){
+                    System.out.println("no results were found in the search"); //Only a message for the admin.
+                    return null;
+             }else
+                return result; //Send the result of the search
+         
+        }catch(SQLException ex){
+            return null;
+        }
+     }
+    
       public ResultSet searchUser(String name){
         try{
             ResultSet result = this.statemen.executeQuery("SELECT password FROM users WHERE userName='"+name+"'");
@@ -69,26 +86,21 @@ public class DataBaseConnection {
      }
      
      public boolean insert(String userName, String name,String lastName ,String password,String cellNumber, String email, String institution){
-<<<<<<< HEAD
+
          Calendar cal1 = Calendar.getInstance();
          
          String currentlyDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
-         
-=======
-         String currentlyDate = "2014-07-12";
-               // generar llaves y encriptar pass
+
+                    // generar llaves y encriptar pass
         
          Cipher c=new Cipher();
          Keys k=new Keys();
-         byte[] Encripted;
-         String Encriptedpass;
+         StringBuffer md5pass = new StringBuffer();
+          
         try {
             System.out.println("Generating keys...");
             k.generatekeys(name);
-            PublicKey pub=k.getPubKey(name);
-            Encripted=c.PubEncrypt(password, pub);
-            Encriptedpass=new String(Encripted);
-            
+            md5pass=k.getmd5pass(name, password);
             
         } catch (NoSuchAlgorithmException ex) {
             System.out.println("Failed to Generate Keys");
@@ -100,11 +112,11 @@ public class DataBaseConnection {
             return false;
         }
 //         generar llaves y encriptar pass
->>>>>>> 8d3300774f324dec613fcdcd47105dfcffd974f9
+
          try{
-           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+Encriptedpass+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentlyDate+"')"); 
+           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+md5pass+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentlyDate+"')"); 
            return true;
-         }catch(SQLException ex){
+         }catch(Exception  ex){
             System.out.println("A problem was accurred " + ex.getMessage());
             return false;
         }
