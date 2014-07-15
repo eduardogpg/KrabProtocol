@@ -110,31 +110,8 @@ public class DataBaseConnection {
          
          String currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
 
-         // generar llaves y encriptar pass
-        
-         Cipher c=new Cipher();
-         Keys k=new Keys();
-         StringBuffer md5pass = new StringBuffer();  
-        try {
-            System.out.println("Generating keys...");
-            k.generatekeys(name,password);
-            String key=userName+password;
-            md5pass=c.getmd5(key);
-        } catch (NoSuchAlgorithmException ex) {
-            System.out.println("Failed to Generate Keys");
-            ex.printStackTrace();
-            return false;
-        } catch (IOException ex) {
-            System.out.println("Failed to Generate Files");
-            ex.printStackTrace();
-            return false;
-        } catch (Exception ex) {
-            Logger.getLogger(DataBaseConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-//         generar llaves y encriptar pass
-
          try{
-           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+md5pass+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentDate+"')"); 
+           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+password+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentDate+"')"); 
            return true;
          }catch(Exception  ex){
             System.out.println("A problem was accurred " + ex.getMessage());
