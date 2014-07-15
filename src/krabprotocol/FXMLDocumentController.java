@@ -48,6 +48,9 @@ public class FXMLDocumentController {
             triggerChat tServerChat = new triggerChat(); 
             tServerChat.start(); //executes the chat server
             
+            Sesion s=new Sesion();
+            s.start();
+            
             singletonChat.userName = userName.getText();
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));

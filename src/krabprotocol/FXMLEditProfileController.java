@@ -137,9 +137,9 @@ public class FXMLEditProfileController implements Initializable {
                 DataBaseConnection d = new DataBaseConnection();
                 Cipher c=new Cipher();
                 String newkey=profileName+newPassword;
-                System.out.println("new key: "+newkey);
+                //System.out.println("new key: "+newkey);
                 StringBuffer newpass=c.getmd5(newkey);
-                System.out.println("new pass: "+newpass);
+                //System.out.println("new pass: "+newpass);
                 if(d.updateUser(profileName, currentProfileName, new String(newpass), this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
                       
                     
