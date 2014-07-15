@@ -90,5 +90,15 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Label layoutX="336.0" layoutY="254.0" text="x" textFill="#bc1717" fx:id="xEmail">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="alert" layoutX="109.0" layoutY="365.0" text="Something was happened, Try Again" textFill="#941f1f">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

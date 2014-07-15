@@ -51,6 +51,12 @@ public class FXMLRegisterController implements Initializable {
     private Label xCellNumber;
     
     @FXML
+    private Label xEmail;
+    
+    @FXML
+    private Label alert;
+    
+    @FXML
     private TextField userName;
     
     @FXML
@@ -84,63 +90,65 @@ public class FXMLRegisterController implements Initializable {
         this.xCellNumber.setVisible(false);
         this.xPassword.setVisible(false);
         this.xRepeatPassword.setVisible(false);
-        
+        this.xEmail.setVisible(false);
+        this.alert.setVisible(false);
     }
     @FXML
     public void registry(ActionEvent event) throws IOException {
         this.hideTools();
+        
         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
             if (c.insert(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-                 c.closConnection();
+                c.closConnection();
                 
-                triggerChat tServerChat = new triggerChat(); 
-                tServerChat.start(); //executes the chat server
-                
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
-                Parent root = (Parent) loader.load();
-                Scene scene = new Scene(root);
-
-                Stage secondStage = new Stage();
-                secondStage.setTitle("Nueva Ventana");
-                secondStage.setScene(scene);
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-                secondStage.show();
-             }else{
-                 System.out.println("Algo salio Mal");
-             }
-             
-        }else{
-            this.cellNumber.setText("");
-            this.userName.setText("");
-            this.password.setText("");
-            this.repeatPassword.setText("");
-        }   
+            }else{
+                this.alert.setVisible(true);
+            }
+        } 
     
     }  
     
+    private boolean isNumber(String numberS){
+        
+        try{
+            double number = Double.parseDouble(numberS);
+            return true;
+            
+        }catch(Exception e){ 
+             System.out.println("No es numero");
+            return false;
+           
+        }
+    
+    }
+    
     private boolean isValid(String userName, String name,String lastName ,String password, String RepeatPassword, String cellNumber, String email, String institutuon){
+       
         if( (userName.equals("")) || (name.equals("")) || (lastName.equals("")) || (password.equals("")) || (RepeatPassword.equals("")) || (cellNumber.equals("")) || (email.equals("")) || (institutuon.equals(""))){
             return false;
         }else{
-            try{
-                int number = Integer.parseInt(cellNumber);
-                if(password.equals(RepeatPassword)){
-                    ResultSet myResult = this.c.searchUser(userName);
-                    if(myResult == null)
+            
+            if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
+                if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
+                    if(email.contains("@")){
                         return true;
-                    else{
-                        this.xUserName.setVisible(true);
-                        return false;
+                    }else{
+                       this.xEmail.setVisible(true);
+                       return true;
                     }
+                        
                 }else{
-                    this.xRepeatPassword.setVisible(true);
                     this.xPassword.setVisible(true);
+                    this.xRepeatPassword.setVisible(true);
                     return false;
                 }
-            }catch(Exception e){ 
+            }else{
                 this.xCellNumber.setVisible(true);
                 return false;
             }
+            
+            
         }
-    }
+  }
 }
+
