@@ -6,6 +6,7 @@
 
 package krabprotocol;
 
+import Cipher.Cipher;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -134,19 +135,15 @@ public class FXMLEditProfileController implements Initializable {
          this.hideTools();
          if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 DataBaseConnection d = new DataBaseConnection();
-                if(d.updateUser(profileName, currentProfileName, this.newPassword, this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
-                        
-                    /***********************************************/
-                    /***********************************************/
-                    //      Aqui
-                    //             Yarib
-                    //                      Encripta
-                    //                              la variable newPassword
-                    //                                  con currentProfilename
-                    /***********************************************/
-                    /***********************************************/
+                Cipher c=new Cipher();
+                String newkey=profileName+newPassword;
+                System.out.println("new key: "+newkey);
+                StringBuffer newpass=c.getmd5(newkey);
+                System.out.println("new pass: "+newpass);
+                if(d.updateUser(profileName, currentProfileName, new String(newpass), this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
+                      
                     
-                        if(!this.currentPassword.equals(newPassword))
+                        if(!this.currentPassword.equals(newpass))
                             d.checkChangePassword(currentProfileName, currentPassword,newPassword );
                     
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
