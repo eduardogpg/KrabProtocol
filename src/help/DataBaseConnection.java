@@ -80,7 +80,7 @@ public class DataBaseConnection {
         }
      }
       
-    public void closConnection(){
+    public void closeConnection(){
         try {
             this.myConnection.close();
         } catch (SQLException ex) {
@@ -88,7 +88,7 @@ public class DataBaseConnection {
         }
      }
      
-    public ResultSet selectAllUser(String user){
+    public ResultSet selectAllofUser(String user){
         
          try{
             ResultSet result = this.statemen.executeQuery("SELECT * FROM users WHERE userName='"+user+"'");
@@ -155,6 +155,19 @@ public class DataBaseConnection {
             return false;
         }
         
+    }
+    
+    public boolean updateUser(String userName, String lastUserName, String password,String name, String lastName,String cellNumber,String email,String institution){
+        
+        try{
+            this.statemen.executeUpdate("UPDATE users SET userName='"+userName+"',password='"+password+"',name='"+name+"',lastName='"+lastName+"',cellNumber='"+cellNumber+"' ,email='"+email+"' ,institution='"+institution+"' WHERE userName='"+lastUserName+"'"); 
+             return true;
+        }catch(SQLException ex){
+            System.out.println("Error "+ex.getMessage());
+            return false;
+        }
+        
+       
     }
      
 }

@@ -21,6 +21,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import help.DataBaseConnection;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
@@ -91,7 +97,7 @@ public class FXMLEditProfileController implements Initializable {
     
     private void loadFile(){
         this.d= new DataBaseConnection();
-        ResultSet userD = d.selectAllUser(singletonChat.userName);
+        ResultSet userD = d.selectAllofUser(singletonChat.userName);
         
         try {
             currentProfileName = userD.getString("userName");
@@ -127,10 +133,25 @@ public class FXMLEditProfileController implements Initializable {
     private void updateProfile(ActionEvent event) throws IOException, NoSuchAlgorithmException {
          this.hideTools();
          if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-               System.out.println("Entro sin problemas");
-           }else{
-               System.out.println(":( ");
-           }
+                DataBaseConnection d = new DataBaseConnection();
+                if(d.updateUser(profileName, currentProfileName, this.newPassword, this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
+                      
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
+
+                        Parent root = (Parent) loader.load();
+                        Scene scene = new Scene(root);
+
+                        Stage secondStage = new Stage();
+                        secondStage.setTitle("Edit Profile");
+                        secondStage.setScene(scene);
+                        ((Node)(event.getSource())).getScene().getWindow().hide();
+                        secondStage.show();
+                }else{
+                      System.out.println("Listo");
+                }
+                  
+             
+            }
     }
     
     private boolean isNumber(String numberS){

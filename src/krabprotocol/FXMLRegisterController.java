@@ -98,8 +98,10 @@ public class FXMLRegisterController implements Initializable {
         this.hideTools();
         
         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
+            
             if (c.register(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-                c.closConnection();
+                
+                c.closeConnection();
                 
                 triggerChat t = new triggerChat();
                 t.start();

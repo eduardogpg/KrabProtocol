@@ -44,7 +44,7 @@ public class FXMLDocumentController {
         if (this.isValid( userName.getText() , password.getText())){ //coloco aqui el password a mano por que no se como obtener el valor del paswordfield
             
             myConnection.checkIn( userName.getText() ,currentDate ,this.count);
-            myConnection.closConnection();
+            myConnection.closeConnection();
             triggerChat tServerChat = new triggerChat(); 
             tServerChat.start(); //executes the chat server
             
