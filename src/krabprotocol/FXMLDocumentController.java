@@ -59,9 +59,10 @@ public class FXMLDocumentController {
     @FXML
     public void register(ActionEvent event) throws IOException {
         
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLRegister.fxml"));
+            //FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLRegister.fxml"));
             //FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
-
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
             
             Parent root = (Parent) loader.load();
             loader.getController();

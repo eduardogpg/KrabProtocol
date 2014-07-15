@@ -6,37 +6,26 @@
 
 package krabprotocol;
 
-import chat.triggerChat;
+import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import help.DataBaseConnection;
-import java.io.IOException;
-import java.sql.ResultSet;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
  * @author 1020142461
  */
-public class FXMLRegisterController implements Initializable {
+public class FXMLEditProfileController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
-    
-    
-    DataBaseConnection c;
     
     @FXML
     private Label xUserName;
@@ -46,15 +35,17 @@ public class FXMLRegisterController implements Initializable {
     
     @FXML
     private Label xRepeatPassword;
-    
+            
+    @FXML
+    private Label xEmail;
+            
     @FXML
     private Label xCellNumber;
     
-    @FXML
-    private Label xEmail;
     
-    @FXML
-    private Label alert;
+    
+    
+    
     
     @FXML
     private TextField userName;
@@ -66,6 +57,12 @@ public class FXMLRegisterController implements Initializable {
     private TextField lastName;
     
     @FXML
+    private TextField password;
+    
+    @FXML
+    private TextField repeatPassword;
+    
+    @FXML
     private TextField email;
     
     @FXML
@@ -73,40 +70,30 @@ public class FXMLRegisterController implements Initializable {
     
     @FXML
     private TextField institution;
-    
-    @FXML
-    private PasswordField password;
-    
-    @FXML
-    private PasswordField repeatPassword;
+            
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.hideTools();
-        c = new DataBaseConnection();
-    }
+    }    
     private void hideTools(){
-        this.xUserName.setVisible(false);
         this.xCellNumber.setVisible(false);
+        this.xEmail.setVisible(false);
         this.xPassword.setVisible(false);
         this.xRepeatPassword.setVisible(false);
-        this.xEmail.setVisible(false);
-        this.alert.setVisible(false);
+        this.xUserName.setVisible(false);
     }
-    @FXML
-    public void registry(ActionEvent event) throws IOException {
-        this.hideTools();
-        
-        if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-            if (c.insert(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-                c.closConnection();
-                
-            }else{
-                this.alert.setVisible(true);
-            }
-        } 
     
-    }  
+      
+    @FXML
+    private void updateProfile(ActionEvent event) throws IOException, NoSuchAlgorithmException {
+         this.hideTools();
+         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
+               System.out.println("Entro sin problemas");
+           }else{
+               System.out.println(":( ");
+           }
+    }
     
     private boolean isNumber(String numberS){
         
@@ -115,7 +102,7 @@ public class FXMLRegisterController implements Initializable {
             return true;
             
         }catch(Exception e){ 
-           return false;
+            return false;
            
         }
     
@@ -149,5 +136,5 @@ public class FXMLRegisterController implements Initializable {
             
         }
   }
+    
 }
-

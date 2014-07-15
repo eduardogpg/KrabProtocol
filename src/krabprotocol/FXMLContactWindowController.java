@@ -7,10 +7,12 @@
 package krabprotocol;
 
 import chat.triggerChat;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -50,6 +52,8 @@ public class FXMLContactWindowController implements Initializable {
             new Contacto("Filomeno", "Amigos"), new Contacto("Vaquita Alpura", "Compañeros de Trabajo"),
             new Contacto("Chica QR en pompas","Compañeros de Trabajo"));
     
+        
+        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -57,6 +61,14 @@ public class FXMLContactWindowController implements Initializable {
    
     }
     
+    @FXML
+    public void editProfile(ActionEvent event) throws IOException {
+    
+    }
+    
+
+
+
     public void cargar(){
         System.out.println("Iniciar ;)");
         //crea la raiz del arbol
@@ -179,5 +191,7 @@ public class FXMLContactWindowController implements Initializable {
         }
 
     }
+    
+    
     
 }
