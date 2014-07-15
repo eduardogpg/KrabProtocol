@@ -136,8 +136,18 @@ public class FXMLEditProfileController implements Initializable {
                 DataBaseConnection d = new DataBaseConnection();
                 if(d.updateUser(profileName, currentProfileName, this.newPassword, this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
                         
+                    /***********************************************/
+                    /***********************************************/
+                    //      Aqui
+                    //             Yarib
+                    //                      Encripta
+                    //                              la variable newPassword
+                    //                                  con currentProfilename
+                    /***********************************************/
+                    /***********************************************/
+                    
                         if(!this.currentPassword.equals(newPassword))
-                            d.checkChange(currentProfileName, newPassword, currentPassword);
+                            d.checkChangePassword(currentProfileName, currentPassword,newPassword );
                     
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
 

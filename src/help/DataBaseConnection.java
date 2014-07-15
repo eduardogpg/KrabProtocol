@@ -145,7 +145,7 @@ public class DataBaseConnection {
         }
     }
     
-    public boolean checkChange(String userName, String lastPasword, String newPassword){
+    public boolean checkChangePassword(String userName, String lastPasword, String newPassword){
         Calendar cal1 = Calendar.getInstance();
         String currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
 
