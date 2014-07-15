@@ -105,9 +105,7 @@ public class FXMLRegisterController implements Initializable {
         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
             
 
-            if (c.register(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-                c.closeConnection();
-
+        
          // generar llaves y encriptar pass
          Cipher ci=new Cipher();
          Keys k=new Keys();
@@ -154,7 +152,7 @@ public class FXMLRegisterController implements Initializable {
     
         }
     
-    }
+    
     
     private boolean isNumber(String numberS){
         
