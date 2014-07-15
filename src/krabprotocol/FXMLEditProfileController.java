@@ -135,7 +135,10 @@ public class FXMLEditProfileController implements Initializable {
          if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 DataBaseConnection d = new DataBaseConnection();
                 if(d.updateUser(profileName, currentProfileName, this.newPassword, this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
-                      
+                        
+                        if(!this.currentPassword.equals(newPassword))
+                            d.checkChange(currentProfileName, newPassword, currentPassword);
+                    
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
 
                         Parent root = (Parent) loader.load();

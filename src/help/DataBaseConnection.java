@@ -143,8 +143,19 @@ public class DataBaseConnection {
             System.out.println("Error "+ex.getMessage());
             return false;
         }
-        
-       
+    }
+    
+    public boolean checkChange(String userName, String lastPasword, String newPassword){
+        Calendar cal1 = Calendar.getInstance();
+        String currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
+
+        try{
+           this.statemen.execute("INSERT INTO `historicPasswordTable` VALUES('"+userName+"','"+lastPasword+"','"+newPassword+"','"+currentDate+"')"); 
+           return true;
+         }catch(Exception  ex){
+            System.out.println("A problem was accurred at the table historicAccessTable" + ex.getMessage());
+            return false;
+        }
     }
      
 }

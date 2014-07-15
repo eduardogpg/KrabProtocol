@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="391.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="krabprotocol.FXMLEditProfileController">
+<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="391.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="krabprotocol.FXMLEditProfileController">
    <children>
       <Separator layoutX="30.0" layoutY="24.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="5.0" />
       <Separator layoutX="34.0" layoutY="69.0" prefHeight="3.0" prefWidth="221.0" />
@@ -97,5 +96,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <PasswordField layoutX="195.0" layoutY="462.0" />
    </children>
 </AnchorPane>
