@@ -46,7 +46,7 @@ public class DataBaseConnection {
         
     }
     
-      public ResultSet Loggin(String name,String pass) throws IOException, NoSuchAlgorithmException{
+    public ResultSet Loggin(String name,String pass) throws IOException, NoSuchAlgorithmException{
         try{
             Keys k=new Keys();
             Cipher c=new Cipher();
@@ -66,7 +66,7 @@ public class DataBaseConnection {
         }
      }
     
-      public ResultSet searchUser(String name){
+    public ResultSet searchUser(String name){
         try{
             ResultSet result = this.statemen.executeQuery("SELECT password FROM users WHERE userName='"+name+"'");
             if(!result.next()){
@@ -80,7 +80,7 @@ public class DataBaseConnection {
         }
      }
       
-     public void closConnection(){
+    public void closConnection(){
         try {
             this.myConnection.close();
         } catch (SQLException ex) {
@@ -88,13 +88,29 @@ public class DataBaseConnection {
         }
      }
      
-     public boolean insert(String userName, String name,String lastName ,String password,String cellNumber, String email, String institution){
+    public ResultSet selectAllUser(String user){
+        
+         try{
+            ResultSet result = this.statemen.executeQuery("SELECT * FROM users WHERE userName='"+user+"'");
+            if(!result.next()){
+                    System.out.println("no results were found in the search"); 
+                    return null;
+             }else
+                return result; //Send the result of the search
+         
+        }catch(SQLException ex){
+            return null;
+        }
+         
+     }
+     
+    public boolean register(String userName, String name,String lastName ,String password,String cellNumber, String email, String institution){
 
          Calendar cal1 = Calendar.getInstance();
          
          String currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
 
-                    // generar llaves y encriptar pass
+         // generar llaves y encriptar pass
         
          Cipher c=new Cipher();
          Keys k=new Keys();
@@ -126,5 +142,19 @@ public class DataBaseConnection {
         }
       
      }
-      
+    
+    public boolean checkIn(String userName,String timeFirstTry ,int tries){
+        
+        Calendar cal1 = Calendar.getInstance();
+        String currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE)+" "+cal1.get(Calendar.HOUR)+":"+cal1.get(Calendar.MINUTE)+":"+cal1.get(Calendar.SECOND);
+        try{
+           this.statemen.execute("INSERT INTO `historicAccessTable` VALUES('"+userName+"','"+timeFirstTry+"','"+currentDate+"','"+tries+"')"); 
+           return true;
+         }catch(Exception  ex){
+            System.out.println("A problem was accurred at the table historicAccessTable" + ex.getMessage());
+            return false;
+        }
+        
+    }
+     
 }

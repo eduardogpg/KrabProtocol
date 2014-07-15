@@ -14,6 +14,8 @@ import java.util.Hashtable;
  */
 public class singletonChat {
     
+    static String userName;
+    
     private singletonChat(){}
      
     private Hashtable<String,String> listChat =new Hashtable<String,String>();

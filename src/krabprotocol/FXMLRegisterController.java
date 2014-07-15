@@ -98,20 +98,22 @@ public class FXMLRegisterController implements Initializable {
         this.hideTools();
         
         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-            if (c.insert(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
+            if (c.register(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 c.closConnection();
                 
+                triggerChat t = new triggerChat();
+                t.start();
                 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
 
-            Parent root = (Parent) loader.load();
-            Scene scene = new Scene(root);
+                Parent root = (Parent) loader.load();
+                Scene scene = new Scene(root);
 
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Main");
-            secondStage.setScene(scene);
-            ((Node)(event.getSource())).getScene().getWindow().hide();
-            secondStage.show();
+                Stage secondStage = new Stage();
+                secondStage.setTitle("Main");
+                secondStage.setScene(scene);
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                secondStage.show();
             
             }else{
                 this.alert.setVisible(true);

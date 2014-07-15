@@ -39,6 +39,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <Hyperlink fx:id="editProfile" layoutX="14.0" layoutY="14.0" text="Hyperlink" />
          </children>
       </Pane>
    </children>

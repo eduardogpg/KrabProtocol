@@ -17,9 +17,15 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 
 public class FXMLDocumentController {
+   
+   private DataBaseConnection myConnection;
+   private int count = 0;
+   private String currentDate;
+   
    
    @FXML
    private TextField userName;
@@ -29,19 +35,24 @@ public class FXMLDocumentController {
   
     @FXML
     private void signIn(ActionEvent event) throws IOException, NoSuchAlgorithmException {
+        if(this.count==0){
+            Calendar cal1 = Calendar.getInstance();
+            currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE)+" "+cal1.get(Calendar.HOUR)+":"+cal1.get(Calendar.MINUTE)+":"+cal1.get(Calendar.SECOND);
         
+        }
+        this.count++;
         if (this.isValid( userName.getText() , password.getText())){ //coloco aqui el password a mano por que no se como obtener el valor del paswordfield
+            
+            myConnection.checkIn( userName.getText() ,currentDate ,this.count);
+            myConnection.closConnection();
             triggerChat tServerChat = new triggerChat(); 
             tServerChat.start(); //executes the chat server
-            //application.openContactWindow(event);
             
-            //System.out.println(userName.getText() +"  " +password.getText());
-            //Parent root;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+            singletonChat.userName = userName.getText();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
 
-            //Parent root = FXMLLoader.load(getClass().getResource("FXMLContacWindow.fxml"));
             Parent root = (Parent) loader.load();
-            //loader.getController();
             Scene scene = new Scene(root);
 
             Stage secondStage = new Stage();
@@ -52,7 +63,7 @@ public class FXMLDocumentController {
         
         }else{   
             userName.setText("");
-            
+            this.password.setText("");
         }
     }
     
@@ -60,10 +71,7 @@ public class FXMLDocumentController {
     public void register(ActionEvent event) throws IOException {
         
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLRegister.fxml"));
-            //FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
-            
-            //FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
-            
+           
             Parent root = (Parent) loader.load();
             loader.getController();
             Scene scene = new Scene(root);
@@ -79,13 +87,12 @@ public class FXMLDocumentController {
     
     
     private boolean isValid(String name, String password) throws IOException, NoSuchAlgorithmException{
-        DataBaseConnection myConnection = new DataBaseConnection();
+        myConnection = new DataBaseConnection();
         ResultSet myResult = myConnection.Loggin(name,password);
         
         if (myResult == null)
              return false;
         else try {
-            myConnection.closConnection();
             return true;
         } catch (Exception  ex) {
             System.out.println(ex);

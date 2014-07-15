@@ -57,7 +57,7 @@ public class FXMLContactWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        
+        System.out.println("Lalo");
    
     }
     

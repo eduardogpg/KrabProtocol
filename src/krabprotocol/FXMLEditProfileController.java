@@ -16,6 +16,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import help.DataBaseConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  * FXML Controller class
  *
@@ -26,6 +31,12 @@ public class FXMLEditProfileController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private String currentPassword;
+    private String newPassword;
+    private String profileName;
+    private String currentProfileName;
+    
+    private  DataBaseConnection d;
     
     @FXML
     private Label xUserName;
@@ -75,7 +86,34 @@ public class FXMLEditProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.hideTools();
+        this.loadFile();
     }    
+    
+    private void loadFile(){
+        this.d= new DataBaseConnection();
+        ResultSet userD = d.selectAllUser(singletonChat.userName);
+        
+        try {
+            currentProfileName = userD.getString("userName");
+            profileName = this.currentProfileName;
+            
+    
+            this.currentPassword = userD.getString("password");
+            this.newPassword = currentPassword;
+            
+            this.userName.setText( this.currentProfileName );
+            this.name.setText( userD.getString("name"));
+            this.lastName.setText( userD.getString("lastName"));
+            this.cellNumber.setText( userD.getString("cellNumber"));
+            this.email.setText( userD.getString("email"));
+            this.institution.setText( userD.getString("institution"));
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLEditProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     private void hideTools(){
         this.xCellNumber.setVisible(false);
         this.xEmail.setVisible(false);
@@ -110,22 +148,35 @@ public class FXMLEditProfileController implements Initializable {
     
     private boolean isValid(String userName, String name,String lastName ,String password, String RepeatPassword, String cellNumber, String email, String institutuon){
        
-        if( (userName.equals("")) || (name.equals("")) || (lastName.equals("")) || (password.equals("")) || (RepeatPassword.equals("")) || (cellNumber.equals("")) || (email.equals("")) || (institutuon.equals(""))){
+        if( (userName.equals("")) || (name.equals("")) || (lastName.equals("")) || (cellNumber.equals("")) || (email.equals("")) || (institutuon.equals(""))){
             return false;
         }else{
             
-            if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
+            if((!password.equals("")) || (!RepeatPassword.equals("")) ){
                 if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
-                    if(email.contains("@")){
-                        return true;
-                    }else{
-                       this.xEmail.setVisible(true);
-                       return false;
-                    }
-                        
+                    this.newPassword = password;
                 }else{
-                    this.xPassword.setVisible(true);
                     this.xRepeatPassword.setVisible(true);
+                    this.xPassword.setVisible(true);
+                    return false;
+                }
+            }
+            if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
+                if(email.contains("@")){
+                    if(!this.currentProfileName.equals(userName)){
+
+                        if( this.d.searchUser(userName) == null){
+                            this.profileName = userName;
+                            return true;
+                        }else{
+                            this.xUserName.setVisible(true);
+                            return false;
+                        }                    
+                    }
+                    return true;
+                 
+                }else{
+                    this.xEmail.setVisible(true);
                     return false;
                 }
             }else{
@@ -133,8 +184,9 @@ public class FXMLEditProfileController implements Initializable {
                 return false;
             }
             
-            
         }
-  }
-    
+    }
 }
+  
+    
+
