@@ -112,6 +112,8 @@ public class DataBaseConnection {
             System.out.println("Failed to Generate Files");
             ex.printStackTrace();
             return false;
+        } catch (Exception ex) {
+            Logger.getLogger(DataBaseConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
 //         generar llaves y encriptar pass
 
