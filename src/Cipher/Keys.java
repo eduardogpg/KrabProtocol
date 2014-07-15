@@ -63,9 +63,9 @@ public class Keys {
        String key=k.substring(0,k.length()/2);
        byte[]mod=c.Symetricencrypt(mo, new String (k));
        byte[]exp=c.Symetricencrypt(ex, new String (k));
-       System.out.println("key: "+k);
-       System.out.println("mod md5: "+c.getmd5(Mod.toString()));
-       System.out.println("exp md5: "+c.getmd5(Exp.toString()));
+//       System.out.println("key: "+k);
+//       System.out.println("mod md5: "+c.getmd5(Mod.toString()));
+//       System.out.println("exp md5: "+c.getmd5(Exp.toString()));
        try{
          File Dir= new File(dir);
          if(!Dir.exists()){
@@ -154,9 +154,9 @@ public class Keys {
        String e=c.Symetricdecrypt(encryptedmod, new String(k));
        BigInteger modulus=new BigInteger(m);
        BigInteger exponent=new BigInteger(e);
-       System.out.println("key: "+k);
-       System .out.println("mod md5:"+c.getmd5(modulus.toString()));
-       System.out.println("exp md5"+c.getmd5(exponent.toString()));
+//       System.out.println("key: "+k);
+//       System .out.println("mod md5:"+c.getmd5(modulus.toString()));
+//       System.out.println("exp md5"+c.getmd5(exponent.toString()));
       RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(modulus, exponent);  
       KeyFactory fact = KeyFactory.getInstance("RSA");  
       PrivateKey privateKey = fact.generatePrivate(rsaPrivateKeySpec);  
