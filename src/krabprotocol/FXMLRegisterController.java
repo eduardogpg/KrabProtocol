@@ -6,6 +6,8 @@
 
 package krabprotocol;
 
+import Cipher.Cipher;
+import Cipher.Keys;
 import chat.triggerChat;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +18,10 @@ import javafx.scene.control.TextField;
 
 import help.DataBaseConnection;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -99,9 +104,35 @@ public class FXMLRegisterController implements Initializable {
         
         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
             
+<<<<<<< HEAD
             if (c.register(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 
                 c.closeConnection();
+=======
+         // generar llaves y encriptar pass
+         Cipher ci=new Cipher();
+         Keys k=new Keys();
+         StringBuffer md5pass = new StringBuffer(); 
+         
+        try {
+            System.out.println("Generating keys...");
+            k.generatekeys(userName.getText(),password.getText());
+            String key=userName.getText()+password.getText();
+            md5pass=ci.getmd5(key);
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Failed to Generate Keys");
+            ex.printStackTrace(); 
+        } catch (IOException ex) {
+            System.out.println("Failed to Generate Files");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(DataBaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //         generar llaves y encriptar pass
+   
+         if (c.register(this.userName.getText(),this.name.getText(),this.lastName.getText(),new String(md5pass), cellNumber.getText() , this.email.getText(), this.institution.getText())){
+             c.closConnection();
+>>>>>>> 5e92aa0d298c6e53bb42585335c7c0ee0f0113e1
                 
                 triggerChat t = new triggerChat();
                 t.start();
