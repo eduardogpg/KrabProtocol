@@ -101,6 +101,18 @@ public class FXMLRegisterController implements Initializable {
             if (c.insert(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 c.closConnection();
                 
+                
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Main");
+            secondStage.setScene(scene);
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+            secondStage.show();
+            
             }else{
                 this.alert.setVisible(true);
             }
@@ -130,7 +142,10 @@ public class FXMLRegisterController implements Initializable {
             if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
                 if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
                     if(email.contains("@")){
-                        return true;
+                        if( this.c.searchUser(userName) == null)
+                            return true;
+                        else
+                            return false;
                     }else{
                        this.xEmail.setVisible(true);
                        return false;

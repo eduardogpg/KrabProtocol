@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+import help.DataBaseConnection;
 
 import chat.triggerChat;
 
@@ -33,7 +33,8 @@ public class KrabProtocol extends Application {
         launch(args);
         Application.launch(KrabProtocol.class, args); //Para que sirve esto?
 
-              
+        
+        
     }
     
 }

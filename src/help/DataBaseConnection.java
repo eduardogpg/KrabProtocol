@@ -27,8 +27,8 @@ public class DataBaseConnection {
     private com.mysql.jdbc.Connection myConnection;
     private com.mysql.jdbc.Statement statemen;
     private final String dataBase ="KrabProtocol";
-    private final String userDataBase="root";
-    private final String password="KJvnje1S7XW73jvEd01E";
+    private final String userDataBase="wawser";//"root";
+    private final String password="h7u7zDTYUzS6pAXB";//"KJvnje1S7XW73jvEd01E";
     
 
     
@@ -92,7 +92,7 @@ public class DataBaseConnection {
 
          Calendar cal1 = Calendar.getInstance();
          
-         String currentlyDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
+         String currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE);
 
                     // generar llaves y encriptar pass
         
@@ -118,7 +118,7 @@ public class DataBaseConnection {
 //         generar llaves y encriptar pass
 
          try{
-           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+md5pass+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentlyDate+"')"); 
+           this.statemen.execute("INSERT INTO `users` VALUES('"+userName+"','"+md5pass+"','"+name+"','"+lastName+"','"+cellNumber+"','"+email+"','"+institution+"','"+currentDate+"')"); 
            return true;
          }catch(Exception  ex){
             System.out.println("A problem was accurred " + ex.getMessage());
