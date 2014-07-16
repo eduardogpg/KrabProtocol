@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
@@ -35,8 +36,9 @@ public class FXMLContactWindowController implements Initializable {
     @FXML
     private TextField converToDollar;
     
-    @FXML 
-    private Button convert;
+    @FXML
+    private Label resultConvert;
+ 
     
     private Currency c;
     
@@ -63,24 +65,26 @@ public class FXMLContactWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         c = new Currency();
-        System.out.println( c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN));
-        System.out.println("Lalo");
+        this.resultConvert.setVisible(false);
         cargar();
    
     }
     
     @FXML
     public void convertDollar(ActionEvent event) throws IOException {
-        System.out.println("XDXDXD");
+        
+        try{
+            Double pesos = Double.parseDouble( this.converToDollar.getText());
+            pesos = c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN) * pesos;
+            this.resultConvert.setVisible(true);
+            this.resultConvert.setText( ""+pesos );
+        }catch(Exception ex){
+            this.resultConvert.setText( "only number, Try again" );
+        }
        
+        
     }
     
-    private Double convertDollar(){
-        Currency c = new Currency();
-        Double dollar  = (c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN) * this.pesos );
-        return dollar;
-    }
-
 
 
     public void cargar(){
