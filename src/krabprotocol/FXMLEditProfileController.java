@@ -6,6 +6,7 @@
 
 package krabprotocol;
 
+import Cipher.Cipher;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -16,12 +17,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import help.DataBaseConnection;
+import models.DataBaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import help.DataBaseConnection;
+import models.DataBaseConnection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -37,8 +38,9 @@ public class FXMLEditProfileController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private String currentPassword;
     private String newPassword;
+    private String currentPassword;
+    
     private String profileName;
     private String currentProfileName;
     
@@ -59,8 +61,14 @@ public class FXMLEditProfileController implements Initializable {
     @FXML
     private Label xCellNumber;
     
+    @FXML
+    private Label xCurrentPassword;
     
+    @FXML
+    private Label necesaryFields;
     
+    @FXML
+    private Label aProblemOcurred;
     
     
     
@@ -87,7 +95,10 @@ public class FXMLEditProfileController implements Initializable {
     
     @FXML
     private TextField institution;
-            
+          
+    @FXML
+    private TextField currenPasswordField;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -126,6 +137,9 @@ public class FXMLEditProfileController implements Initializable {
         this.xPassword.setVisible(false);
         this.xRepeatPassword.setVisible(false);
         this.xUserName.setVisible(false);
+        this.xCurrentPassword.setVisible(false);
+        this.aProblemOcurred.setVisible(false);
+        this.necesaryFields.setVisible(false);
     }
     
       
@@ -134,33 +148,32 @@ public class FXMLEditProfileController implements Initializable {
          this.hideTools();
          if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 DataBaseConnection d = new DataBaseConnection();
-                if(d.updateUser(profileName, currentProfileName, this.newPassword, this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
-                        
-                    /***********************************************/
-                    /***********************************************/
-                    //      Aqui
-                    //             Yarib
-                    //                      Encripta
-                    //                              la variable newPassword
-                    //                                  con currentProfilename
-                    /***********************************************/
-                    /***********************************************/
+                
+                if(!this.currentPassword.equals(this.newPassword)){
+                    Cipher c=new Cipher();
+                    String newkey=profileName+newPassword;
+                    StringBuffer newpass=c.getmd5(newkey);
+                    this.newPassword = new String(newpass);
                     
-                        if(!this.currentPassword.equals(newPassword))
-                            d.checkChangePassword(currentProfileName, currentPassword,newPassword );
+                    d.checkChangePassword(currentProfileName, currentPassword, this.newPassword );
+                }
+                
+                if(d.updateUser(profileName, currentProfileName,this.newPassword, this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
                     
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
 
-                        Parent root = (Parent) loader.load();
-                        Scene scene = new Scene(root);
+                    Parent root = (Parent) loader.load();
+                    Scene scene = new Scene(root);
 
-                        Stage secondStage = new Stage();
-                        secondStage.setTitle("Edit Profile");
-                        secondStage.setScene(scene);
-                        ((Node)(event.getSource())).getScene().getWindow().hide();
-                        secondStage.show();
+                    Stage secondStage = new Stage();
+                    secondStage.setTitle("Edit Profile");
+                    secondStage.setScene(scene);
+                    ((Node)(event.getSource())).getScene().getWindow().hide();
+                    secondStage.show();
+                    
                 }else{
-                      System.out.println("Listo");
+                    this.aProblemOcurred.setVisible(true);
+                      System.out.println("A problem was ocurred");
                 }
                   
              
@@ -182,43 +195,52 @@ public class FXMLEditProfileController implements Initializable {
     
     private boolean isValid(String userName, String name,String lastName ,String password, String RepeatPassword, String cellNumber, String email, String institutuon){
        
-        if( (userName.equals("")) || (name.equals("")) || (lastName.equals("")) || (cellNumber.equals("")) || (email.equals("")) || (institutuon.equals(""))){
+        if(this.currenPasswordField.getText().equals("")){
+            this.xCurrentPassword.setVisible(true);
             return false;
         }else{
-            
-            if((!password.equals("")) || (!RepeatPassword.equals("")) ){
-                if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
-                    this.newPassword = password;
-                }else{
-                    this.xRepeatPassword.setVisible(true);
-                    this.xPassword.setVisible(true);
+                if( (userName.equals("")) || (name.equals("")) || (lastName.equals("")) || (cellNumber.equals("")) || (email.equals("")) || (institutuon.equals(""))){
+                    this.necesaryFields.setVisible(true);
                     return false;
-                }
-            }
-            if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
-                if(email.contains("@")){
-                    if(!this.currentProfileName.equals(userName)){
+                }else{
 
-                        if( this.d.searchUser(userName) == null){
-                            this.profileName = userName;
-                            return true;
+                    if((!password.equals("")) || (!RepeatPassword.equals("")) ){
+                        if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
+                            this.newPassword = password;
                         }else{
-                            this.xUserName.setVisible(true);
+                            this.xRepeatPassword.setVisible(true);
+                            this.xPassword.setVisible(true);
                             return false;
-                        }                    
+                        }
                     }
-                    return true;
-                 
-                }else{
-                    this.xEmail.setVisible(true);
-                    return false;
+                    if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
+                        if(email.contains("@")){
+                            if(!this.currentProfileName.equals(userName)){
+
+                                if( this.d.searchUser(userName) == null){
+                                    this.profileName = userName;
+                                    return true;
+                                }else{
+                                    this.xUserName.setVisible(true);
+                                    return false;
+                                }                    
+                            }
+                            return true;
+
+                        }else{
+                            this.xEmail.setVisible(true);
+                            return false;
+                        }
+                    }else{
+                        this.xCellNumber.setVisible(true);
+                        return false;
+                    }
+
                 }
-            }else{
-                this.xCellNumber.setVisible(true);
-                return false;
-            }
-            
         }
+        
+        
+
     }
 }
   

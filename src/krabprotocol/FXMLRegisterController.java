@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import help.DataBaseConnection;
+import models.DataBaseConnection;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;

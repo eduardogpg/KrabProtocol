@@ -12,7 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import help.DataBaseConnection;
+import models.DataBaseConnection;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -47,6 +47,9 @@ public class FXMLDocumentController {
             myConnection.closeConnection();
             triggerChat tServerChat = new triggerChat(); 
             tServerChat.start(); //executes the chat server
+            
+            Sesion s=new Sesion();
+            s.start();
             
             singletonChat.userName = userName.getText();
             
