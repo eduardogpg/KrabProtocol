@@ -29,12 +29,7 @@ public class KrabProtocol extends Application {
     }
 
     public static void main(String[] args) {
-     
-        launch(args);
         Application.launch(KrabProtocol.class, args); //Para que sirve esto?
-
-        
-        
     }
     
 }

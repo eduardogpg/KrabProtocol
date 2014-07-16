@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package krabprotocol;
 
 import Cipher.Cipher;
@@ -23,17 +17,15 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-/**
- * FXML Controller class
- *
- * @author 1020142461
- */
+
 public class FXMLRegisterController implements Initializable {
 
     /**
@@ -87,6 +79,15 @@ public class FXMLRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        cellNumber.setOnKeyTyped(new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
+                char kt = event.getCharacter().charAt(0);
+                if(!Character.isDigit(kt))
+                    event.consume();
+            }
+        });
         this.hideTools();
         c = new DataBaseConnection();
     }
@@ -98,14 +99,13 @@ public class FXMLRegisterController implements Initializable {
         this.xEmail.setVisible(false);
         this.alert.setVisible(false);
     }
+    
     @FXML
     public void registry(ActionEvent event) throws IOException {
         this.hideTools();
         
         if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
-            
 
-        
          // generar llaves y encriptar pass
          Cipher ci=new Cipher();
          Keys k=new Keys();
@@ -142,6 +142,8 @@ public class FXMLRegisterController implements Initializable {
                 Stage secondStage = new Stage();
                 secondStage.setTitle("Main");
                 secondStage.setScene(scene);
+                secondStage.setMinHeight(400);
+                secondStage.setMinWidth(500);
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 secondStage.show();
             
@@ -162,9 +164,7 @@ public class FXMLRegisterController implements Initializable {
             
         }catch(Exception e){ 
            return false;
-           
         }
-    
     }
     
     private boolean isValid(String userName, String name,String lastName ,String password, String RepeatPassword, String cellNumber, String email, String institutuon){
@@ -174,7 +174,11 @@ public class FXMLRegisterController implements Initializable {
         }else{
             
             if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
+                this.xCellNumber.setVisible(false);
+                this.alert.setVisible(false);
                 if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
+                    this.xPassword.setVisible(false);
+                    this.alert.setVisible(false);
                     if(email.contains("@")){
                         if( this.c.searchUser(userName) == null)
                             return true;
@@ -182,16 +186,21 @@ public class FXMLRegisterController implements Initializable {
                             return false;
                     }else{
                        this.xEmail.setVisible(true);
+                       this.alert.setText("E-mail Incorrecto");
+                       this.alert.setVisible(true);
                        return false;
                     }
                         
                 }else{
                     this.xPassword.setVisible(true);
                     this.xRepeatPassword.setVisible(true);
+                    this.alert.setText("Contraseñas muy cortas");
+                    this.alert.setVisible(true);
                     return false;
                 }
             }else{
                 this.xCellNumber.setVisible(true);
+                this.alert.setText("Numero de celular incorrecto");
                 return false;
             }
             
