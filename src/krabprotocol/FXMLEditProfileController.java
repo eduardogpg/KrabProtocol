@@ -148,6 +148,7 @@ public class FXMLEditProfileController implements Initializable {
          this.hideTools();
          if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 DataBaseConnection d = new DataBaseConnection();
+<<<<<<< HEAD
                 
                 if(!this.currentPassword.equals(this.newPassword)){
                     Cipher c=new Cipher();
@@ -159,6 +160,18 @@ public class FXMLEditProfileController implements Initializable {
                 }
                 
                 if(d.updateUser(profileName, currentProfileName,this.newPassword, this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
+=======
+                Cipher c=new Cipher();
+                String newkey=profileName+newPassword;
+                //System.out.println("new key: "+newkey);
+                StringBuffer newpass=c.getmd5(newkey);
+                //System.out.println("new pass: "+newpass);
+                if(d.updateUser(profileName, currentProfileName, new String(newpass), this.name.getText(), this.lastName.getText(), this.cellNumber.getText(), this.email.getText(), this.institution.getText())){
+                      
+                    
+                        if(!this.currentPassword.equals(newpass))
+                            d.checkChangePassword(currentProfileName, currentPassword,newPassword );
+>>>>>>> 2e69a84e963af3ce5d6928e40ca0548763039316
                     
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
 
