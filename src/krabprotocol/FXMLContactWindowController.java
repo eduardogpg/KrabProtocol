@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package krabprotocol;
 
 import chat.triggerChat;
@@ -44,6 +38,7 @@ public class FXMLContactWindowController implements Initializable {
     @FXML 
     private Button convert;
     
+    private Currency c;
     
     private double pesos;
     
@@ -67,15 +62,16 @@ public class FXMLContactWindowController implements Initializable {
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Currency c = new Currency();
+        c = new Currency();
         System.out.println( c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN));
         System.out.println("Lalo");
+        cargar();
    
     }
     
     @FXML
     public void convertDollar(ActionEvent event) throws IOException {
-        
+        System.out.println("XDXDXD");
        
     }
     
@@ -88,7 +84,6 @@ public class FXMLContactWindowController implements Initializable {
 
 
     public void cargar(){
-        System.out.println("Iniciar ;)");
         //crea la raiz del arbol
         rootItem = new TreeItem<>("Contacts", rootIcon);
         rootItem.setExpanded(true);
@@ -209,7 +204,4 @@ public class FXMLContactWindowController implements Initializable {
         }
 
     }
-    
-    
-    
 }
