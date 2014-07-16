@@ -45,6 +45,7 @@ public class FXMLContactWindowController implements Initializable {
     private Button convert;
     
     
+    private double pesos;
     
     private TreeItem<String> rootItem;
     
@@ -74,10 +75,15 @@ public class FXMLContactWindowController implements Initializable {
     
     @FXML
     public void convertDollar(ActionEvent event) throws IOException {
-        Currency c = new Currency();
-        System.out.println( c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN));
+        
+       
     }
     
+    private Double convertDollar(){
+        Currency c = new Currency();
+        Double dollar  = (c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN) * this.pesos );
+        return dollar;
+    }
 
 
 
