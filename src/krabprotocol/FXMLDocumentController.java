@@ -13,11 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import models.DataBaseConnection;
-import java.net.URL;
+import Cipher.*;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class FXMLDocumentController {
@@ -85,22 +87,33 @@ public class FXMLDocumentController {
             ((Node)(event.getSource())).getScene().getWindow().hide();
             secondStage.show();
             
-            
     }
     
     
-    private boolean isValid(String name, String password) throws IOException, NoSuchAlgorithmException{
+    private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException{
         myConnection = new DataBaseConnection();
-        ResultSet myResult = myConnection.Loggin(name,password);
+        ResultSet ironThrone = myConnection.Loggin(userName);
         
-        if (myResult == null)
-             return false;
-        else try {
-            return true;
-        } catch (Exception  ex) {
-            System.out.println(ex);
+        if (ironThrone==null)
             return false;
+        else{
+            Keys k=new Keys();
+            Cipher c=new Cipher();
+            String key=userName+password;
+            StringBuffer md5pass=c.getmd5(key);
+            password = new String(md5pass);
+            
+            try {
+                if(password.equals(ironThrone.getString("password")))
+                    return true;
+                else
+                    return false;
+            } catch (SQLException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+            
         }
-    }
+    }           
     
 }

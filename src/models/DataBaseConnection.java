@@ -6,8 +6,6 @@
 
 package models;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,21 +44,15 @@ public class DataBaseConnection {
         
     }
     
-    public ResultSet Loggin(String name,String pass) throws IOException, NoSuchAlgorithmException{
+    public ResultSet Loggin(String userName) throws IOException, NoSuchAlgorithmException{
         try{
-            Keys k=new Keys();
-            Cipher c=new Cipher();
-            String key=name+pass;
-            StringBuffer md5pass=c.getmd5(key);
-            //System.out.println(name+" "+md5pass);
-            ResultSet result = this.statemen.executeQuery("SELECT password FROM users WHERE userName='"+name+"'&&"
-                    + "password='"+md5pass+"'");
+           
+            ResultSet result = this.statemen.executeQuery("SELECT password FROM users WHERE userName='"+userName+"'");
             if(!result.next()){
-                    System.out.println("no results were found in the search"); //Only a message for the admin.
-                    return null;
-             }else
-                return result; //Send the result of the search
-         
+                return null;
+            }else
+                return result;
+            
         }catch(SQLException ex){
             return null;
         }
