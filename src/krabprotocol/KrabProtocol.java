@@ -7,10 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import models.DataBaseConnection;
-
-import chat.triggerChat;
-
 /**
  *
  * @author 1020142461
@@ -30,6 +26,7 @@ public class KrabProtocol extends Application {
 
     public static void main(String[] args) {
         Application.launch(KrabProtocol.class, args); //Para que sirve esto?
+        
     }
     
 }

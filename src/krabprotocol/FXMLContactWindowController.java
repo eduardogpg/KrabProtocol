@@ -18,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -29,12 +30,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
+import services.Currency;
 
 public class FXMLContactWindowController implements Initializable {
 
     
     @FXML
     private TreeView treev;
+    
+    @FXML
+    private TextField converToDollar;
+    
+    @FXML 
+    private Button convert;
+    
+    
     
     private TreeItem<String> rootItem;
     
@@ -56,14 +66,16 @@ public class FXMLContactWindowController implements Initializable {
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        Currency c = new Currency();
+        System.out.println( c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN));
         System.out.println("Lalo");
    
     }
     
     @FXML
-    public void editProfile(ActionEvent event) throws IOException {
-    
+    public void convertDollar(ActionEvent event) throws IOException {
+        Currency c = new Currency();
+        System.out.println( c.conversionRate(net.webservicex.Currency.USD, net.webservicex.Currency.MXN));
     }
     
 

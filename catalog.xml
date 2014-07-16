@@ -2,4 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://192.168.0.108:8080/webServiceLogin/Login?wsdl" uri="xml-resources/web-service-references/Login/wsdl/192.168.0.108_8080/webServiceLogin/Login.wsdl"/>
     <system systemId="http://192.168.0.108:8080/webServiceLogin/Login?xsd=1" uri="xml-resources/web-service-references/Login/wsdl/192.168.0.108_8080/webServiceLogin/Login.xsd_1.xsd"/>
+    <system systemId="http://www.webservicex.com/CurrencyConvertor.asmx?wsdl" uri="xml-resources/web-service-references/CurrencyConvertor/wsdl/www.webservicex.com/CurrencyConvertor.asmx.wsdl"/>
+    <system systemId="http://www.webservicex.net/CurrencyConvertor.asmx?WSDL" uri="xml-resources/web-service-references/CurrencyConvertor/wsdl/www.webservicex.net/CurrencyConvertor.asmx.wsdl"/>
 </catalog>

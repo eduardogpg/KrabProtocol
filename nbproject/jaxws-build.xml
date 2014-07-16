@@ -33,5 +33,22 @@
         <delete dir="${build.generated.dir}/jax-wsCache/Login"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/org/model"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-Login"/>
+    <target name="wsimport-client-CurrencyConvertor" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/CurrencyConvertor"/>
+        <property name="wsdl-CurrencyConvertor" location="xml-resources/web-service-references/CurrencyConvertor/wsdl/www.webservicex.net/CurrencyConvertor.asmx.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/CurrencyConvertor" destdir="${build.generated.dir}/jax-wsCache/CurrencyConvertor" wsdl="${wsdl-CurrencyConvertor}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://www.webservicex.net/CurrencyConvertor.asmx?WSDL" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-CurrencyConvertor}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/CurrencyConvertor"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/CurrencyConvertor">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-CurrencyConvertor" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/CurrencyConvertor"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/net/webservicex"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-Login, wsimport-client-CurrencyConvertor"/>
 </project>

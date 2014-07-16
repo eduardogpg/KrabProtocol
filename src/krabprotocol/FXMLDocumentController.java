@@ -54,7 +54,8 @@ public class FXMLDocumentController {
             
             singletonChat.userName = userName.getText();
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+            
 
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -92,7 +93,7 @@ public class FXMLDocumentController {
     private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException{
         myConnection = new DataBaseConnection();
         
-         Keys k=new Keys();
+        Keys k=new Keys();
         Cipher c=new Cipher();
         String key=userName+password;
         StringBuffer md5pass=c.getmd5(key);
