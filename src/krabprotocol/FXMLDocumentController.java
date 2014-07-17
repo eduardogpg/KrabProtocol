@@ -88,7 +88,21 @@ public class FXMLDocumentController {
             secondStage.show();
             
     }
-    
+    @FXML
+     public void showCredits(ActionEvent event) throws IOException {
+         
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("Credits.fxml"));
+           
+            Parent root = (Parent) loader.load();
+            loader.getController();
+            Scene scene = new Scene(root);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Main");
+            secondStage.setScene(scene);
+            secondStage.show();
+            
+     }
     
     private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException{
         myConnection = new DataBaseConnection();
