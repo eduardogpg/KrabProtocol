@@ -6,7 +6,15 @@
 
 package krabprotocol;
 
+import chat.serverChat;
+import java.io.IOException;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
@@ -28,4 +36,29 @@ public class singletonChat {
         return instanceSingleton;
     }
     
+    
+    public void newConversation(String userName, String ip){
+        
+        this.listChat.put(userName, ip);
+        
+    }
+    public void makeNewScreen(){
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
+            
+
+            Parent root;
+         try {
+             root = (Parent) loader.load();
+             Scene scene = new Scene(root);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Main");
+            secondStage.setScene(scene);
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+            secondStage.show();
+         } catch (IOException ex) {
+             Logger.getLogger(serverChat.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }
 }

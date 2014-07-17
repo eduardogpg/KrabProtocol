@@ -34,6 +34,9 @@ public class ChatWindowController implements Initializable {
     TextField message;
     @FXML
     TextArea conversation;
+    
+    @FXML
+    TextField ip;
     /**
      * Initializes the controller class.
      */
@@ -47,7 +50,7 @@ public class ChatWindowController implements Initializable {
         
         if(!this.message.getText().equals("")){
             if (this.messageStart == false){
-                this.newConversation();
+                this.newConversation(this.ip.getText());
                 this.sendNewMessage();
             }else
                 this.sendNewMessage();
@@ -55,11 +58,11 @@ public class ChatWindowController implements Initializable {
           
     }
     
-    private void newConversation(){
+    private void newConversation(String ip){
                 
                 try{
                     chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteName);
-                    this.messageStart = newMessage.setConversation("Eduardo", "192.168.1.10");
+                    this.messageStart = newMessage.setConversation("Eduardo", ip);
                 }
                 catch(Exception e){
                     e.printStackTrace();
@@ -67,11 +70,19 @@ public class ChatWindowController implements Initializable {
                 
     }
     
+    private void addYourMessage(String message){
+        this.conversation.setText( this.conversation.getText() + "\nYou: "+ message+ " ");
+    }
+    
+    private void newMessage(String userName, String message){
+            this.conversation.setText( this.conversation.getText() + "\n"+userName+":"+ message+ " ");
+    }
+    
     private void sendNewMessage(){
                 try{
                     chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteName);
+                    this.addYourMessage( this.message.getText());
                     newMessage.getMessage(this.message.getText());
-                    this.conversation.setText( this.conversation.getText() + "\nYou: "+ this.message.getText()+ " ");
                     this.message.setText("");
                 }
                 catch(Exception e){

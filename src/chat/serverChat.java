@@ -1,14 +1,18 @@
 
 package chat;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import krabprotocol.ChatWindowController;
 
+import krabprotocol.singletonChat;
 /**
  *
  * @author 1020142461
@@ -24,7 +28,9 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
     }
 
     public boolean setConversation(String userName, String ip) throws RemoteException {
-        System.out.println("Se a creado una nueva ventana");
+        
+        System.out.println("Aqui se abre una nueva  ventana");
+
         return true;
     }
     

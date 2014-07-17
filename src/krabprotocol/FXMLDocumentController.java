@@ -61,7 +61,7 @@ public class FXMLDocumentController {
             Scene scene = new Scene(root);
 
             Stage secondStage = new Stage();
-            secondStage.setTitle("Main");
+            secondStage.setTitle("New chat with ");
             secondStage.setScene(scene);
             ((Node)(event.getSource())).getScene().getWindow().hide();
             secondStage.show();

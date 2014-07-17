@@ -10,8 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -24,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.Currency;
 
@@ -83,6 +87,23 @@ public class FXMLContactWindowController implements Initializable {
         }
        
         
+    }
+    
+    @FXML
+    public void newChat(ActionEvent event) throws IOException {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
+            
+
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Main");
+            secondStage.setScene(scene);
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+            secondStage.show();
+        System.out.println("Adios");
     }
     
 
