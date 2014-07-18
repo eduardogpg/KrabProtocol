@@ -114,7 +114,8 @@ public class FXMLDocumentController {
         password = new String(md5pass);
             
         Login ac = new Login();
-        return ac.loginUser(userName, password);
+        //return ac.loginUser(userName, password);
+        return ac.loginWithDB(userName, password);
     }           
     
 }

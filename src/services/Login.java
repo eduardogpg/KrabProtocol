@@ -10,6 +10,9 @@ package services;
  *
  * @author 1020142461
  */
+import java.sql.*;
+import models.DataBaseConnection;
+
 public class Login {
 
     public boolean loginUser(java.lang.String userName, java.lang.String password) {
@@ -17,5 +20,16 @@ public class Login {
         org.model.Login port = service.getLoginPort();
         return port.loginUser(userName, password);
     }
-    
+      public boolean loginWithDB(String userName, String Password){
+        DataBaseConnection c = new DataBaseConnection();
+        ResultSet r = c.searchUser(userName);
+        try {
+            if (Password.equals(r.getString("password")))
+                return true;
+            else
+                return false;
+        } catch (SQLException ex) {
+           return false;
+        }
+    }
 }
