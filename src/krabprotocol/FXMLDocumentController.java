@@ -52,7 +52,8 @@ public class FXMLDocumentController {
             Sesion s=new Sesion();
             s.start();
             
-            singletonChat.userName = userName.getText();
+            singletonServerChat sc = singletonServerChat.getInstance();
+            sc.setUserName( this.userName.getText() );
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
             

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package chat;
 
@@ -15,6 +11,9 @@ import java.rmi.RemoteException;
  */
 public interface chatCommunication extends Remote{
     
-    public void getMessage(String message) throws RemoteException;
-    public boolean setConversation(String userName, String ip)throws RemoteException;
+    public boolean setNewConversation(String userName, String ip) throws RemoteException;
+    public void sendPublicMessage(String UserName, String message) throws RemoteException;
+    public boolean connect(String userName) throws RemoteException;
+   
+    
 }

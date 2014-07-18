@@ -3,28 +3,28 @@ package krabprotocol;
 import Cipher.Cipher;
 import Cipher.Keys;
 import chat.triggerChat;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
-import models.DataBaseConnection;
 import java.io.IOException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import models.DataBaseConnection;
 
 public class FXMLRegisterController implements Initializable {
 
@@ -76,6 +76,9 @@ public class FXMLRegisterController implements Initializable {
     
     @FXML
     private PasswordField repeatPassword;
+
+   @FXML
+   private CheckBox checkTerms;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -168,44 +171,50 @@ public class FXMLRegisterController implements Initializable {
     }
     
     private boolean isValid(String userName, String name,String lastName ,String password, String RepeatPassword, String cellNumber, String email, String institutuon){
-       
-        if( (userName.equals("")) || (name.equals("")) || (lastName.equals("")) || (password.equals("")) || (RepeatPassword.equals("")) || (cellNumber.equals("")) || (email.equals("")) || (institutuon.equals(""))){
-            return false;
-        }else{
+        if(this.checkTerms.isSelected()){
             
-            if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
-                this.xCellNumber.setVisible(false);
+            if( (userName.equals("")) || (name.equals("")) || (lastName.equals("")) || (password.equals("")) || (RepeatPassword.equals("")) || (cellNumber.equals("")) || (email.equals("")) || (institutuon.equals(""))){
                 this.alert.setVisible(false);
-                if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
-                    this.xPassword.setVisible(false);
+                return false;
+            }else{
+
+                if (  ( ( this.isNumber(cellNumber))   && (cellNumber.length()>=10)  ) ){
+                    this.xCellNumber.setVisible(false);
                     this.alert.setVisible(false);
-                    if(email.contains("@")){
-                        if( this.c.searchUser(userName) == null)
-                            return true;
-                        else
-                            return false;
+                    if ((( password.equals(RepeatPassword) ) && ( password.length() > 6 ) ) ){
+                        this.xPassword.setVisible(false);
+                        this.alert.setVisible(false);
+                        if(email.contains("@")){
+                            if( this.c.searchUser(userName) == null)
+                                return true;
+                            else
+                                return false;
+                        }else{
+                           this.xEmail.setVisible(true);
+                           this.alert.setText("E-mail Incorrecto");
+                           this.alert.setVisible(true);
+                           return false;
+                        }
+
                     }else{
-                       this.xEmail.setVisible(true);
-                       this.alert.setText("E-mail Incorrecto");
-                       this.alert.setVisible(true);
-                       return false;
+                        this.xPassword.setVisible(true);
+                        this.xRepeatPassword.setVisible(true);
+                        this.alert.setText("Contraseñas muy cortas");
+                        this.alert.setVisible(true);
+                        return false;
                     }
-                        
                 }else{
-                    this.xPassword.setVisible(true);
-                    this.xRepeatPassword.setVisible(true);
-                    this.alert.setText("Contraseñas muy cortas");
-                    this.alert.setVisible(true);
+                    this.xCellNumber.setVisible(true);
                     return false;
                 }
-            }else{
-                this.xCellNumber.setVisible(true);
-                this.alert.setText("Numero de celular incorrecto");
-                return false;
+
+
             }
-            
-            
+        }else{
+           System.out.println("No esta checado");
+            return false;
         }
+        
   }
 }
 

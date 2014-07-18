@@ -17,7 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import models.DataBaseConnection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -108,7 +108,9 @@ public class FXMLEditProfileController implements Initializable {
     
     private void loadFile(){
         this.d= new DataBaseConnection();
-        ResultSet userD = d.selectAllofUser(singletonChat.userName);
+        
+        singletonServerChat s = singletonServerChat.getInstance();
+        ResultSet userD = d.selectAllofUser(s.getUserName());
         
         try {
             currentProfileName = userD.getString("userName");

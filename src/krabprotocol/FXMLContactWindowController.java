@@ -57,12 +57,11 @@ public class FXMLContactWindowController implements Initializable {
         new Image(getClass().getResourceAsStream("img/MSN-icon.png"))
     );
     
-    //lista de ejemplo borrar luego
-        List<Contacto> contacto = Arrays.asList(
-            new Contacto("Shago", "Amigos"), new Contacto("Pepe", "Amigos"),
-            new Contacto("Juan", "Amigos"), new Contacto("Sergio", "Amigos"),
-            new Contacto("Filomeno", "Amigos"), new Contacto("Vaquita Alpura", "Compañeros de Trabajo"),
-            new Contacto("Chica QR en pompas","Compañeros de Trabajo"));
+    List<Contacto> contacto = Arrays.asList(
+      new Contacto("Shago", "Amigos"), new Contacto("Pepe", "Amigos"),
+      new Contacto("Juan", "Amigos"), new Contacto("Sergio", "Amigos"),
+      new Contacto("Filomeno", "Amigos"), new Contacto("Vaquita Alpura", "Compañeros de Trabajo"),
+      new Contacto("Chica QR en pompas","Compañeros de Trabajo"));
     
         
         
@@ -94,16 +93,22 @@ public class FXMLContactWindowController implements Initializable {
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
             
-
+            
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
-
+            
+            
             Stage secondStage = new Stage();
-            secondStage.setTitle("Main");
+            secondStage.setTitle("Chat with : ");
             secondStage.setScene(scene);
-            //((Node)(event.getSource())).getScene().getWindow().hide();
+            
+            ChatWindowController c = loader.getController();
+            c.setIPReceiver("localhost");
+            
+            
             secondStage.show();
-        System.out.println("Adios");
+        
+            
     }
     
 
