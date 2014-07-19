@@ -14,12 +14,13 @@ import javafx.stage.Stage;
 
 import models.DataBaseConnection;
 import Cipher.*;
+import java.rmi.registry.LocateRegistry;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 
 import services.Login;
-
-
+import services.webScanner;
+import scanner.triggerServer;
 
 public class FXMLDocumentController {
    
@@ -42,12 +43,24 @@ public class FXMLDocumentController {
         
         }
         this.count++;
-        if (this.isValid( userName.getText() , password.getText())){ //coloco aqui el password a mano por que no se como obtener el valor del paswordfield
+        if (this.isValid( userName.getText() , password.getText())){ 
             
             myConnection.checkIn( userName.getText() ,currentDate ,this.count);
             myConnection.closeConnection();
+            
+            LocateRegistry.createRegistry(1099);
+            
+            
+            webScanner ws = new webScanner();
+            if (ws.imFirst()){
+                triggerServer tS = new triggerServer();
+                tS.run();
+            }
+            
             triggerChat tServerChat = new triggerChat(); 
             tServerChat.start(); //executes the chat server
+            
+            
             
             Sesion s=new Sesion();
             s.start();
@@ -57,7 +70,6 @@ public class FXMLDocumentController {
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
             
-
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
 

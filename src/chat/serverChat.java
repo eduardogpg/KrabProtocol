@@ -3,6 +3,7 @@ package chat;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Hashtable;
 import krabprotocol.singletonServerChat;
 /**
  *
@@ -10,30 +11,41 @@ import krabprotocol.singletonServerChat;
  */
 public class serverChat  extends UnicastRemoteObject implements chatCommunication {
     
+     private Hashtable<String,String> dictionariChats =new Hashtable<String,String>(); 
+    
     singletonServerChat ssc;
      public serverChat() throws RemoteException{
 	super();
          ssc= singletonServerChat.getInstance();
     }
 
-    @Override
+    /**
+     *
+     * @param userName 
+     * @param ip
+     * @return
+     * @throws RemoteException
+     */
+    @Override 
     public boolean setNewConversation(String userName, String ip) throws RemoteException {
         
-        ssc.makeNewChat(userName, ip);
+        if(!this.dictionariChats.containsKey(userName)){
+            this.dictionariChats.put(userName, ip);
+            
+        }
+        
         return true;
     }
 
-    @Override
+     @Override
     public void sendPublicMessage(String UserName, String message) throws RemoteException {
-       System.out.println("De "+UserName+ "  : "+message);
+      
     }
 
-    @Override
-    public boolean connect(String userName) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean connect() throws RemoteException {
+        return true;
     }
        
-    
-    
+   
     
 }

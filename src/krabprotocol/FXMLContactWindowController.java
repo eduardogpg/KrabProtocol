@@ -1,11 +1,12 @@
 package krabprotocol;
 
-import chat.triggerChat;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -33,7 +34,7 @@ import services.Currency;
 
 public class FXMLContactWindowController implements Initializable {
 
-    
+   
     @FXML
     private TreeView treev;
     
@@ -44,6 +45,8 @@ public class FXMLContactWindowController implements Initializable {
     private Label resultConvert;
  
     
+    private singletonServerChat ssc;
+            
     private Currency c;
     
     private double pesos;
@@ -67,6 +70,8 @@ public class FXMLContactWindowController implements Initializable {
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ssc= singletonServerChat.getInstance();
+        
         c = new Currency();
         this.resultConvert.setVisible(false);
         cargar();
@@ -96,8 +101,6 @@ public class FXMLContactWindowController implements Initializable {
             
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
-            
-            
             Stage secondStage = new Stage();
             secondStage.setTitle("Chat with : ");
             secondStage.setScene(scene);
@@ -105,10 +108,7 @@ public class FXMLContactWindowController implements Initializable {
             ChatWindowController c = loader.getController();
             c.setIPReceiver("localhost");
             
-            
             secondStage.show();
-        
-            
     }
     
 
@@ -234,4 +234,8 @@ public class FXMLContactWindowController implements Initializable {
         }
 
     }
+    
+    
+  
+   
 }

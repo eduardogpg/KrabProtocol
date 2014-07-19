@@ -18,13 +18,12 @@ public class triggerChat extends Thread{
     
     public void run(){
         try {
-            System.out.println("Run Server ...");
-            LocateRegistry.createRegistry(1099);
+            System.out.println("Comenzando Server de mensajeria...");
             chatCommunication myChat = new serverChat();
             
             try {
                 Naming.rebind("rmi://localhost:1099/myChat", myChat);
-                System.out.println("Server onLine ...");
+                System.out.println("Server de mensajeria Online ...");
             } catch (MalformedURLException ex) {
                System.err.println(ex);
             }
