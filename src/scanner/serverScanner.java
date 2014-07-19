@@ -19,7 +19,12 @@ public class serverScanner extends UnicastRemoteObject implements scannerNetwork
     Hashtable<String,String> dictionariUsers =new Hashtable<String,String>();
     
     public serverScanner() throws RemoteException{
+        
         super();
+        dictionariUsers.put("Eduardo", "192.168.0.105");
+        dictionariUsers.put("Fernando", "192.168.0.105");
+        dictionariUsers.put("Ismael", "192.168.0.105");
+        dictionariUsers.put("Santiago", "192.168.0.108");
     }
         
     public boolean addMe(String userName, String ip) throws RemoteException {
@@ -28,8 +33,17 @@ public class serverScanner extends UnicastRemoteObject implements scannerNetwork
         return true;
     }
 
-    public Hashtable<String, String> senList() throws RemoteException {
+    public Hashtable<String, String> sendList() throws RemoteException {
         return this.dictionariUsers;
+    }
+
+    public boolean deleateUser(String userName) throws RemoteException {
+        try{
+            this.dictionariUsers.remove(userName);
+            return true;
+        }catch(Exception ex){
+            return false;
+        }
     }
     
    

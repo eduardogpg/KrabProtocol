@@ -17,5 +17,6 @@ import java.util.Hashtable;
 public interface scannerNetwork extends Remote{
     
     public boolean addMe(String userName, String ip) throws RemoteException;
-    public Hashtable<String,String> senList()  throws RemoteException;
+    public Hashtable<String,String> sendList()  throws RemoteException;
+    public boolean deleateUser(String userName)throws RemoteException;
 }

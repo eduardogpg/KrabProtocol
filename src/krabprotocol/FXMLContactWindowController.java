@@ -32,6 +32,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.Currency;
 
+import services.scannerServices;
+
 public class FXMLContactWindowController implements Initializable {
 
    
@@ -75,7 +77,9 @@ public class FXMLContactWindowController implements Initializable {
         c = new Currency();
         this.resultConvert.setVisible(false);
         cargar();
-   
+      
+        //scannerServices sS = new scannerServices();
+        //sS.run();
     }
     
     @FXML
@@ -148,6 +152,7 @@ public class FXMLContactWindowController implements Initializable {
                 return new TextFieldTreeCellImpl();
             }
         });
+        
     }
     
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
