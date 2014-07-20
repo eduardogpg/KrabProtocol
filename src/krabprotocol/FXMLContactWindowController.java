@@ -3,10 +3,8 @@ package krabprotocol;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -77,9 +74,7 @@ public class FXMLContactWindowController implements Initializable {
         c = new Currency();
         this.resultConvert.setVisible(false);
         cargar();
-      
-        //scannerServices sS = new scannerServices();
-        //sS.run();
+           
     }
     
     @FXML
@@ -92,16 +87,13 @@ public class FXMLContactWindowController implements Initializable {
             this.resultConvert.setText( ""+pesos );
         }catch(Exception ex){
             this.resultConvert.setText( "only number, Try again" );
-        }
-       
-        
+        }  
     }
     
     @FXML
     public void newChat(ActionEvent event) throws IOException {
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
-            
             
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -240,7 +232,8 @@ public class FXMLContactWindowController implements Initializable {
 
     }
     
-    
+   
+  
   
    
 }

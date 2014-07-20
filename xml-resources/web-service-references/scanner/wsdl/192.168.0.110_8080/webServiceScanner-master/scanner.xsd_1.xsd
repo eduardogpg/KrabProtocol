@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://scanner.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://scanner.org/">
+
+<xs:element name="ImFirst" type="tns:ImFirst"/>
+
+<xs:element name="ImFirstResponse" type="tns:ImFirstResponse"/>
+
+<xs:element name="getFirstUserName" type="tns:getFirstUserName"/>
+
+<xs:element name="getFirstUserNameResponse" type="tns:getFirstUserNameResponse"/>
+
+<xs:element name="getFisrtIp" type="tns:getFisrtIp"/>
+
+<xs:element name="getFisrtIpResponse" type="tns:getFisrtIpResponse"/>
+
+<xs:element name="removeUser" type="tns:removeUser"/>
+
+<xs:element name="removeUserResponse" type="tns:removeUserResponse"/>
+
+<xs:complexType name="getFisrtIp">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getFisrtIpResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="removeUser">
+<xs:sequence>
+<xs:element name="UserName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="removeUserResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getFirstUserName">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getFirstUserNameResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ImFirst">
+<xs:sequence>
+<xs:element name="userName" type="xs:string" minOccurs="0"/>
+<xs:element name="ip" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ImFirstResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

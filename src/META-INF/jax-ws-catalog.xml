@@ -4,4 +4,6 @@
     <system systemId="http://192.168.0.108:8080/webServiceLogin/Login?xsd=1" uri="wsdl/192.168.0.108_8080/webServiceLogin/Login.xsd_1.xsd"/>
     <system systemId="http://www.webservicex.com/CurrencyConvertor.asmx?wsdl" uri="wsdl/www.webservicex.com/CurrencyConvertor.asmx.wsdl"/>
     <system systemId="http://www.webservicex.net/CurrencyConvertor.asmx?WSDL" uri="wsdl/www.webservicex.net/CurrencyConvertor.asmx.wsdl"/>
+    <system systemId="http://192.168.0.110:8080/webServiceScanner-master/scanner?wsdl" uri="wsdl/192.168.0.110_8080/webServiceScanner-master/scanner.wsdl"/>
+    <system systemId="http://192.168.0.110:8080/webServiceScanner-master/scanner?xsd=1" uri="wsdl/192.168.0.110_8080/webServiceScanner-master/scanner.xsd_1.xsd"/>
 </catalog>

@@ -16,6 +16,8 @@ public class Login {
         org.model.Login port = service.getLoginPort();
         return port.loginUser(userName, password);
     }
+    
+    
       public boolean loginWithDB(String userName, String Password){
         DataBaseConnection c = new DataBaseConnection();
         ResultSet r = c.searchUser(userName);

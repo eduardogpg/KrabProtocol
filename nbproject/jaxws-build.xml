@@ -50,5 +50,22 @@
         <delete dir="${build.generated.dir}/jax-wsCache/CurrencyConvertor"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/net/webservicex"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-Login, wsimport-client-CurrencyConvertor"/>
+    <target name="wsimport-client-scanner" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/scanner"/>
+        <property name="wsdl-scanner" location="xml-resources/web-service-references/scanner/wsdl/192.168.0.110_8080/webServiceScanner-master/scanner.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/scanner" destdir="${build.generated.dir}/jax-wsCache/scanner" wsdl="${wsdl-scanner}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://192.168.0.110:8080/webServiceScanner-master/scanner?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-scanner}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/scanner"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/scanner">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-scanner" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/scanner"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/org/scanner"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-Login, wsimport-client-CurrencyConvertor, wsimport-client-scanner"/>
 </project>

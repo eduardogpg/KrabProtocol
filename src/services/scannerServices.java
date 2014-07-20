@@ -15,7 +15,7 @@ import scanner.scannerNetwork;
  *
  * @author 1020142461
  */
-public class scannerServices extends Thread{
+public class scannerServices implements Runnable{
     
     public void run(){
         
@@ -26,32 +26,36 @@ public class scannerServices extends Thread{
                 scannerNetwork myScanner = (scannerNetwork)Naming.lookup("rmi://localhost:1099/scanner");
                 Hashtable ht = myScanner.sendList();
                 
-                Enumeration<String> elemnts = ht.keys();
-                System.out.println("A listar");
-                while(elemnts.hasMoreElements()){
+                if(ht.size()!=0){
                     
-                    String user = elemnts.nextElement();
-                    String address = "rmi://"+ ht.get(user) +":1099/myChat";
-                    
-                    try{
-                        chatCommunication newMessage = (chatCommunication)Naming.lookup(address);
-                        
+                    Enumeration<String> elemnts = ht.keys();
+
+                    System.out.println("A listar : "+ ht.size());
+                    while(elemnts.hasMoreElements()){
+
+                        String user = elemnts.nextElement();
+                        String address = "rmi://"+ ht.get(user) +":1099/myChat";
+
                         try{
-                            System.out.println(newMessage.connect());
-                            System.out.println("Conexion exitosa con "+user +"ip :" + address);
-                        }catch (Exception exx){
-                            myScanner.deleateUser(user);
+                            chatCommunication newMessage = (chatCommunication)Naming.lookup(address);
+
+                            try{
+                                System.out.println(newMessage.connect());
+                                System.out.println("Conexion exitosa con "+user +"ip :" + address);
+                            }catch (Exception exx){
+                                myScanner.deleateUser(user);
+                            }
+
+                        }catch(MalformedURLException | NotBoundException | RemoteException e){
+                           System.err.println(e);
+                           myScanner.deleateUser(user);
+                           System.out.println("Borrado "+ user);
                         }
-                        
-                    }catch(MalformedURLException | NotBoundException | RemoteException e){
-                       System.err.println(e);
-                       myScanner.deleateUser(user);
-                       System.out.println("Borrado "+ user);
-                    }
-                    
+
+                    } //Fin de while
+                }else{
+                    System.out.println("Si entra al Hilo, pero no muestra nada");
                 }
-                
-                
                 
             }catch(Exception ex){
                 System.err.println(ex);

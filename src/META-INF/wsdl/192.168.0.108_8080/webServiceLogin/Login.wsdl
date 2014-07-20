@@ -30,7 +30,7 @@
 </binding>
 <service name="Login">
 <port name="LoginPort" binding="tns:LoginPortBinding">
-<soap:address location="http://192.168.0.108:8080/webServiceLogin/Login"/>
+<soap:address location="http://yaroc:8080/webServiceLogin/Login"/>
 </port>
 </service>
 </definitions>

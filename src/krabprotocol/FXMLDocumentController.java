@@ -1,7 +1,12 @@
 package krabprotocol;
 
+import Cipher.*;
 import chat.triggerChat;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.rmi.registry.LocateRegistry;
+import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,16 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import models.DataBaseConnection;
-import Cipher.*;
-import java.rmi.registry.LocateRegistry;
-import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-
-import services.Login;
-import services.webScanner;
 import scanner.triggerServer;
+import services.Login;
+import services.scannerServices;
+import services.webScanner;
+
 
 public class FXMLDocumentController {
    
@@ -45,6 +46,8 @@ public class FXMLDocumentController {
         this.count++;
         if (this.isValid( userName.getText() , password.getText())){ 
             
+            boolean imServer = false;
+            
             myConnection.checkIn( userName.getText() ,currentDate ,this.count);
             myConnection.closeConnection();
             
@@ -52,15 +55,14 @@ public class FXMLDocumentController {
             
             
             webScanner ws = new webScanner();
-            if (ws.imFirst()){
+            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
+                imServer = true;
                 triggerServer tS = new triggerServer();
                 tS.run();
             }
             
             triggerChat tServerChat = new triggerChat(); 
             tServerChat.start(); //executes the chat server
-            
-            
             
             Sesion s=new Sesion();
             s.start();
@@ -74,11 +76,15 @@ public class FXMLDocumentController {
             Scene scene = new Scene(root);
 
             Stage secondStage = new Stage();
-            secondStage.setTitle("New chat with ");
+            secondStage.setTitle("Your Count ");
             secondStage.setScene(scene);
             ((Node)(event.getSource())).getScene().getWindow().hide();
+            
             secondStage.show();
-        
+            
+            scannerServices ss = new scannerServices();
+            javafx.application.Platform.runLater(ss);
+       
         }else{   
             userName.setText("");
             this.password.setText("");
@@ -95,7 +101,7 @@ public class FXMLDocumentController {
             Scene scene = new Scene(root);
 
             Stage secondStage = new Stage();
-            secondStage.setTitle("Main");
+            secondStage.setTitle("Register");
             secondStage.setScene(scene);
             ((Node)(event.getSource())).getScene().getWindow().hide();
             secondStage.show();
@@ -111,7 +117,7 @@ public class FXMLDocumentController {
             Scene scene = new Scene(root);
 
             Stage secondStage = new Stage();
-            secondStage.setTitle("Main");
+            secondStage.setTitle("Credits");
             secondStage.setScene(scene);
             secondStage.show();
             
@@ -127,8 +133,8 @@ public class FXMLDocumentController {
         password = new String(md5pass);
             
         Login ac = new Login();
-        //return ac.loginUser(userName, password);
-        return ac.loginWithDB(userName, password);
+        return ac.loginUser(userName, password);
+        //return ac.loginWithDB(userName, password);
     }           
     
 }

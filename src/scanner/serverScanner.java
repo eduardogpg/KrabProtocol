@@ -21,10 +21,7 @@ public class serverScanner extends UnicastRemoteObject implements scannerNetwork
     public serverScanner() throws RemoteException{
         
         super();
-        dictionariUsers.put("Eduardo", "192.168.0.105");
-        dictionariUsers.put("Fernando", "192.168.0.105");
-        dictionariUsers.put("Ismael", "192.168.0.105");
-        dictionariUsers.put("Santiago", "192.168.0.108");
+     
     }
         
     public boolean addMe(String userName, String ip) throws RemoteException {
