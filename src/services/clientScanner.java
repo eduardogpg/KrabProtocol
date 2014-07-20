@@ -32,4 +32,19 @@ public class clientScanner {
        
     
     }
+    
+    
+    public boolean addMeatNetwork(String userName, String ip, String ipServer){
+    
+        scannerNetwork myScanner;
+        try {
+            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":1099/scanner");
+            myScanner.addMe(userName, ip);
+            return true;
+        } catch(Exception  ex){
+            System.err.println(ex);
+            return false;
+        }
+    
+    }
 }

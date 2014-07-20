@@ -23,7 +23,6 @@ import models.DataBaseConnection;
 import scanner.triggerServer;
 import services.Login;
 import services.clientScanner;
-import services.scannerServices;
 import services.webScanner;
 
 
@@ -50,8 +49,6 @@ public class FXMLDocumentController {
         this.count++;
         if (this.isValid( userName.getText() , password.getText())){ 
             
-            boolean imServer = false;
-            
             myConnection.checkIn( userName.getText() ,currentDate ,this.count);
             myConnection.closeConnection();
             
@@ -63,52 +60,44 @@ public class FXMLDocumentController {
         
             webScanner ws = new webScanner();
             
-            if (ws.imFirst(userName.getText()+"lao", InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
-                imServer = true;
+            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
+                
+                System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
                 tS.run();
             }else{
-                //Quitar despues
-                triggerServer tS = new triggerServer();
-                tS.run();
+                System.out.println("Iam the Client because Im No the Firts");
                 
-                sc.setIpServer( ws.getFisrtIp());
                 System.out.println( sc.getIpServer() );
             }
-                        
+            sc.setIpServer( ws.getFisrtIp());        
+            
+            clientScanner cS = new clientScanner();
+            cS.addMeatNetwork( userName.getText() , InetAddress.getLocalHost().getHostAddress() , sc.getIpServer());
+            
             this.serverChat(); //Method
             this.sesion( ); //Method
             
-            new Thread(new Runnable() {
-             public void run() {
-                Platform.runLater(new Runnable() {
-                    @Override public void run() {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
 
-                     Parent root;
-                        try {
-                            root = (Parent) loader.load();
-                             Scene scene = new Scene(root);
+            Parent root;
+            try {
+               root = (Parent) loader.load();
+                Scene scene = new Scene(root);
 
-                            Stage secondStage = new Stage();
-                            secondStage.setTitle("Your Count ");
-                            secondStage.setScene(scene);
-                            ((Node)(event.getSource())).getScene().getWindow().hide();
+               Stage secondStage = new Stage();
+               secondStage.setTitle("Your Count ");
+               secondStage.setScene(scene);
+               ((Node)(event.getSource())).getScene().getWindow().hide();
 
-                            secondStage.show();  
+               secondStage.show();  
 
-                        } catch (IOException ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                                      
-                        
-                        
-                        
-                    }
-                });
+            } catch (IOException ex) {
+               Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
+                    
             
-        }).start();
+    
             
 
             

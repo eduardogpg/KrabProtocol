@@ -7,9 +7,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -28,16 +25,14 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import services.Currency;
 
 import services.clientScanner;
 
 public class FXMLContactWindowController implements Initializable {
-
+    
+    private Hashtable userOnline = new Hashtable();
    
     @FXML
     private TreeView treev;
@@ -65,14 +60,9 @@ public class FXMLContactWindowController implements Initializable {
         new Image(getClass().getResourceAsStream("img/MSN-icon.png"))
     );
     
-    List<Contacto> contacto = Arrays.asList(
-      new Contacto("Shago", "Amigos"), new Contacto("Pepe", "Amigos"),
-      new Contacto("Juan", "Amigos"), new Contacto("Sergio", "Amigos"),
-      new Contacto("Filomeno", "Amigos"), new Contacto("Vaquita Alpura", "Compañeros de Trabajo"),
-      new Contacto("Chica QR en pompas","Compañeros de Trabajo"));
-    
+  
         
-        
+      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ssc= singletonServerChat.getInstance();
@@ -80,7 +70,15 @@ public class FXMLContactWindowController implements Initializable {
         c = new Currency();
         this.resultConvert.setVisible(false);
         
-        final TreeView treev = new TreeView();
+        try{
+            clientScanner cs = new clientScanner();
+            singletonServerChat sc = singletonServerChat.getInstance();
+            cargar( cs.getMembersOnline( sc.getIpServer() ));
+        }catch(Exception ex){
+        
+        }
+        
+                                
         /*
         new Thread(new Runnable() {
              public void run() {
@@ -143,12 +141,16 @@ public class FXMLContactWindowController implements Initializable {
 
 
     final void cargar( Hashtable Users){
-        System.out.println(Users.size());
         Enumeration<String> elemnts = Users.keys();
+        
+        TreeItem<String> rootfileItem = new TreeItem<>("Members Online", rootIcon);
+        rootfileItem.setExpanded(true);
         while(elemnts.hasMoreElements()){
-            String userConnect = elemnts.nextElement();
-            System.out.println(userConnect);
+            
+            TreeItem<String> item = new TreeItem<> ( elemnts.nextElement() );
+            rootfileItem.getChildren().add(item);
         }
+        treev.setRoot(rootfileItem);
         
     }
     
@@ -170,71 +172,7 @@ public class FXMLContactWindowController implements Initializable {
             });
         }
         
-        //@Override
-        public void startEdit(){
-            super.startEdit();
-            
-            System.out.println("XD Me haces cosquillas");
-            if(textfield == null){
-                createTextField();
-            }
-            setText(null);
-            setGraphic(textfield);
-            textfield.selectAll();
-        }
         
-        @Override
-        public void cancelEdit(){
-            super.cancelEdit();
-            setText((String)getItem());
-            setGraphic(getTreeItem().getGraphic());
-        }
-        
-        @Override
-        public void updateItem(String item, boolean empty){
-            super.updateItem(item, empty);
-            
-            if(empty){
-                setText(null);
-                setGraphic(null);
-            } else {
-                if(isEditing()){
-                    
-                    //
-                    if(textfield !=null){
-                        textfield.setText(getString());
-                    }
-                    setText(null);
-                    setGraphic(textfield);
-                    //
-                } else {
-                    setText(getString());
-                    setGraphic(getTreeItem().getGraphic());
-                    if(getTreeItem().isLeaf()){
-                        setContextMenu(popupMenu);
-                    }
-                }
-            }
-        }
-        ///
-        private void createTextField(){
-            textfield = new TextField(getString());
-            textfield.setOnKeyReleased(new EventHandler<KeyEvent>(){
-                @Override
-                public void handle(KeyEvent k){
-                    if(k.getCode() == KeyCode.ENTER){
-                        commitEdit(textfield.getText());
-                    }else if(k.getCode() == KeyCode.ESCAPE){
-                        cancelEdit();
-                    }
-                }
-            });
-        }//
-        
-        private String getString(){
-            return getItem() == null? "": getItem().toString();
-        }
-
     }
     
    
