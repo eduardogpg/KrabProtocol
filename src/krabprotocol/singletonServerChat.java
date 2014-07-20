@@ -1,6 +1,8 @@
 
 package krabprotocol;
 
+import java.util.Hashtable;
+
 
 /**
  *
@@ -15,7 +17,8 @@ public class singletonServerChat {
     
     static boolean flagTree = true;
     
-   
+    static Hashtable userOnline = new Hashtable();
+    
     /*End Variables*/
     
     /*****************************************/

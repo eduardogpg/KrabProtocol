@@ -32,7 +32,6 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Button layoutX="14.0" layoutY="222.0" mnemonicParsing="false" onAction="#newChat" text="new Chat" />
                </children>
             </AnchorPane>
         </items>

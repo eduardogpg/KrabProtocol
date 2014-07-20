@@ -9,8 +9,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,6 +20,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import models.DataBaseConnection;
 import scanner.triggerServer;
 import services.Login;
@@ -81,7 +82,7 @@ public class FXMLDocumentController {
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
 
-<<<<<<< HEAD
+
             Parent root;
             try {
                root = (Parent) loader.load();
@@ -89,31 +90,26 @@ public class FXMLDocumentController {
 
                Stage secondStage = new Stage();
                secondStage.setTitle("Your Count ");
+               Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.jpg"));
+               secondStage.getIcons().add(ico);
                secondStage.setScene(scene);
                ((Node)(event.getSource())).getScene().getWindow().hide();
-=======
-                     Parent root;
-                        try {
-                            root = (Parent) loader.load();
-                             Scene scene = new Scene(root);
-                            
-                            Stage secondStage = new Stage();
-                            Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.jpg"));
-                            secondStage.getIcons().add(ico);
-                            secondStage.setTitle("Your Count ");
-                            secondStage.setScene(scene);
-                            ((Node)(event.getSource())).getScene().getWindow().hide();
->>>>>>> c0783da32b1e3bad52c09d48a332b9e11f70c823
+               
+                secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    public void handle(WindowEvent we) {
+                    
+                            webScanner wS = new webScanner();
+                            singletonServerChat  sS = singletonServerChat.getInstance();
+                            wS.removeUser( sS.getUserName() );
+                        
+                }});
+                    
 
                secondStage.show();  
 
             } catch (IOException ex) {
                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-                    
-            
-    
-            
 
             
             //scannerServices ss = new scannerServices();
@@ -130,7 +126,6 @@ public class FXMLDocumentController {
     }
     
     private void sesion(){
-        
         Sesion s=new Sesion();
         s.start();
     }

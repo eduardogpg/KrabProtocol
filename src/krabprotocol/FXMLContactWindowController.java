@@ -7,6 +7,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -25,15 +27,15 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import services.Currency;
-
 import services.clientScanner;
 
 public class FXMLContactWindowController implements Initializable {
     
-    private Hashtable userOnline = new Hashtable();
-   
     @FXML
     private TreeView treev;
    
@@ -77,8 +79,7 @@ public class FXMLContactWindowController implements Initializable {
         }catch(Exception ex){
         
         }
-        
-                                
+       
         /*
         new Thread(new Runnable() {
              public void run() {
@@ -121,27 +122,13 @@ public class FXMLContactWindowController implements Initializable {
         }  
     }
     
-    @FXML
-    public void newChat(ActionEvent event) throws IOException {
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
-            
-            Parent root = (Parent) loader.load();
-            Scene scene = new Scene(root);
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Chat with : ");
-            secondStage.setScene(scene);
-            
-            ChatWindowController c = loader.getController();
-            c.setIPReceiver("localhost");
-            
-            secondStage.show();
-    }
-    
+  
 
 
     final void cargar( Hashtable Users){
         Enumeration<String> elemnts = Users.keys();
+        
+        singletonServerChat.userOnline = Users;
         
         TreeItem<String> rootfileItem = new TreeItem<>("Members Online", rootIcon);
         rootfileItem.setExpanded(true);
@@ -151,6 +138,39 @@ public class FXMLContactWindowController implements Initializable {
             rootfileItem.getChildren().add(item);
         }
         treev.setRoot(rootfileItem);
+        
+        treev.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+                if(event.getButton().equals(MouseButton.PRIMARY)){
+                    if(event.getClickCount() == 2){
+                        TreeItem<String> ev = (TreeItem) treev.getSelectionModel().getSelectedItem();
+                        System.out.println("Me hiciste Click  " + ev.getValue());
+                        System.out.println( "La ip es  " +singletonServerChat.userOnline.get(ev.getValue()) + " "); 
+                        
+                        
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
+
+                        Parent root;
+                        try {
+                            root = (Parent) loader.load();
+                            Scene scene = new Scene(root);
+                            Stage secondStage = new Stage();
+                            secondStage.setTitle("Chat with : "+ev.getValue()+"");
+                            secondStage.setScene(scene);
+
+                            ChatWindowController c = loader.getController();
+                            c.setIPReceiver( (String) singletonServerChat.userOnline.get(ev.getValue()) );
+
+                            secondStage.show();
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        
+                    }
+                }
+            }
+        });
         
     }
     
@@ -174,9 +194,7 @@ public class FXMLContactWindowController implements Initializable {
         
         
     }
-    
-   
-  
-  
+
+
    
 }
