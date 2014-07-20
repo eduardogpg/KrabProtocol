@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import models.DataBaseConnection;
 import scanner.triggerServer;
@@ -80,6 +81,7 @@ public class FXMLDocumentController {
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
 
+<<<<<<< HEAD
             Parent root;
             try {
                root = (Parent) loader.load();
@@ -89,6 +91,19 @@ public class FXMLDocumentController {
                secondStage.setTitle("Your Count ");
                secondStage.setScene(scene);
                ((Node)(event.getSource())).getScene().getWindow().hide();
+=======
+                     Parent root;
+                        try {
+                            root = (Parent) loader.load();
+                             Scene scene = new Scene(root);
+                            
+                            Stage secondStage = new Stage();
+                            Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.jpg"));
+                            secondStage.getIcons().add(ico);
+                            secondStage.setTitle("Your Count ");
+                            secondStage.setScene(scene);
+                            ((Node)(event.getSource())).getScene().getWindow().hide();
+>>>>>>> c0783da32b1e3bad52c09d48a332b9e11f70c823
 
                secondStage.show();  
 
