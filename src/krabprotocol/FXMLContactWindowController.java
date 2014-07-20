@@ -3,8 +3,13 @@ package krabprotocol;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -29,13 +34,14 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.Currency;
 
-import services.scannerServices;
+import services.clientScanner;
 
 public class FXMLContactWindowController implements Initializable {
 
    
     @FXML
     private TreeView treev;
+   
     
     @FXML
     private TextField converToDollar;
@@ -73,7 +79,34 @@ public class FXMLContactWindowController implements Initializable {
         
         c = new Currency();
         this.resultConvert.setVisible(false);
-        cargar();
+        
+        final TreeView treev = new TreeView();
+        /*
+        new Thread(new Runnable() {
+             public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override public void run() {
+                        while(singletonServerChat.flagTree){
+                            try {
+                                Thread.sleep(5000);
+                                clientScanner cs = new clientScanner();
+                                
+                                singletonServerChat sc = singletonServerChat.getInstance();
+                                cargar( cs.getMembersOnline( sc.getIpServer() ));
+                                
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                    }
+                });
+            }
+            
+        }).start();
+        
+        */
+        
            
     }
     
@@ -109,41 +142,13 @@ public class FXMLContactWindowController implements Initializable {
     
 
 
-    public void cargar(){
-        //crea la raiz del arbol
-        rootItem = new TreeItem<>("Contacts", rootIcon);
-        rootItem.setExpanded(true);
-        
-        //llena el arbol XD borrar luego quiza
-        for (Contacto cont : contacto) {
-            TreeItem<String> item = new TreeItem<> (cont.getUsername());
-            boolean found = false;
-            for(TreeItem<String> depNode:rootItem.getChildren()){
-                if(depNode.getValue().contentEquals(cont.getGrupo())){
-                    depNode.getChildren().add(item);
-                    found = true;
-                    break;
-                }
-            }
-            if(!found){
-                TreeItem<String> depNode = new TreeItem<>(cont.getGrupo());
-                rootItem.getChildren().add(depNode);
-                depNode.getChildren().add(item);
-            }
+    final void cargar( Hashtable Users){
+        System.out.println(Users.size());
+        Enumeration<String> elemnts = Users.keys();
+        while(elemnts.hasMoreElements()){
+            String userConnect = elemnts.nextElement();
+            System.out.println(userConnect);
         }
-        //obtiene el TreeView del FXML
-        //TreeView<String> tree = (TreeView) getScene.lookup("#treev");
-        //treev = new TreeView();
-        treev.setRoot(rootItem);//configura la raiz
-        
-        // lo hace editable e implementa cellfactory
-        treev.setEditable(true);
-        treev.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>(){
-            @Override
-            public TreeCell<String> call(TreeView<String> param) {
-                return new TextFieldTreeCellImpl();
-            }
-        });
         
     }
     

@@ -12,25 +12,25 @@ package services;
  */
 public class webScanner {
 
-    public static boolean imFirst(java.lang.String userName, java.lang.String ip) {
+    public  boolean imFirst(java.lang.String userName, java.lang.String ip) {
         org.scanner.Scanner_Service service = new org.scanner.Scanner_Service();
         org.scanner.Scanner port = service.getScannerPort();
         return port.imFirst(userName, ip);
     }
 
-    private static String getFirstUserName() {
+    public  String getFirstUserName() {
         org.scanner.Scanner_Service service = new org.scanner.Scanner_Service();
         org.scanner.Scanner port = service.getScannerPort();
         return port.getFirstUserName();
     }
 
-    private static String getFisrtIp() {
+    public  String getFisrtIp() {
         org.scanner.Scanner_Service service = new org.scanner.Scanner_Service();
         org.scanner.Scanner port = service.getScannerPort();
         return port.getFisrtIp();
     }
 
-    private static boolean removeUser(java.lang.String userName) {
+   public  boolean removeUser(java.lang.String userName) {
         org.scanner.Scanner_Service service = new org.scanner.Scanner_Service();
         org.scanner.Scanner port = service.getScannerPort();
         return port.removeUser(userName);

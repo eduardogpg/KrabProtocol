@@ -1,12 +1,6 @@
 
 package krabprotocol;
 
-import java.util.Hashtable;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
  *
@@ -16,8 +10,10 @@ public class singletonServerChat {
     
     /*Variables */
     private String currentUserName;
+    private String ipServer;
     private FXMLContactWindowController myContactWindowController;
     
+    static boolean flagTree = true;
     
    
     /*End Variables*/
@@ -43,6 +39,14 @@ public class singletonServerChat {
         return this.currentUserName;
     }
     
+    
+    public void setIpServer(String ipServer){
+        this.ipServer = ipServer;
+    }
+    
+    public String getIpServer(){
+        return this.ipServer;
+    }
    
     
 }

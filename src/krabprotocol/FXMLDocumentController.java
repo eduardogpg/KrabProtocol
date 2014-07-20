@@ -7,6 +7,9 @@ import java.net.InetAddress;
 import java.rmi.registry.LocateRegistry;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +22,7 @@ import javafx.stage.Stage;
 import models.DataBaseConnection;
 import scanner.triggerServer;
 import services.Login;
+import services.clientScanner;
 import services.scannerServices;
 import services.webScanner;
 
@@ -53,43 +57,82 @@ public class FXMLDocumentController {
             
             LocateRegistry.createRegistry(1099);
             
+            singletonServerChat sc = singletonServerChat.getInstance();
+            sc.setUserName(  this.userName.getText()  );
             
+        
             webScanner ws = new webScanner();
-            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
+            
+            if (ws.imFirst(userName.getText()+"lao", InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
                 imServer = true;
                 triggerServer tS = new triggerServer();
                 tS.run();
+            }else{
+                //Quitar despues
+                triggerServer tS = new triggerServer();
+                tS.run();
+                
+                sc.setIpServer( ws.getFisrtIp());
+                System.out.println( sc.getIpServer() );
+            }
+                        
+            this.serverChat(); //Method
+            this.sesion( ); //Method
+            
+            new Thread(new Runnable() {
+             public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override public void run() {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+
+                     Parent root;
+                        try {
+                            root = (Parent) loader.load();
+                             Scene scene = new Scene(root);
+
+                            Stage secondStage = new Stage();
+                            secondStage.setTitle("Your Count ");
+                            secondStage.setScene(scene);
+                            ((Node)(event.getSource())).getScene().getWindow().hide();
+
+                            secondStage.show();  
+
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                                      
+                        
+                        
+                        
+                    }
+                });
             }
             
-            triggerChat tServerChat = new triggerChat(); 
-            tServerChat.start(); //executes the chat server
+        }).start();
             
-            Sesion s=new Sesion();
-            s.start();
-            
-            singletonServerChat sc = singletonServerChat.getInstance();
-            sc.setUserName( this.userName.getText() );
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
-            
-            Parent root = (Parent) loader.load();
-            Scene scene = new Scene(root);
 
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Your Count ");
-            secondStage.setScene(scene);
-            ((Node)(event.getSource())).getScene().getWindow().hide();
             
-            secondStage.show();
-            
-            scannerServices ss = new scannerServices();
-            javafx.application.Platform.runLater(ss);
+            //scannerServices ss = new scannerServices();
+            //javafx.application.Platform.runLater(ss);
        
         }else{   
             userName.setText("");
             this.password.setText("");
         }
     }
+    private void serverChat(){
+        triggerChat tServerChat = new triggerChat(); 
+        tServerChat.start(); //executes the chat server
+    }
+    
+    private void sesion(){
+        
+        Sesion s=new Sesion();
+        s.start();
+    }
+    
+   
+    
     
     @FXML
     public void register(ActionEvent event) throws IOException {
@@ -133,8 +176,8 @@ public class FXMLDocumentController {
         password = new String(md5pass);
             
         Login ac = new Login();
-        return ac.loginUser(userName, password);
-        //return ac.loginWithDB(userName, password);
+        //return ac.loginUser(userName, password);
+        return ac.loginWithDB(userName, password);
     }           
     
 }

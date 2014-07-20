@@ -16,7 +16,10 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
     singletonServerChat ssc;
      public serverChat() throws RemoteException{
 	super();
-         ssc= singletonServerChat.getInstance();
+               
+        ssc= singletonServerChat.getInstance();
+        
+        
     }
 
     /**
@@ -31,6 +34,7 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         
         if(!this.dictionariChats.containsKey(userName)){
             this.dictionariChats.put(userName, ip);
+        
             
         }
         
