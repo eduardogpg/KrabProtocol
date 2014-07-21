@@ -12,26 +12,52 @@
           <AnchorPane minHeight="0.0" minWidth="215.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <TreeView fx:id="treev" prefHeight="475.0" prefWidth="274.0" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-122.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="refreshButton" layoutX="181.0" layoutY="2.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="28.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="137.0" prefHeight="469.0" prefWidth="137.0">
                <children>
-                  <Pane prefHeight="97.0" prefWidth="251.0" AnchorPane.bottomAnchor="372.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label layoutX="7.0" layoutY="8.0" text="Convert Pesos to Dollar">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="converToDollar" layoutX="7.0" layoutY="39.0" prefHeight="25.0" prefWidth="145.0" />
-                        <Button fx:id="convert" layoutX="169.0" layoutY="39.0" mnemonicParsing="false" onAction="#convertDollar" text="Convert" />
-                        <Label fx:id="resultConvert" layoutX="11.0" layoutY="71.0" text="x" textFill="#c93636">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="115.0" minWidth="100.0" prefHeight="100.0" prefWidth="135.0">
+                           <children>
+                              <Pane prefHeight="97.0" prefWidth="251.0" AnchorPane.bottomAnchor="372.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label layoutX="7.0" layoutY="8.0" text="Convert Pesos to Dollar">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="converToDollar" layoutX="7.0" layoutY="39.0" prefHeight="25.0" prefWidth="145.0" />
+                                    <Button fx:id="convert" layoutX="169.0" layoutY="39.0" mnemonicParsing="false" onAction="#convertDollar" text="Convert" />
+                                    <Label fx:id="resultConvert" layoutX="11.0" layoutY="71.0" text="x" textFill="#c93636">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <Pane fx:id="confirmPanel" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button fx:id="authButton" layoutX="98.0" layoutY="89.0" mnemonicParsing="false" onAction="#darPermisosADropbox" />
+                                    <Label fx:id="autLabel" layoutX="51.0" layoutY="68.0" text="Pegar codigo de Autorizacion" />
+                                    <TextField fx:id="autKey" layoutX="19.0" layoutY="89.0" prefHeight="25.0" prefWidth="204.0" />
+                                    <Button fx:id="confirmButton" layoutX="88.0" layoutY="124.0" mnemonicParsing="false" text="Aceptar" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <TreeView fx:id="files" prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
                </children>
             </AnchorPane>
         </items>

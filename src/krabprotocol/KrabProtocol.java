@@ -19,7 +19,7 @@ public class KrabProtocol extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         Scene scene= new Scene(root);
-        Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.jpg"));
+        Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.png"));
         stage.getIcons().add(ico);
         stage.setTitle("Login");
         stage.setScene(scene);

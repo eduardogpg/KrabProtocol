@@ -90,7 +90,7 @@ public class FXMLDocumentController {
 
                Stage secondStage = new Stage();
                secondStage.setTitle("Your Count ");
-               Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.jpg"));
+               Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.png"));
                secondStage.getIcons().add(ico);
                secondStage.setScene(scene);
                ((Node)(event.getSource())).getScene().getWindow().hide();
