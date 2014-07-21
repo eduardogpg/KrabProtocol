@@ -47,6 +47,7 @@ public class FXMLContactWindowController implements Initializable {
     @FXML
     private Label resultConvert;
  
+    private Hashtable<String,ChatWindowController> dictionariChats =new Hashtable<String,ChatWindowController>(); 
     
     private singletonServerChat ssc;
             
@@ -178,6 +179,11 @@ public class FXMLContactWindowController implements Initializable {
                     ChatWindowController sW =loader.getController();
                     sW.setIPReceiver(ip);
                     
+                    singletonServerChat ssh = singletonServerChat.getInstance();
+                    FXMLContactWindowController x =ssh.getFXMLContactWindowController();
+                    x.AddNewChat(userName, loader.getController());
+                    
+                    
                 } catch (Exception ex) {
                     System.err.println(ex);
                 }
@@ -185,6 +191,19 @@ public class FXMLContactWindowController implements Initializable {
             });
     }
     
+    public void AddNewChat(String userName , ChatWindowController controller){
+        //System.err.println("Agregra a "+ userName);
+        this.dictionariChats.put(userName, controller);
+    }
+    
+    public ChatWindowController getChatWindowController(String userName){
+        //System.err.println("buscar a "+ userName);
+        return this.dictionariChats.get(userName);
+    }
+    
+    public Hashtable getHashTable(){
+        return this.dictionariChats;
+    }
     
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
         private TextField textfield;

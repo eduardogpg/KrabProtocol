@@ -6,19 +6,21 @@
 
 package krabprotocol;
 
+
+import chat.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URL;
+import java.rmi.Naming;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-
-import chat.*;
-import java.net.InetAddress;
-import java.rmi.Naming;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 /**
  * FXML Controller class
  *
@@ -40,7 +42,7 @@ public class ChatWindowController implements Initializable {
     
         @Override
         public void initialize(URL url, ResourceBundle rb) {
-
+            //this.conversationArea.setStyle("-fx-background-color: black;");
         }
 
         public void setIPReceiver(String ip){
@@ -55,16 +57,17 @@ public class ChatWindowController implements Initializable {
                 
                 this.senPublicMessage(this.messageField.getText());
                 
-                putYourMessage(this.messageField.getText());
+                putMessage("\nYou : " + this.messageField.getText());
+                this.messageField.setText("");
             }
-
+            
         }
         
-        private void putYourMessage(String message){
-             this.conversationArea.setText( this.conversationArea.getText() + "\nYou: "+ message+ " ");
-             this.messageField.setText("");
-             
+        public void putMessage(String message){
+            this.conversationArea.setText( this.conversationArea.getText() +  message );
+        
         }
+        
         private void senPublicMessage(String message){
             
             try{
@@ -92,8 +95,6 @@ public class ChatWindowController implements Initializable {
             this.communicationEstablished = true;
         }
         
-       public void putMessage(String userName, String message){
-            this.conversationArea.setText( this.conversationArea.getText() + "\n"+userName+":" + message+ " ");
-       }
+       
     
 }

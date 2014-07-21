@@ -3,6 +3,7 @@ package chat;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -38,18 +39,33 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
      */
     @Override 
     public boolean setNewConversation(String userName, String ip) throws RemoteException {
-        System.out.println("Vamos");
+        //System.out.println("Vamos");
+        
         FXMLContactWindowController s =ssc.getFXMLContactWindowController();
-        s.makeChat(userName, ip);
+        Hashtable table = s.getHashTable();
+        if(!table.containsKey(userName+"Prueba"))
+            s.makeChat(userName+"Prueba", ip);
        
-                  
         return true;
     }
 
      @Override
     public void sendPublicMessage(String userName, String message) throws RemoteException {
-       System.out.println(userName + " : "+ message);
-       
+       //System.out.println(userName + " : "+ message);
+        
+       singletonServerChat ssh = singletonServerChat.getInstance();
+        FXMLContactWindowController x =ssh.getFXMLContactWindowController();
+        ChatWindowController sH = x.getChatWindowController(userName+"Prueba");
+        sH.putMessage("\n"+userName+"Prueba" + " : "+message);
+        
+        /*
+        Enumeration<String> elemnts = sH.keys();
+        while(elemnts.hasMoreElements()){
+               String user = elemnts.nextElement();
+               System.out.println("Valor en la lista " + user);
+        }
+        ChatWindowController xx = x.getChatWindowController(userName+"Prueba");*/
+        
     }
 
     public boolean connect() throws RemoteException {
