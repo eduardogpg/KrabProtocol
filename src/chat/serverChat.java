@@ -43,20 +43,22 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         
         FXMLContactWindowController s =ssc.getFXMLContactWindowController();
         Hashtable table = s.getHashTable();
-        if(!table.containsKey(userName+"Prueba"))
-            s.makeChat(userName+"Prueba", ip);
+        if(!table.containsKey(userName))
+            s.makeChat(userName, ip);
        
         return true;
     }
 
+    
+    //Algo va mal aqui
      @Override
     public void sendPublicMessage(String userName, String message) throws RemoteException {
        //System.out.println(userName + " : "+ message);
         
        singletonServerChat ssh = singletonServerChat.getInstance();
         FXMLContactWindowController x =ssh.getFXMLContactWindowController();
-        ChatWindowController sH = x.getChatWindowController(userName+"Prueba");
-        sH.putMessage("\n"+userName+"Prueba" + " : "+message);
+        ChatWindowController sH = x.getChatWindowController(userName);
+        sH.putMessage("\n"+userName + " : "+message);
         
         /*
         Enumeration<String> elemnts = sH.keys();
