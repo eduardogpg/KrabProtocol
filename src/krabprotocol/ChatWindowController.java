@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 /**
  * FXML Controller class
  *
@@ -42,6 +43,7 @@ public class ChatWindowController implements Initializable {
     
         @Override
         public void initialize(URL url, ResourceBundle rb) {
+            Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.png"));
             //this.conversationArea.setStyle("-fx-background-color: black;");
         }
 

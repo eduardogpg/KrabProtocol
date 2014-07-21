@@ -188,6 +188,11 @@ public class FXMLContactWindowController implements Initializable {
                 TreeItem<String> item = new TreeItem<> (child.name);
                 if(child.isFolder()){
                     //item.setGraphic(rootIcon);
+                    DbxEntry.WithChildren listingf = client.getMetadataWithChildren("/"+child.name);
+                    for(DbxEntry folderChild : listingf.children){
+                        item.setExpanded(true);
+                        item.getChildren().add(new TreeItem<String>(folderChild.name));
+                    }
                 }else{
                     //item.setGraphic(rootIcon);
                 }
