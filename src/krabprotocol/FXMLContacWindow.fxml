@@ -46,12 +46,12 @@
                                     <Button fx:id="authButton" layoutX="98.0" layoutY="89.0" mnemonicParsing="false" onAction="#darPermisosADropbox" />
                                     <Label fx:id="autLabel" layoutX="51.0" layoutY="68.0" text="Pegar codigo de Autorizacion" />
                                     <TextField fx:id="autKey" layoutX="19.0" layoutY="89.0" prefHeight="25.0" prefWidth="204.0" />
-                                    <Button fx:id="confirmButton" layoutX="88.0" layoutY="124.0" mnemonicParsing="false" text="Aceptar" />
+                                    <Button fx:id="confirmButton" layoutX="88.0" layoutY="124.0" mnemonicParsing="false" onAction="#confirmarPermisosADropBox" text="Aceptar" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Pane fx:id="filesPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <TreeView fx:id="files" prefHeight="200.0" prefWidth="200.0" />
+                                    <TreeView fx:id="files" prefHeight="228.0" prefWidth="247.0" />
                                  </children>
                               </Pane>
                            </children>
