@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import chat.*;
+import java.net.InetAddress;
 import java.rmi.Naming;
 import javafx.scene.control.TextArea;
 /**
@@ -52,7 +53,7 @@ public class ChatWindowController implements Initializable {
                 if(this.communicationEstablished == false)
                     this.communicationEstablished = this.setConversation();
                 
-                this.senPubicMessage(this.messageField.getText());
+                this.senPublicMessage(this.messageField.getText());
                 
                 putYourMessage(this.messageField.getText());
             }
@@ -64,7 +65,7 @@ public class ChatWindowController implements Initializable {
              this.messageField.setText("");
              
         }
-        private void senPubicMessage(String message){
+        private void senPublicMessage(String message){
             
             try{
                 chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
@@ -76,11 +77,10 @@ public class ChatWindowController implements Initializable {
             
         }
         private boolean setConversation(){
-            
             try{
                 chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
                 singletonServerChat ssc = singletonServerChat.getInstance();
-                return newMessage.setNewConversation(ssc.getUserName(), "localhost");
+                return newMessage.setNewConversation(ssc.getUserName(), InetAddress.getLocalHost().getHostAddress() );
             }catch(Exception e){
                 return false;
             }

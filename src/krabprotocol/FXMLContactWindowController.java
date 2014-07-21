@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -147,32 +148,43 @@ public class FXMLContactWindowController implements Initializable {
                         System.out.println("Me hiciste Click  " + ev.getValue());
                         System.out.println( "La ip es  " +singletonServerChat.userOnline.get(ev.getValue()) + " "); 
                         
+                        singletonServerChat sc = singletonServerChat.getInstance();
+                        FXMLContactWindowController x =sc.getFXMLContactWindowController();
+                        x.makeChat( ev.getValue() , (String) singletonServerChat.userOnline.get(ev.getValue()) );
                         
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
-
-                        Parent root;
-                        try {
-                            root = (Parent) loader.load();
-                            Scene scene = new Scene(root);
-                            Stage secondStage = new Stage();
-                            secondStage.setTitle("Chat with : "+ev.getValue()+"");
-                            secondStage.setScene(scene);
-
-                            ChatWindowController c = loader.getController();
-                            c.setIPReceiver( (String) singletonServerChat.userOnline.get(ev.getValue()) );
-
-                            secondStage.show();
-                        } catch (IOException ex) {
-                            Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
-                        
+                     
                     }
                 }
             }
         });
         
     }
+    
+    public void makeChat(String userName, String ip){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
+                    Parent root = (Parent) loader.load();
+                    Scene scene = new Scene(root);
+                    Stage secondStage = new Stage();
+
+                    secondStage.setTitle("New chat with :"+userName);
+                    secondStage.setScene(scene);
+                    
+                    secondStage.show();
+                    ChatWindowController sW =loader.getController();
+                    sW.setIPReceiver(ip);
+                    
+                } catch (Exception ex) {
+                    System.err.println(ex);
+                }
+                }
+            });
+    }
+    
     
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
         private TextField textfield;

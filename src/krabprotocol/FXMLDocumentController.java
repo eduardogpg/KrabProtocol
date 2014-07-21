@@ -95,6 +95,7 @@ public class FXMLDocumentController {
                secondStage.setScene(scene);
                ((Node)(event.getSource())).getScene().getWindow().hide();
                
+               
                 secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     public void handle(WindowEvent we) {
                     
@@ -104,7 +105,7 @@ public class FXMLDocumentController {
                         
                 }});
                     
-
+               sc.setFXMLContactWindowController( loader.getController() );
                secondStage.show();  
 
             } catch (IOException ex) {

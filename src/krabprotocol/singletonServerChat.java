@@ -13,12 +13,14 @@ public class singletonServerChat {
     /*Variables */
     private String currentUserName;
     private String ipServer;
-    private FXMLContactWindowController myContactWindowController;
-    
+   
+   
     static boolean flagTree = true;
     
     static Hashtable userOnline = new Hashtable();
     
+    
+    private FXMLContactWindowController myController;
     /*End Variables*/
     
     /*****************************************/
@@ -33,7 +35,13 @@ public class singletonServerChat {
     }
     /*****************************************/
     
+    public void setFXMLContactWindowController( FXMLContactWindowController controller){
+        this.myController = controller;
+    }
     
+    public FXMLContactWindowController getFXMLContactWindowController(){
+        return this.myController;
+    }
     
     public void setUserName(String userName){
         this.currentUserName = userName;
