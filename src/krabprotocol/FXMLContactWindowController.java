@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -48,8 +49,10 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import scanner.triggerServer;
 import services.Currency;
 import services.clientScanner;
+import services.webScanner;
 
 public class FXMLContactWindowController implements Initializable {
     
@@ -115,42 +118,48 @@ public class FXMLContactWindowController implements Initializable {
         
         c = new Currency();
         this.resultConvert.setVisible(false);
+        this.checkMembersOnline();
+     
+             
+    }
+    
+    private void checkMembersOnline(){
         
         try{
             clientScanner cs = new clientScanner();
             singletonServerChat sc = singletonServerChat.getInstance();
-            cargar( cs.getMembersOnline( sc.getIpServer() ));
-        }catch(Exception ex){
-        
-        }
-       
-        /*
-        new Thread(new Runnable() {
-             public void run() {
-                Platform.runLater(new Runnable() {
-                    @Override public void run() {
-                        while(singletonServerChat.flagTree){
-                            try {
-                                Thread.sleep(5000);
-                                clientScanner cs = new clientScanner();
-                                
-                                singletonServerChat sc = singletonServerChat.getInstance();
-                                cargar( cs.getMembersOnline( sc.getIpServer() ));
-                                
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        
-                    }
-                });
-            }
+            Hashtable h = cs.getMembersOnline( sc.getIpServer() );
+            if(h!=null)
+                cargar( h );
+            else
+               imFisrt();
             
-        }).start();
+                
+        }catch(Exception ex){
+            imFisrt();
+        }
+         
+    }
+    private void imFisrt(){
+        webScanner ws = new webScanner();
+        singletonServerChat s = singletonServerChat.getInstance();
         
-        */
-        
-           
+        try { 
+            if (ws.imFirst(s.getUserName(), InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
+                  System.out.println("Now Im the firts");
+                  triggerServer tS = new triggerServer();
+                  tS.run();
+            }else{
+                System.out.println("Iam the Client because Im No the Firts");
+                System.out.println( s.getIpServer() );
+            }
+
+            s.setIpServer( ws.getFisrtIp());        
+
+            clientScanner cS = new clientScanner();
+            cS.addMeatNetwork( s.getUserName() , InetAddress.getLocalHost().getHostAddress() , s.getIpServer());
+        }catch(Exception ex){}      
+            
     }
     
     @FXML
@@ -310,14 +319,16 @@ public class FXMLContactWindowController implements Initializable {
                     secondStage.setTitle("New chat with :"+userName);
                     secondStage.setScene(scene);
                     
-                    secondStage.show();
+                    
                     ChatWindowController sW =loader.getController();
                     sW.setIPReceiver(ip);
+                    sW.setNameChat(userName);
                     
                     singletonServerChat ssh = singletonServerChat.getInstance();
                     FXMLContactWindowController x =ssh.getFXMLContactWindowController();
                     x.AddNewChat(userName, loader.getController());
                     
+                    secondStage.show();
                     
                 } catch (Exception ex) {
                     System.err.println(ex);

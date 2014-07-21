@@ -15,6 +15,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.rmi.Naming;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +31,8 @@ import javafx.scene.image.Image;
 public class ChatWindowController implements Initializable {
     
     private String remoteIpForConnect;
+    private String nameChat;
+    
     private boolean communicationEstablished;
     
     
@@ -75,7 +78,7 @@ public class ChatWindowController implements Initializable {
             try{
                 chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
                 singletonServerChat ssc = singletonServerChat.getInstance();
-                newMessage.sendPublicMessage(ssc.getUserName(), message);
+                newMessage.sendPublicMessage(this.nameChat, message);
             }catch(Exception e){
                 
             }
@@ -97,6 +100,9 @@ public class ChatWindowController implements Initializable {
             this.communicationEstablished = true;
         }
         
+        public void setNameChat(String name){
+            this.nameChat = name;
+        }
        
     
 }

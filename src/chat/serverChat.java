@@ -49,6 +49,8 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         return true;
     }
 
+    
+    //Algo va mal aqui
      @Override
     public void sendPublicMessage(String userName, String message) throws RemoteException {
        //System.out.println(userName + " : "+ message);
