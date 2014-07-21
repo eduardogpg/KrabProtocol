@@ -47,4 +47,19 @@ public class clientScanner {
         }
     
     }
+    
+    
+    public boolean removeMe(String userName, String ipServer){
+        scannerNetwork myScanner;
+        try {
+            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":1099/scanner");
+            myScanner.deleateUser(userName);
+            return true;
+        } catch(Exception  ex){
+            System.err.println(ex);
+            return false;
+        }
+        
+       
+    }
 }

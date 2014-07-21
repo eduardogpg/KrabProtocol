@@ -122,6 +122,10 @@ public class FXMLContactWindowController implements Initializable {
      
              
     }
+    @FXML
+    public void updateMembers(ActionEvent event) throws IOException {
+        checkMembersOnline();
+    }
     
     private void checkMembersOnline(){
         

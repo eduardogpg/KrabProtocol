@@ -69,8 +69,8 @@ public class FXMLDocumentController {
                 tS.run();
             }else{
                 System.out.println("Iam the Client because Im No the Firts");
-                
                 System.out.println( sc.getIpServer() );
+                
             }
             sc.setIpServer( ws.getFisrtIp());        
             
@@ -102,6 +102,9 @@ public class FXMLDocumentController {
                             webScanner wS = new webScanner();
                             singletonServerChat  sS = singletonServerChat.getInstance();
                             wS.removeUser( sS.getUserName() );
+                            
+                            
+                            cS.removeMe( sS.getUserName(), ws.getFisrtIp() );
                         
                 }});
                     
