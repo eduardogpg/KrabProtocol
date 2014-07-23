@@ -52,12 +52,13 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
             sH.requestForConversation();
                     
         }else{
+            /*
             System.err.println("El server dice que ya existe, nombre a buscar : "+ userName);
             Enumeration<String> elemnts = singletonServerChat.dictionariChats.keys();
             while(elemnts.hasMoreElements()){
                String user = elemnts.nextElement();
                System.out.println("Usuario en lista " + user);
-        }
+            }*/
         }
        
         return true;
@@ -77,7 +78,7 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
             ChatWindowController sH = singletonServerChat.dictionariChats.get(userName);
             sH.putMessage("\n"+userName + " : "+message);
         }else{
-            System.err.println("No hay chat a donde agregar : ");
+           // System.err.println("No hay chat a donde agregar : ");
         }
         
         
