@@ -105,6 +105,10 @@ public class FXMLContactWindowController implements Initializable {
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        BufferedReader reader = new BufferedReader(new FileReader("autCode.txt"));
+        if(reader != null){
+            mostrarArchivo();
+        }
         autKey.setVisible(false);
         confirmButton.setVisible(false);
         autLabel.setVisible(false);
@@ -172,7 +176,7 @@ public class FXMLContactWindowController implements Initializable {
             String code = autKey.getText();//es el textfield
             DbxAuthFinish authFinish = webAuth.finish(code);
             String accessToken = authFinish.accessToken;
-            PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter("autCode.txt", "UTF-8");
             writer.println(accessToken);
             writer.close();
             client = new DbxClient(config, accessToken);
@@ -191,6 +195,7 @@ public class FXMLContactWindowController implements Initializable {
     
     private void mostrarArchivos(){
         try {
+            client = new DbxClient(config, accessToken);
             DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
             System.out.println("Files in the root path:");
             TreeItem<String> rootfileItem = new TreeItem<>("/", rootIcon);
