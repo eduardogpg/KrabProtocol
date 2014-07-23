@@ -24,75 +24,43 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
     singletonServerChat ssc;
      public serverChat() throws RemoteException{
 	super();
-               
         ssc= singletonServerChat.getInstance();
-        
         
     }
 
-    /**
-     *
-     * @param userName 
-     * @param ip
-     * @return
-     * @throws RemoteException
-     */
     @Override 
     public boolean setNewConversation(String userName, String ip) throws RemoteException {
-        //System.out.println("Vamos");
-        //userName =;
         
-        //Hashtable table = s.getHashTable();
-        //if(!table.containsKey(userName)){
+        if (!singletonServerChat.dictionariChats.containsKey( userName ))
+            this.makeNewWindowsChat(userName, ip);
+        else
+            System.err.println("Ya no se puede :( ");
         
-        if(!singletonServerChat.dictionariChats.containsKey( userName)){
-            FXMLContactWindowController s =ssc.getFXMLContactWindowController();
-            s.makeChat(userName, ip);
-            ChatWindowController sH = singletonServerChat.dictionariChats.get(userName);
-            sH.requestForConversation();
-                    
-        }else{
-            /*
-            System.err.println("El server dice que ya existe, nombre a buscar : "+ userName);
-            Enumeration<String> elemnts = singletonServerChat.dictionariChats.keys();
-            while(elemnts.hasMoreElements()){
-               String user = elemnts.nextElement();
-               System.out.println("Usuario en lista " + user);
-            }*/
-        }
-       
         return true;
     }
 
-    
-    //Algo va mal aqui
-     @Override
-    public void sendPublicMessage(String userName, String message) throws RemoteException {
-       //System.out.println(userName + " : "+ message);
-       
-        
-       singletonServerChat ssh = singletonServerChat.getInstance();
-        FXMLContactWindowController x =ssh.getFXMLContactWindowController();
-        //ChatWindowController sH = x.getChatWindowController(userName);
-        if(singletonServerChat.dictionariChats.containsKey(userName)){
-            ChatWindowController sH = singletonServerChat.dictionariChats.get(userName);
-            sH.putMessage("\n"+userName + " : "+message);
-        }else{
-           // System.err.println("No hay chat a donde agregar : ");
-        }
-        
-        
-        
-        /*
-        Enumeration<String> elemnts = sH.keys();
-        while(elemnts.hasMoreElements()){
-               String user = elemnts.nextElement();
-               System.out.println("Valor en la lista " + user);
-        }
-        ChatWindowController xx = x.getChatWindowController(userName+"Prueba");*/
+    private void makeNewWindowsChat(String userName, String ip){
+        FXMLContactWindowController controller = ssc.getFXMLContactWindowController();
+        controller.makeChat(userName+'p', ip);
         
     }
+    
+    @Override
+    public void sendPublicMessage(String userName, String message) throws RemoteException {
+        System.out.println(userName +" : "+ message );
+         if (singletonServerChat.dictionariChats.containsKey( userName ))
+            this.pushMessage(userName , message);
+        else
+            System.err.println("Ya no se puede colocar el mensaje :( ");
+    }
+    
+    
+    private void pushMessage(String userName, String message){
+        ChatWindowController myController = singletonServerChat.dictionariChats.get(userName);
+        myController.putMessage("\n"+userName + " : "+ message);
+    }
 
+        
     public boolean connect() throws RemoteException {
         return true;
     }

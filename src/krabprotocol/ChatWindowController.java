@@ -44,6 +44,8 @@ public class ChatWindowController implements Initializable {
     @FXML
     TextArea conversationArea;
     
+    private boolean primeraVez= false;
+    
         @Override
         public void initialize(URL url, ResourceBundle rb) {
             Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.png"));
@@ -56,7 +58,9 @@ public class ChatWindowController implements Initializable {
 
         @FXML
         public void sendMessage(ActionEvent event) throws IOException {
+            
             if( !this.messageField.getText().equals("")){
+                
                 if(this.communicationEstablished == false)
                     this.communicationEstablished = this.setConversation();
                 

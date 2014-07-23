@@ -16,10 +16,7 @@ public class singletonServerChat {
    
    
     static boolean flagTree = true;
-    
     static Hashtable userOnline = new Hashtable();
-    
-    
     public static Hashtable<String,ChatWindowController> dictionariChats =new Hashtable<String,ChatWindowController>(); 
     
     private FXMLContactWindowController myController;

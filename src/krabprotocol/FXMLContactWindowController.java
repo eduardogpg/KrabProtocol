@@ -348,8 +348,8 @@ public class FXMLContactWindowController implements Initializable {
     }
     
     public void makeChat(String userName, String ip){
-        if(!singletonServerChat.dictionariChats.contains(userName)){
-            System.out.println("No existe "+ userName);
+        if(!singletonServerChat.dictionariChats.containsKey(userName)){
+            
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -363,18 +363,31 @@ public class FXMLContactWindowController implements Initializable {
                         secondStage.setTitle("New chat with :"+userName);
                         secondStage.setScene(scene);
 
-
                         ChatWindowController sW =loader.getController();
                         sW.setIPReceiver(ip);
                         sW.setNameChat(userName);
 
+                        /*
                         singletonServerChat ssh = singletonServerChat.getInstance();
                         FXMLContactWindowController x =ssh.getFXMLContactWindowController();
-                        //x.AddNewChat(userName, loader.getController());
+                        x.AddNewChat(userName, loader.getController());
+                        */
+                        ChatWindowController controller = loader.getController();
+                        controller.putMessage("conexion with :" + ip);
                         
-                        singletonServerChat.dictionariChats.put(userName,loader.getController());
+                        controller.setNameChat(userName);
+                        controller.setIPReceiver(ip);
+                        secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                        
+                            public void handle(WindowEvent we) {
+                                singletonServerChat.dictionariChats.remove(userName);
+                                
+                            }});
+                        
+                        singletonServerChat.dictionariChats.put(userName,controller);
+                        
                         System.err.println("Usuario agregado " + userName);
-                        
+                       
                         secondStage.show();
 
                     } catch (Exception ex) {
