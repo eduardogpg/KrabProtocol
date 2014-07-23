@@ -7,7 +7,10 @@ import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWebAuthNoRedirect;
+import com.dropbox.core.DbxWriteMode;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -43,8 +46,11 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
@@ -55,7 +61,6 @@ import scanner.triggerServer;
 import services.Currency;
 import services.clientScanner;
 import services.webScanner;
-
 public class FXMLContactWindowController implements Initializable {
     
     @FXML
@@ -112,8 +117,10 @@ public class FXMLContactWindowController implements Initializable {
         config = new DbxRequestConfig("Krab-Protocol", Locale.getDefault().toString());
         webAuth = new DbxWebAuthNoRedirect(config, appInfo);
         try {
-            reader = new BufferedReader(new FileReader("autCode.txt"));
-            if(reader != null){
+            File f = new File("autCode.txt");
+            
+            if(f.exists()){
+                reader = new BufferedReader(new FileReader("autCode.txt"));
                 String code = reader.readLine();
                 mostrarArchivos(code);
                 confirmPanel.setVisible(false);//panel
@@ -129,7 +136,57 @@ public class FXMLContactWindowController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        filesPane.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                if (db.hasFiles()) {
+                    event.acceptTransferModes(TransferMode.COPY);
+                } else {
+                    event.consume();
+                }
+            }
+        });
+        filesPane.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasFiles()) {
+                    success = true;
+                    String filePath = null;
+                    for (File file:db.getFiles()) {
+                        filePath = file.getAbsolutePath();
+                        
+                        filePath = filePath.replace("C:\\", "/");
+                        filePath = filePath.replace('\\', '/');
+                        System.out.println(filePath);
+                        //File inputFile = new File("working-draft.txt");
+                        FileInputStream inputStream = null;
+                        try {
+                            inputStream = new FileInputStream(file);
+                        
+                            DbxEntry.File uploadedFile = client.uploadFile(filePath, DbxWriteMode.add(), file.length(), inputStream);
+                            System.out.println("Uploaded: " + uploadedFile.toString());
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (DbxException ex) {
+                            Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        } finally {
+                            try {
+                                inputStream.close();
+                            } catch (IOException ex) {
+                                Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
         Image imageRefresh = new Image(getClass().getResourceAsStream("img/refreshIcon.png"));
         refreshButton.setGraphic(new ImageView(imageRefresh));
         Image imageDropBox = new Image(getClass().getResourceAsStream("img/dropbox_button50.png"));
@@ -253,6 +310,8 @@ public class FXMLContactWindowController implements Initializable {
             files.setRoot(rootfileItem);//treeview
         } catch (DbxException ex) {
             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            confirmPanel.setVisible(true);//panel
+            filesPane.setVisible(false);
         }
         
         confirmPanel.setVisible(false);//panel
