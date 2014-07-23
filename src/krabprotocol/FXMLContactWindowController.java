@@ -176,7 +176,10 @@ public class FXMLContactWindowController implements Initializable {
                             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         } finally {
                             try {
+                                BufferedReader reader = new BufferedReader(new FileReader("autCode.txt"));
+                                String code = reader.readLine();
                                 inputStream.close();
+                                mostrarArchivos(code);
                             } catch (IOException ex) {
                                 Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
                             }
