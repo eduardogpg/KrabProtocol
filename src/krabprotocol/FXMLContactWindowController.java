@@ -167,6 +167,24 @@ public class FXMLContactWindowController implements Initializable {
     }
     
     @FXML
+    public void updateMyCount(ActionEvent event) throws IOException {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
+           
+            Parent root = (Parent) loader.load();
+            loader.getController();
+            Scene scene = new Scene(root);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Register");
+            secondStage.setScene(scene);
+            
+            secondStage.show();
+            
+    }
+    
+    
+    @FXML
     private void confirmarPermisosADropBox(){
         try {
             String code = autKey.getText();//es el textfield

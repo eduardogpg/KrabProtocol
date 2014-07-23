@@ -137,7 +137,7 @@ public class FXMLRegisterController implements Initializable {
                 triggerChat t = new triggerChat();
                 t.start();
                 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
 
                 Parent root = (Parent) loader.load();
                 Scene scene = new Scene(root);
