@@ -6,4 +6,6 @@
     <system systemId="http://www.webservicex.net/CurrencyConvertor.asmx?WSDL" uri="xml-resources/web-service-references/CurrencyConvertor/wsdl/www.webservicex.net/CurrencyConvertor.asmx.wsdl"/>
     <system systemId="http://192.168.0.110:8080/webServiceScanner-master/scanner?wsdl" uri="xml-resources/web-service-references/scanner/wsdl/192.168.0.110_8080/webServiceScanner-master/scanner.wsdl"/>
     <system systemId="http://192.168.0.110:8080/webServiceScanner-master/scanner?xsd=1" uri="xml-resources/web-service-references/scanner/wsdl/192.168.0.110_8080/webServiceScanner-master/scanner.xsd_1.xsd"/>
+    <system systemId="http://yaroc:8080/webServiceLogin/Login?WSDL" uri="xml-resources/web-service-references/Login/wsdl/yaroc_8080/webServiceLogin/Login.wsdl"/>
+    <system systemId="http://yaroc:8080/webServiceLogin/Login?xsd=1" uri="xml-resources/web-service-references/Login/wsdl/yaroc_8080/webServiceLogin/Login.xsd_1.xsd"/>
 </catalog>

@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import models.DataBaseConnection;
+import org.model.Exception_Exception;
 import scanner.triggerServer;
 import services.Login;
 import services.clientScanner;
@@ -42,7 +43,7 @@ public class FXMLDocumentController {
    
   
     @FXML
-    private void signIn(ActionEvent event) throws IOException, NoSuchAlgorithmException {
+    private void signIn(ActionEvent event) throws IOException, NoSuchAlgorithmException, Exception_Exception {
         if(this.count==0){
             Calendar cal1 = Calendar.getInstance();
             currentDate = ""+cal1.get(Calendar.YEAR)+"-"+cal1.get(Calendar.MONTH)+"-"+cal1.get(Calendar.DATE)+" "+cal1.get(Calendar.HOUR)+":"+cal1.get(Calendar.MINUTE)+":"+cal1.get(Calendar.SECOND);
@@ -169,18 +170,17 @@ public class FXMLDocumentController {
             
      }
     
-    private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException{
+    private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException, Exception_Exception{
         myConnection = new DataBaseConnection();
         
-        Keys k=new Keys();
+         Keys k=new Keys();
         Cipher c=new Cipher();
-        String key=userName+password;
-        StringBuffer md5pass=c.getmd5(key);
-        password = new String(md5pass);
             
         Login ac = new Login();
-        //return ac.loginUser(userName, password);
-        return ac.loginWithDB(userName, password);
+        ac.negociacion();
+        boolean res=ac.loginUser(userName.getBytes(),password.getBytes());
+        System.out.println(res);
+        return res;
     }           
     
 }

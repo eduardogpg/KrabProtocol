@@ -16,6 +16,8 @@ import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -60,12 +62,8 @@ public class Keys {
        String mo=Mod.toString();
        String ex=Exp.toString();
        StringBuffer k=c.getmd5(pass);
-       String key=k.substring(0,k.length()/2);
        byte[]mod=c.Symetricencrypt(mo, new String (k));
        byte[]exp=c.Symetricencrypt(ex, new String (k));
-//       System.out.println("key: "+k);
-//       System.out.println("mod md5: "+c.getmd5(Mod.toString()));
-//       System.out.println("exp md5: "+c.getmd5(Exp.toString()));
        try{
          File Dir= new File(dir);
          if(!Dir.exists()){
@@ -96,8 +94,7 @@ public class Keys {
              if(Dir.mkdirs()){System.out.println(dir+" Created");}
              else{System.out.println("Failed to create");return false;}
          }
-       }catch(Exception e){e.printStackTrace();}
-       
+       }catch(Exception e){e.printStackTrace();}    
        try {  
          Fios = new FileOutputStream(fileName);  
          Obos = new ObjectOutputStream(new BufferedOutputStream(Fios));  
@@ -110,9 +107,8 @@ public class Keys {
         }finally{  
          if(Obos != null&&Fios!=null){  
            Obos.close();Fios.close();  }}       
-          
-    
     }
+        BigInteger Modulus=null,Exponent=null;
     public PublicKey getPubKey(String name) throws IOException{
        FileInputStream fi = null;  
        ObjectInputStream oi = null;  
@@ -122,12 +118,10 @@ public class Keys {
        fi = new FileInputStream(new File(pubfile));  
        oi = new ObjectInputStream(fi);  
        BigInteger modulus = (BigInteger) oi.readObject();  
-       BigInteger exponent = (BigInteger) oi.readObject();  
-      
-       RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(modulus, exponent);  
-       KeyFactory fact = KeyFactory.getInstance("RSA");  
-       PublicKey publicKey = fact.generatePublic(rsaPublicKeySpec);  
-              
+       BigInteger exponent = (BigInteger) oi.readObject(); 
+       this.Modulus=modulus;
+       this.Exponent=exponent;
+       PublicKey publicKey = this.genpubkey(modulus, exponent);
        return publicKey;  
         
           } catch (Exception e) {  
@@ -137,7 +131,12 @@ public class Keys {
          oi.close();fi.close();  }}  
   
         }
-    
+      public BigInteger getModulus(){
+      return this.Modulus;}
+      
+      public BigInteger getExponent(){
+      return this.Exponent;}
+      
     public PrivateKey getprivKey(String name,String pass) throws IOException{
        FileInputStream fi = null;  
        ObjectInputStream oi = null;  
@@ -149,26 +148,43 @@ public class Keys {
        byte encryptedexp[]=(byte[])oi.readObject();
        byte encryptedmod[]=(byte[])oi.readObject();
        StringBuffer k=c.getmd5(pass);
-       //String key=k.substring(0,k.length()/2);
        String m=c.Symetricdecrypt(encryptedexp, new String(k));
        String e=c.Symetricdecrypt(encryptedmod, new String(k));
        BigInteger modulus=new BigInteger(m);
        BigInteger exponent=new BigInteger(e);
-//       System.out.println("key: "+k);
-//       System .out.println("mod md5:"+c.getmd5(modulus.toString()));
-//       System.out.println("exp md5"+c.getmd5(exponent.toString()));
-      RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(modulus, exponent);  
-      KeyFactory fact = KeyFactory.getInstance("RSA");  
-      PrivateKey privateKey = fact.generatePrivate(rsaPrivateKeySpec);  
-              
+       PrivateKey privateKey = this.genprivkey(modulus, exponent);
        return privateKey;  
-        
           } catch (Exception e) {  
              return null;
         }finally{
       if(oi != null&&fi!=null){  
          oi.close();fi.close();  }}        
         }
+    
+    public PrivateKey genprivkey(BigInteger modulus,BigInteger exponent){
+        try {
+            RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(modulus, exponent);
+            KeyFactory fact = KeyFactory.getInstance("RSA");
+            PrivateKey privateKey = fact.generatePrivate(rsaPrivateKeySpec);
+            return privateKey;
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    
+    }
+    public PublicKey genpubkey(BigInteger modulus,BigInteger exponent){
+        try {
+            RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(modulus, exponent);
+            KeyFactory fact = KeyFactory.getInstance("RSA");
+            PublicKey publicKey = fact.generatePublic(rsaPublicKeySpec);
+            return publicKey;
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    
+    }
     
     private String getpubfile(String name){
         String user=System.getProperties().getProperty("user.name");
@@ -179,10 +195,6 @@ public class Keys {
         String user=System.getProperties().getProperty("user.name");
         String privfile="C:\\Users\\"+user+"\\Documents\\Krab\\Keys\\"+name+"\\Kpriv.cb";
     return privfile;
-    }
-
-    private void CipherPrivKey() {
-        
     }
     
     
