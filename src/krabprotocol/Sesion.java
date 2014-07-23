@@ -14,11 +14,15 @@ public class Sesion extends Thread{
          
          try {
              
-            sleep(60000);
+            sleep(20000);
              
          } catch (InterruptedException ex) {
              ex.printStackTrace();
          }
-         System.out.println("Sesion Expirada");
+        singletonServerChat ssC = singletonServerChat.getInstance();
+        FXMLContactWindowController controller = ssC.getFXMLContactWindowController();
+        
+        controller.reload();
+        
      }
 }

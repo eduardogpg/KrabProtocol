@@ -381,7 +381,7 @@ public class FXMLContactWindowController implements Initializable {
                         
                             public void handle(WindowEvent we) {
                                 singletonServerChat.dictionariChats.remove(userName);
-                                
+                                secondStage.close();
                             }});
                         
                         singletonServerChat.dictionariChats.put(userName,controller);
@@ -435,6 +435,44 @@ public class FXMLContactWindowController implements Initializable {
         
     }
 
+    public void reload(){
+    
+    Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("alert.fxml"));
+                        Parent root = (Parent) loader.load();
+                        Scene scene = new Scene(root);
+                        Stage secondStage = new Stage();
 
+                        secondStage.setTitle("Alert");
+                        secondStage.setScene(scene);
+                        
+                        secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                        public void handle(WindowEvent we) {
+
+
+                                webScanner wS = new webScanner();
+                                singletonServerChat  sS = singletonServerChat.getInstance();
+                                wS.removeUser( sS.getUserName() );
+
+                        }});
+                        
+                        secondStage.show();
+                        
+                    } catch (Exception ex) {
+                        System.err.println(ex);
+                    }
+                    }
+                });
+
+    
+    }
+ public void over (ActionEvent event) throws IOException {
+      
+ }
    
+
 }
