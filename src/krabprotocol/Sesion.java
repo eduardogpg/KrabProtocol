@@ -14,7 +14,7 @@ public class Sesion extends Thread{
          
          try {
              
-            sleep(20000);
+            sleep(80000);
              
          } catch (InterruptedException ex) {
              ex.printStackTrace();
