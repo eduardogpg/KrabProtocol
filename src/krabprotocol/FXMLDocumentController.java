@@ -99,13 +99,16 @@ public class FXMLDocumentController {
                
                 secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     public void handle(WindowEvent we) {
-                    
+                            
+                        /*
                             webScanner wS = new webScanner();
                             singletonServerChat  sS = singletonServerChat.getInstance();
                             wS.removeUser( sS.getUserName() );
                             
                             
                             cS.removeMe( sS.getUserName(), ws.getFisrtIp() );
+                                
+                         */
                         
                 }});
                     

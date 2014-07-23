@@ -171,6 +171,24 @@ public class FXMLContactWindowController implements Initializable {
     }
     
     @FXML
+    public void updateMyCount(ActionEvent event) throws IOException {
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEditProfile.fxml"));
+           
+            Parent root = (Parent) loader.load();
+            loader.getController();
+            Scene scene = new Scene(root);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Register");
+            secondStage.setScene(scene);
+            
+            secondStage.show();
+            
+    }
+    
+    
+    @FXML
     private void confirmarPermisosADropBox(){
         try {
             String code = autKey.getText();//es el textfield
@@ -315,39 +333,47 @@ public class FXMLContactWindowController implements Initializable {
     }
     
     public void makeChat(String userName, String ip){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
+        if(!singletonServerChat.dictionariChats.contains(userName)){
+            System.out.println("No existe "+ userName);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
-                    Parent root = (Parent) loader.load();
-                    Scene scene = new Scene(root);
-                    Stage secondStage = new Stage();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
+                        Parent root = (Parent) loader.load();
+                        Scene scene = new Scene(root);
+                        Stage secondStage = new Stage();
 
-                    secondStage.setTitle("New chat with :"+userName);
-                    secondStage.setScene(scene);
-                    
-                    
-                    ChatWindowController sW =loader.getController();
-                    sW.setIPReceiver(ip);
-                    sW.setNameChat(userName);
-                    
-                    singletonServerChat ssh = singletonServerChat.getInstance();
-                    FXMLContactWindowController x =ssh.getFXMLContactWindowController();
-                    x.AddNewChat(userName, loader.getController());
-                    
-                    secondStage.show();
-                    
-                } catch (Exception ex) {
-                    System.err.println(ex);
-                }
-                }
-            });
+                        secondStage.setTitle("New chat with :"+userName);
+                        secondStage.setScene(scene);
+
+
+                        ChatWindowController sW =loader.getController();
+                        sW.setIPReceiver(ip);
+                        sW.setNameChat(userName);
+
+                        singletonServerChat ssh = singletonServerChat.getInstance();
+                        FXMLContactWindowController x =ssh.getFXMLContactWindowController();
+                        //x.AddNewChat(userName, loader.getController());
+                        
+                        singletonServerChat.dictionariChats.put(userName,loader.getController());
+                        System.err.println("Usuario agregado " + userName);
+                        
+                        secondStage.show();
+
+                    } catch (Exception ex) {
+                        System.err.println(ex);
+                    }
+                    }
+                });
+        }else{
+            System.err.println("El usuario ya existe");
+        }
     }
     
     public void AddNewChat(String userName , ChatWindowController controller){
-        //System.err.println("Agregra a "+ userName);
+        System.out.println("Se agrego a  "+ userName);
         this.dictionariChats.put(userName, controller);
     }
     
