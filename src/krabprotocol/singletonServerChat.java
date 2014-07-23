@@ -12,6 +12,8 @@ public class singletonServerChat {
     
     /*Variables */
     private String currentUserName;
+    private String password;
+    
     private String ipServer;
    
    
@@ -33,6 +35,13 @@ public class singletonServerChat {
         return instanceSingleton;
     }
     /*****************************************/
+    public void setPassword(String password){
+        this.password = password;
+    }
+    
+    public String getPassword(){
+        return this.password;
+    }
     
     public void setFXMLContactWindowController( FXMLContactWindowController controller){
         this.myController = controller;

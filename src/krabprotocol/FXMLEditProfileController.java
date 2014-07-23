@@ -7,6 +7,7 @@
 package krabprotocol;
 
 import Cipher.Cipher;
+import Cipher.Keys;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -146,7 +147,7 @@ public class FXMLEditProfileController implements Initializable {
     
       
     @FXML
-    private void updateProfile(ActionEvent event) throws IOException, NoSuchAlgorithmException {
+    private void updateProfile(ActionEvent event) throws IOException, NoSuchAlgorithmException, Exception {
          this.hideTools();
          if(isValid(this.userName.getText(),this.name.getText(),this.lastName.getText(),this.password.getText(),this.repeatPassword.getText(), cellNumber.getText() , this.email.getText(), this.institution.getText())){
                 DataBaseConnection d = new DataBaseConnection();
@@ -157,6 +158,8 @@ public class FXMLEditProfileController implements Initializable {
                     String newkey=profileName+newPassword;
                     StringBuffer newpass=c.getmd5(newkey);
                     this.newPassword = new String(newpass);
+                    Keys k=new Keys();
+                    k.generatekeys(profileName, password.getText());
                     
                     d.checkChangePassword(currentProfileName, currentPassword, this.newPassword );
                 }

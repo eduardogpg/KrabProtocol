@@ -55,11 +55,11 @@ public class FXMLDocumentController {
             myConnection.checkIn( userName.getText() ,currentDate ,this.count);
             myConnection.closeConnection();
             
-            LocateRegistry.createRegistry(1099);
+            //LocateRegistry.createRegistry(1099);
             
             singletonServerChat sc = singletonServerChat.getInstance();
             sc.setUserName(  this.userName.getText()  );
-            
+            sc.setPassword( this.password.getText() );
         
             webScanner ws = new webScanner();
             
@@ -104,11 +104,10 @@ public class FXMLDocumentController {
                             webScanner wS = new webScanner();
                             singletonServerChat  sS = singletonServerChat.getInstance();
                             wS.removeUser( sS.getUserName() );
+                            secondStage.close();
                             
-                        /*    
-                            cS.removeMe( sS.getUserName(), ws.getFisrtIp() );
-                                
-                         */
+                            System.exit(1);
+                            
                         
                 }});
                     
@@ -176,7 +175,7 @@ public class FXMLDocumentController {
     private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException, Exception_Exception{
         myConnection = new DataBaseConnection();
         
-         Keys k=new Keys();
+        Keys k=new Keys();
         Cipher c=new Cipher();
             
         Login ac = new Login();
