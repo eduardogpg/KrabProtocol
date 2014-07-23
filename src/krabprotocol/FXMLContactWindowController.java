@@ -7,7 +7,9 @@ import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWebAuthNoRedirect;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -105,9 +107,17 @@ public class FXMLContactWindowController implements Initializable {
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        BufferedReader reader = new BufferedReader(new FileReader("autCode.txt"));
-        if(reader != null){
-            mostrarArchivo();
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader("autCode.txt"));
+            if(reader != null){
+            String code = reader.readLine();
+            mostrarArchivos(code);
+        }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
         autKey.setVisible(false);
         confirmButton.setVisible(false);
@@ -199,6 +209,8 @@ public class FXMLContactWindowController implements Initializable {
             writer.close();
             client = new DbxClient(config, accessToken);
             System.out.println("Linked account: " + client.getAccountInfo().displayName);
+            
+            mostrarArchivos(accessToken);
         } catch (DbxException ex) {
             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -208,10 +220,9 @@ public class FXMLContactWindowController implements Initializable {
         }
         confirmPanel.setVisible(false);//panel
         filesPane.setVisible(true);
-        mostrarArchivos();
     }
     
-    private void mostrarArchivos(){
+    private void mostrarArchivos(String accessToken){
         try {
             client = new DbxClient(config, accessToken);
             DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
