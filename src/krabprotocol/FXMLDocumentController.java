@@ -55,7 +55,7 @@ public class FXMLDocumentController {
             myConnection.checkIn( userName.getText() ,currentDate ,this.count);
             myConnection.closeConnection();
             
-            LocateRegistry.createRegistry(1099);
+            //LocateRegistry.createRegistry(1099);
             
             singletonServerChat sc = singletonServerChat.getInstance();
             sc.setUserName(  this.userName.getText()  );
