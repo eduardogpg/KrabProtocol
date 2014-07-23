@@ -108,21 +108,28 @@ public class FXMLContactWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BufferedReader reader;
+         DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
+        config = new DbxRequestConfig("Krab-Protocol", Locale.getDefault().toString());
+        webAuth = new DbxWebAuthNoRedirect(config, appInfo);
         try {
             reader = new BufferedReader(new FileReader("autCode.txt"));
             if(reader != null){
-            String code = reader.readLine();
-            mostrarArchivos(code);
-        }
+                String code = reader.readLine();
+                mostrarArchivos(code);
+                confirmPanel.setVisible(false);//panel
+                filesPane.setVisible(true);
+            }else{
+                autKey.setVisible(false);
+                confirmButton.setVisible(false);
+                autLabel.setVisible(false);
+                filesPane.setVisible(false);
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        autKey.setVisible(false);
-        confirmButton.setVisible(false);
-        autLabel.setVisible(false);
-        filesPane.setVisible(false);
+        
         Image imageRefresh = new Image(getClass().getResourceAsStream("img/refreshIcon.png"));
         refreshButton.setGraphic(new ImageView(imageRefresh));
         Image imageDropBox = new Image(getClass().getResourceAsStream("img/dropbox_button50.png"));
@@ -218,8 +225,6 @@ public class FXMLContactWindowController implements Initializable {
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        confirmPanel.setVisible(false);//panel
-        filesPane.setVisible(true);
     }
     
     private void mostrarArchivos(String accessToken){
@@ -249,6 +254,9 @@ public class FXMLContactWindowController implements Initializable {
         } catch (DbxException ex) {
             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        confirmPanel.setVisible(false);//panel
+        filesPane.setVisible(true);
     }
     
     @FXML
@@ -258,10 +266,6 @@ public class FXMLContactWindowController implements Initializable {
     
     @FXML
     private void darPermisosADropbox(){
-        DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
-        
-        config = new DbxRequestConfig("Krab-Protocol", Locale.getDefault().toString());
-        webAuth = new DbxWebAuthNoRedirect(config, appInfo);
 
         // Have the user sign in and authorize your app.
         String authorizeUrl = webAuth.start();
