@@ -20,6 +20,8 @@ public class singletonServerChat {
     static Hashtable userOnline = new Hashtable();
     
     
+    public static Hashtable<String,ChatWindowController> dictionariChats =new Hashtable<String,ChatWindowController>(); 
+    
     private FXMLContactWindowController myController;
     /*End Variables*/
     

@@ -74,7 +74,8 @@ public class ChatWindowController implements Initializable {
         }
         
         private void senPublicMessage(String message){
-            
+            //System.out.println("\n\nEnviar a "+ this.remoteIpForConnect);
+            //System.out.println("A usaurio  "+ this.nameChat);
             try{
                 chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
                 singletonServerChat ssc = singletonServerChat.getInstance();
