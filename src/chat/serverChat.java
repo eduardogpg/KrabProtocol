@@ -41,7 +41,7 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
 
     private void makeNewWindowsChat(String userName, String ip){
         FXMLContactWindowController controller = ssc.getFXMLContactWindowController();
-        controller.makeChat(userName, ip);
+        controller.makeChat(userName+'p', ip);
         
     }
     
@@ -49,7 +49,7 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
     public void sendPublicMessage(String userName, String message) throws RemoteException {
         System.out.println(userName +" : "+ message );
          if (singletonServerChat.dictionariChats.containsKey( userName ))
-            this.pushMessage(userName, message);
+            this.pushMessage(userName , message);
         else
             System.err.println("Ya no se puede colocar el mensaje :( ");
     }
