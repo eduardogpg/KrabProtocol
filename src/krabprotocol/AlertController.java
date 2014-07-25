@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import org.model.Exception_Exception;
 import services.Login;
+import services.webScanner;
 
 /**
  * FXML Controller class
@@ -54,7 +55,13 @@ public class AlertController implements Initializable {
        
     @FXML
     public void rechazar(ActionEvent event) throws IOException {
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        
+        webScanner wS = new webScanner();
+        singletonServerChat  sS = singletonServerChat.getInstance();
+        wS.removeUser( sS.getUserName() );
+                           
+                            
         System.exit(1);
+        
     }
 }

@@ -381,7 +381,9 @@ public class FXMLContactWindowController implements Initializable {
                         
                             public void handle(WindowEvent we) {
                                 singletonServerChat.dictionariChats.remove(userName);
+                                
                                 secondStage.close();
+                                
                             }});
                         
                         singletonServerChat.dictionariChats.put(userName,controller);
@@ -457,6 +459,10 @@ public class FXMLContactWindowController implements Initializable {
                                 webScanner wS = new webScanner();
                                 singletonServerChat  sS = singletonServerChat.getInstance();
                                 wS.removeUser( sS.getUserName() );
+
+
+                                System.exit(1);
+
 
                         }});
                         
