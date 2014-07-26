@@ -15,14 +15,14 @@ import scanner.scannerNetwork;
  *
  * @author 1020142461
  */
-public class scannerServices implements Runnable{
+public class triggerScannerServices extends Thread{
     
     public void run(){
         
         while(true){
             
             try{
-                Thread.sleep(5000);//Only 5 sec
+                Thread.sleep(2000);//Only 5 sec
                 scannerNetwork myScanner = (scannerNetwork)Naming.lookup("rmi://localhost:1099/scanner");
                 Hashtable ht = myScanner.sendList();
                 

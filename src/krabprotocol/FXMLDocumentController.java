@@ -27,7 +27,7 @@ import scanner.triggerServer;
 import services.Login;
 import services.clientScanner;
 import services.webScanner;
-
+import services.triggerScannerServices;
 
 public class FXMLDocumentController {
    
@@ -52,34 +52,42 @@ public class FXMLDocumentController {
         this.count++;
         if (this.isValid( userName.getText() , password.getText())){ 
             
-            myConnection.checkIn( userName.getText() ,currentDate ,this.count);
-            myConnection.closeConnection();
+            myConnection.checkIn( userName.getText() ,currentDate ,this.count);//Hisotrico de Logins
+            myConnection.closeConnection(); //Cerramos la conexión para evitar ataques
             
-            LocateRegistry.createRegistry(1099);
+            LocateRegistry.createRegistry(1099); 
             
-            singletonServerChat sc = singletonServerChat.getInstance();
-            sc.setUserName(  this.userName.getText()  );
-            sc.setPassword( this.password.getText() );
         
+            //Consumimos el servicio en la maquina de Yarib
             webScanner ws = new webScanner();
             
-            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
+            if (true){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
                 
                 System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
-                tS.run();
+                tS.run();//Comenzamos el Scanner
+                
+                triggerScannerServices ttS = new triggerScannerServices();
+                ttS.start();
+                
             }else{
                 System.out.println("Iam the Client because Im No the Firts");
-                System.out.println( sc.getIpServer() );
-                
             }
-            sc.setIpServer( ws.getFisrtIp());        
+            //"Variables de sesión"
+            singletonServerChat sc = singletonServerChat.getInstance(); 
+            sc.setUserName(  this.userName.getText()  ); 
+            sc.setPassword( this.password.getText() );
+            //sc.setIpServer( ws.getFisrtIp());     
+            sc.setIpServer( InetAddress.getLocalHost().getHostAddress() );
             
+            //Agregamos al usuario en la red, incluyendo si es el Scanner o no
             clientScanner cS = new clientScanner();
-            cS.addMeatNetwork( userName.getText() , InetAddress.getLocalHost().getHostAddress() , sc.getIpServer());
+            if(cS.addMeatNetwork( userName.getText() , InetAddress.getLocalHost().getHostAddress() , sc.getIpServer())){
+                this.serverChat(); //Comenzamos el servidor de Chat
+                //this.sesion( ); //Comenzamos la sesion
             
-            this.serverChat(); //Method
-            this.sesion( ); //Method
+            }
+            
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLContacWindow.fxml"));
 
@@ -100,13 +108,16 @@ public class FXMLDocumentController {
                 secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     public void handle(WindowEvent we) {
                             
-                        
-                            webScanner wS = new webScanner();
-                            singletonServerChat  sS = singletonServerChat.getInstance();
-                            wS.removeUser( sS.getUserName() );
-                            secondStage.close();
                             
-                            System.exit(1);
+                        singletonServerChat  sS = singletonServerChat.getInstance();
+                        cS.removeMe( sS.getUserName(), sS.getIpServer());
+                        secondStage.close();
+                        
+                        
+                        //webScanner wS = new webScanner();
+                        //wS.removeUser( sS.getUserName() );
+                            
+                        System.exit(1);
                             
                         
                 }});
@@ -175,6 +186,7 @@ public class FXMLDocumentController {
     private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException, Exception_Exception{
         myConnection = new DataBaseConnection();
         
+        /*
         Keys k=new Keys();
         Cipher c=new Cipher();
             
@@ -183,6 +195,8 @@ public class FXMLDocumentController {
         boolean res=ac.loginUser(userName.getBytes(),password.getBytes());
         System.out.println(res);
         return res;
+        */
+        return true;
     }           
     
 }

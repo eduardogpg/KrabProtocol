@@ -21,6 +21,9 @@ public class serverScanner extends UnicastRemoteObject implements scannerNetwork
     public serverScanner() throws RemoteException{
         
         super();
+        this.dictionariUsers.put("yaroc", "192.168.1.118");
+        this.dictionariUsers.put("Santiago", "192.168.1.118");
+        
        
     }
         
@@ -35,6 +38,7 @@ public class serverScanner extends UnicastRemoteObject implements scannerNetwork
     }
 
     public boolean deleateUser(String userName) throws RemoteException {
+        System.err.println("Eliminado a "+userName);
         try{
             this.dictionariUsers.remove(userName);
             return true;

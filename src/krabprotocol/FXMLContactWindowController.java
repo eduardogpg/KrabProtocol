@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -96,6 +97,8 @@ public class FXMLContactWindowController implements Initializable {
     
     private TreeItem<String> rootItem;
     
+    private String pathDrobPox = "autCode_";
+    
     private final Node rootIcon = new ImageView(
         new Image(getClass().getResourceAsStream("img/MSN-icon.png"))
     );
@@ -112,15 +115,20 @@ public class FXMLContactWindowController implements Initializable {
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        singletonServerChat ssC =singletonServerChat.getInstance();
+        this.pathDrobPox = this.pathDrobPox+ssC.getUserName()+".txt";
+        
         BufferedReader reader;
-         DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
+        DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
         config = new DbxRequestConfig("Krab-Protocol", Locale.getDefault().toString());
         webAuth = new DbxWebAuthNoRedirect(config, appInfo);
         try {
-            File f = new File("autCode.txt");
+           // File f = new File("autCode.txt");
+            
+            File f = new File(this.pathDrobPox);
             
             if(f.exists()){
-                reader = new BufferedReader(new FileReader("autCode.txt"));
+                reader = new BufferedReader(new FileReader(this.pathDrobPox));
                 String code = reader.readLine();
                 mostrarArchivos(code);
                 confirmPanel.setVisible(false);//panel
@@ -176,7 +184,9 @@ public class FXMLContactWindowController implements Initializable {
                             Logger.getLogger(FXMLContactWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         } finally {
                             try {
-                                BufferedReader reader = new BufferedReader(new FileReader("autCode.txt"));
+                                singletonServerChat ssC =singletonServerChat.getInstance();
+                                
+                                BufferedReader reader = new BufferedReader(new FileReader( "autCode_"+ssC.getUserName()+".txt" ));
                                 String code = reader.readLine();
                                 inputStream.close();
                                 mostrarArchivos(code);
@@ -200,11 +210,39 @@ public class FXMLContactWindowController implements Initializable {
         c = new Currency();
         this.resultConvert.setVisible(false);
         this.checkMembersOnline();
-     
+        
+        updateContactList(); 
+        
              
+    }
+    
+    private void updateContactList(){
+            Task task = new Task<Void>(){
+
+                @Override
+                protected Void call() throws Exception {
+                    while(true){
+                        Thread.sleep(2000);
+                        
+                        singletonServerChat ssC = singletonServerChat.getInstance();
+                        FXMLContactWindowController tC = ssC.getFXMLContactWindowController();
+                    
+                        tC.checkMembersOnline();
+                        
+                        
+                    }
+                    
+                }
+            
+            
+            };
+            
+            new Thread(task).start();
+
     }
     @FXML
     public void updateMembers(ActionEvent event) throws IOException {
+        
         checkMembersOnline();
     }
     
@@ -230,7 +268,7 @@ public class FXMLContactWindowController implements Initializable {
         singletonServerChat s = singletonServerChat.getInstance();
         
         try { 
-            if (ws.imFirst(s.getUserName(), InetAddress.getLocalHost().getHostAddress() )){ //Comenzar El Scanner
+            if (ws.imFirst(s.getUserName(), InetAddress.getLocalHost().getHostAddress() )){
                   System.out.println("Now Im the firts");
                   triggerServer tS = new triggerServer();
                   tS.run();
@@ -271,7 +309,7 @@ public class FXMLContactWindowController implements Initializable {
             String code = autKey.getText();//es el textfield
             DbxAuthFinish authFinish = webAuth.finish(code);
             String accessToken = authFinish.accessToken;
-            PrintWriter writer = new PrintWriter("autCode.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter(this.pathDrobPox, "UTF-8");
             writer.println(accessToken);
             writer.close();
             client = new DbxClient(config, accessToken);
@@ -388,80 +426,85 @@ public class FXMLContactWindowController implements Initializable {
             rootfileItem.getChildren().add(item);
         }
         treev.setRoot(rootfileItem);
-        
-        treev.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-                if(event.getButton().equals(MouseButton.PRIMARY)){
-                    if(event.getClickCount() == 2){
-                        TreeItem<String> ev = (TreeItem) treev.getSelectionModel().getSelectedItem();
-                        System.out.println("Me hiciste Click  " + ev.getValue());
-                        System.out.println( "La ip es  " +singletonServerChat.userOnline.get(ev.getValue()) + " "); 
-                        
-                        singletonServerChat sc = singletonServerChat.getInstance();
-                        FXMLContactWindowController x =sc.getFXMLContactWindowController();
-                        x.makeChat( ev.getValue() , (String) singletonServerChat.userOnline.get(ev.getValue()) );
-                        
-                     
+        try{
+            
+                treev.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                public void handle(MouseEvent event){
+                    if(event.getButton().equals(MouseButton.PRIMARY)){
+                        if(event.getClickCount() == 2){
+                            TreeItem<String> ev = (TreeItem) treev.getSelectionModel().getSelectedItem();
+
+                            System.out.println( "La ip es  " +singletonServerChat.userOnline.get(ev.getValue()) + " "); 
+
+                            singletonServerChat sc = singletonServerChat.getInstance();
+                            FXMLContactWindowController x =sc.getFXMLContactWindowController();
+                            x.makeChat( ev.getValue() , (String) singletonServerChat.userOnline.get(ev.getValue()) , 0);
+
+
+                        }
                     }
                 }
-            }
-        });
+            });
+        }catch(Exception ex){
+            checkMembersOnline();
+        }
+        
         
     }
     
-    public void makeChat(String userName, String ip){
-        if(!singletonServerChat.dictionariChats.containsKey(userName)){
+    public void makeChat(String userName, String ip, int opcion){
+       
+            if(!singletonServerChat.ChatList.containsKey(userName)){
             
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    try {
+            
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
 
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
-                        Parent root = (Parent) loader.load();
-                        Scene scene = new Scene(root);
-                        Stage secondStage = new Stage();
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("chatWindow.fxml"));
+                            Parent root = (Parent) loader.load();
+                            Scene scene = new Scene(root);
+                            Stage secondStage = new Stage();
 
-                        secondStage.setTitle("New chat with :"+userName);
-                        secondStage.setScene(scene);
+                            secondStage.setTitle("New chat with :"+userName);
+                            secondStage.setScene(scene);
 
-                        ChatWindowController sW =loader.getController();
-                        sW.setIPReceiver(ip);
-                        sW.setNameChat(userName);
+                            ChatWindowController controladorChat =loader.getController();
+                            controladorChat.setIPReceiver(ip);
+                            controladorChat.setNameChat(userName);
+                            controladorChat.addHeader(ip);
+                            
+                            
+                            if(opcion == 1){
+                                controladorChat.preparingTextArea();
+                                controladorChat.setChanelSecure();
+                            }
+                            
 
-                        /*
-                        singletonServerChat ssh = singletonServerChat.getInstance();
-                        FXMLContactWindowController x =ssh.getFXMLContactWindowController();
-                        x.AddNewChat(userName, loader.getController());
-                        */
-                        ChatWindowController controller = loader.getController();
-                        controller.putMessage("conexion with :" + ip);
+                            secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+                                public void handle(WindowEvent we) {
+                                    singletonServerChat.ChatList.remove(userName);
+                                    secondStage.close();
+
+                                }});
+            
+                        singletonServerChat.ChatList.put(userName,controladorChat);
                         
-                        controller.setNameChat(userName);
-                        controller.setIPReceiver(ip);
-                        secondStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                         
-                            public void handle(WindowEvent we) {
-                                singletonServerChat.dictionariChats.remove(userName);
-                                
-                                secondStage.close();
-                                
-                            }});
-                        
-                        singletonServerChat.dictionariChats.put(userName,controller);
-                        
-                        System.err.println("Usuario agregado " + userName);
-                       
                         secondStage.show();
+                        
 
                     } catch (Exception ex) {
                         System.err.println(ex);
                     }
                     }
                 });
-        }else{
-            System.err.println("El usuario ya existe");
-        }
+       
+            }else{
+                System.err.println("Ventana Creada");
+            }
     }
     
     public void AddNewChat(String userName , ChatWindowController controller){

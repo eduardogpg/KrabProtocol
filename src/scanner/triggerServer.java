@@ -27,8 +27,6 @@ public class triggerServer extends Thread{
             Naming.rebind( "rmi://localhost:1099/scanner" , myServer);
             System.out.println("scanner en linea...");
             
-           
-            
         } catch (RemoteException ex) {
             Logger.getLogger(triggerServer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {

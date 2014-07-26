@@ -28,38 +28,34 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         
     }
 
-    @Override 
     public boolean setNewConversation(String userName, String ip) throws RemoteException {
+        userName = userName + "lalo";
+        if(!singletonServerChat.ChatList.containsKey(userName)){
+            
+            FXMLContactWindowController controller = ssc.getFXMLContactWindowController();
+            controller.makeChat(userName,ip,1);
         
-        if (!singletonServerChat.dictionariChats.containsKey( userName ))
-            this.makeNewWindowsChat(userName, ip);
-        else
-            System.err.println("Ya no se puede :( ");
+        }else
+            System.err.println("El usuario ya esta en la lista ");
         
         return true;
     }
 
-    private void makeNewWindowsChat(String userName, String ip){
-        FXMLContactWindowController controller = ssc.getFXMLContactWindowController();
-        controller.makeChat(userName+'p', ip);
+    public void sendPublicMessage(String userName, String message) throws RemoteException {
+      
+        
+        
+        if(singletonServerChat.ChatList.containsKey(userName)){
+            System.out.println(userName+ " : "+ message);
+            ChatWindowController controller = singletonServerChat.ChatList.get(userName);
+            controller.putMessage("\n"+userName + " : "+ message);
+        }else{
+                System.err.println("NOOOOOOOOOOOO ESTAAAAAAAAAAAAA ");
+        }
         
     }
     
-    @Override
-    public void sendPublicMessage(String userName, String message) throws RemoteException {
-        System.out.println(userName +" : "+ message );
-         if (singletonServerChat.dictionariChats.containsKey( userName ))
-            this.pushMessage(userName , message);
-        else
-            System.err.println("Ya no se puede colocar el mensaje :( ");
-    }
     
-    
-    private void pushMessage(String userName, String message){
-        ChatWindowController myController = singletonServerChat.dictionariChats.get(userName);
-        myController.putMessage("\n"+userName + " : "+ message);
-    }
-
         
     public boolean connect() throws RemoteException {
         return true;

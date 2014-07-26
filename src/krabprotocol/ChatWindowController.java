@@ -32,11 +32,8 @@ public class ChatWindowController implements Initializable {
     
     private String remoteIpForConnect;
     private String nameChat;
+    private boolean ChanelSecure = false;
     
-    private boolean communicationEstablished;
-    
-    
-   
     @FXML
     Button sendButton;
     @FXML
@@ -49,9 +46,12 @@ public class ChatWindowController implements Initializable {
         @Override
         public void initialize(URL url, ResourceBundle rb) {
             Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.png"));
-            //this.conversationArea.setStyle("-fx-background-color: black;");
         }
-
+        
+        public void setNameChat(String name){
+            this.nameChat = name;
+        }
+        
         public void setIPReceiver(String ip){
             this.remoteIpForConnect = "rmi://"+ip+":1099/myChat";
         }
@@ -59,55 +59,81 @@ public class ChatWindowController implements Initializable {
         @FXML
         public void sendMessage(ActionEvent event) throws IOException {
             
-            if( !this.messageField.getText().equals("")){
+            if (this.ChanelSecure == false){
+                if( this.ping()){
+                    this.ChanelSecure = true;
+                    makeARemoteWindows();
+                    this.preparingTextArea();
+                    System.out.println("Algo vas a hacer Yarib aqui");
+                }else{
+                    System.err.println("Borrando la Ip que no contesta");
+                }    
+            }else{
+                if(!this.messageField.getText().equals(""))
+                    sendMessage( this.messageField.getText() );
                 
-                if(this.communicationEstablished == false)
-                    this.communicationEstablished = this.setConversation();
-                
-                this.senPublicMessage(this.messageField.getText());
-                
-                putMessage("\nYou : " + this.messageField.getText());
+                putMessage("\nyou : "+ this.messageField.getText()+"\n");
                 this.messageField.setText("");
             }
             
         }
+        
+        public void sendMessage(String message){
+            
+            try{
+                chatCommunication sendMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
+                sendMessage.sendPublicMessage(nameChat, message);
+                
+            }catch(Exception ex){
+                System.err.println(ex);
+                
+            }
+        }
+        
+        public boolean ping(){
+            try{
+                chatCommunication Ping = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
+                return Ping.connect();
+                
+            }catch(Exception ex){
+                System.err.println(ex);
+                return false;
+            }
+            
+        }
+        
+        public boolean makeARemoteWindows(){
+            try{
+                chatCommunication remoteWindows = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
+                singletonServerChat singletonChat = singletonServerChat.getInstance();
+
+                                
+                return remoteWindows.setNewConversation(  singletonChat.getUserName(), InetAddress.getLocalHost().getHostAddress() );
+                
+            }catch(Exception ex){
+               return false;
+            }
+            
+        }
+        
+        
         
         public void putMessage(String message){
             this.conversationArea.setText( this.conversationArea.getText() +  message );
         
         }
         
-        private void senPublicMessage(String message){
-            //System.out.println("\n\nEnviar a "+ this.remoteIpForConnect);
-            //System.out.println("A usaurio  "+ this.nameChat);
-            try{
-                chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
-                singletonServerChat ssc = singletonServerChat.getInstance();
-                newMessage.sendPublicMessage(this.nameChat, message);
-            }catch(Exception e){
-                
-            }
+        public void addHeader(String ip){
+            this.conversationArea.setText("Chat with : "+ip+"\nFor establish secure channel to send an empty message");
             
         }
-        private boolean setConversation(){
-            try{
-                chatCommunication newMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
-                singletonServerChat ssc = singletonServerChat.getInstance();
-                return newMessage.setNewConversation(ssc.getUserName(), InetAddress.getLocalHost().getHostAddress() );
-            }catch(Exception e){
-                return false;
-            }
-             
+        
+        public void preparingTextArea(){
+            this.conversationArea.setText( "------------------------------------");
         }
         
-        
-        public void requestForConversation(){
-            this.communicationEstablished = true;
+        public void setChanelSecure(){
+            this.ChanelSecure = true;
         }
-        
-        public void setNameChat(String name){
-            this.nameChat = name;
-        }
-       
     
 }

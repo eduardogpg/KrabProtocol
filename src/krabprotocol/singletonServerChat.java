@@ -13,15 +13,16 @@ public class singletonServerChat {
     /*Variables */
     private String currentUserName;
     private String password;
-    
     private String ipServer;
-   
-   
     static boolean flagTree = true;
-    static Hashtable userOnline = new Hashtable();
-    public static Hashtable<String,ChatWindowController> dictionariChats =new Hashtable<String,ChatWindowController>(); 
     
     private FXMLContactWindowController myController;
+    
+    static Hashtable userOnline = new Hashtable();
+    public static Hashtable<String,ChatWindowController> ChatList =new Hashtable<String,ChatWindowController>(); 
+    
+    
+    
     /*End Variables*/
     
     /*****************************************/
