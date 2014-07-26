@@ -29,7 +29,6 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
     }
 
     public boolean setNewConversation(String userName, String ip) throws RemoteException {
-        userName = userName + "lalo";
         if(!singletonServerChat.ChatList.containsKey(userName)){
             
             FXMLContactWindowController controller = ssc.getFXMLContactWindowController();
@@ -46,17 +45,14 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         
         
         if(singletonServerChat.ChatList.containsKey(userName)){
-            System.out.println(userName+ " : "+ message);
             ChatWindowController controller = singletonServerChat.ChatList.get(userName);
             controller.putMessage("\n"+userName + " : "+ message);
         }else{
-                System.err.println("NOOOOOOOOOOOO ESTAAAAAAAAAAAAA ");
+            System.err.println("NOOOOOOOOOOOO ESTAAAAAAAAAAAAA ");
         }
         
     }
     
-    
-        
     public boolean connect() throws RemoteException {
         return true;
     }

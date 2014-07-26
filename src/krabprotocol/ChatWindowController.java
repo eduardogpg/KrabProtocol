@@ -16,6 +16,7 @@ import java.net.URL;
 import java.rmi.Naming;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -120,7 +121,7 @@ public class ChatWindowController implements Initializable {
         
         public void putMessage(String message){
             this.conversationArea.setText( this.conversationArea.getText() +  message );
-        
+            updateTextArea();
         }
         
         public void addHeader(String ip){
@@ -128,6 +129,10 @@ public class ChatWindowController implements Initializable {
             
         }
         
+        
+        public void updateTextArea(){
+              this.conversationArea.setText( this.conversationArea.getText() );
+        }
         public void preparingTextArea(){
             this.conversationArea.setText( "------------------------------------");
         }
