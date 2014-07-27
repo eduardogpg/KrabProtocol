@@ -59,13 +59,14 @@ public class FXMLDocumentController {
             myConnection.closeConnection(); //Cerramos la conexión para evitar ataques
             
             LocateRegistry.createRegistry(1099); 
+            LocateRegistry.createRegistry(2099); 
             
         
             //Consumimos el servicio en la maquina de Yarib
             webScanner ws = new webScanner();
             
 
-            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
+            if (true){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
     
                 System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
@@ -81,12 +82,14 @@ public class FXMLDocumentController {
             singletonServerChat sc = singletonServerChat.getInstance(); 
             sc.setUserName(  this.userName.getText()  ); 
             sc.setPassword( this.password.getText() );
-            sc.setIpServer( ws.getFisrtIp());     
+            sc.setIpServer( InetAddress.getLocalHost().getHostAddress() );
+            //sc.setIpServer( ws.getFisrtIp());     
             
             
             //Agregamos al usuario en la red, incluyendo si es el Scanner o no
             clientScanner cS = new clientScanner();
             if(cS.addMeatNetwork( userName.getText() , InetAddress.getLocalHost().getHostAddress() , sc.getIpServer())){
+                System.err.println("Comenzamos el servior de chat");
                 this.serverChat(); //Comenzamos el servidor de Chat
                 //this.sesion( ); //Comenzamos la sesion
             
@@ -188,9 +191,10 @@ public class FXMLDocumentController {
      }
     
     private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException, Exception_Exception{
+        
         myConnection = new DataBaseConnection();
         
-        
+        /*
         Keys k=new Keys();
         Cipher c=new Cipher();
             
@@ -199,7 +203,8 @@ public class FXMLDocumentController {
         boolean res=ac.loginUser(userName.getBytes(),password.getBytes());
         System.out.println(res);
         return res;
-        
+                */
+        return true;
 
     }           
       Bob b;public static String myname,mypass;

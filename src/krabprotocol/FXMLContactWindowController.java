@@ -229,7 +229,6 @@ public class FXMLContactWindowController implements Initializable {
                     
                         tC.checkMembersOnline();
                         
-                        
                     }
                     
                 }
@@ -240,10 +239,12 @@ public class FXMLContactWindowController implements Initializable {
             new Thread(task).start();
 
     }
+    
     @FXML
     public void updateMembers(ActionEvent event) throws IOException {
         
         checkMembersOnline();
+        System.err.println("Mienbros Checados");
     }
     
     private void checkMembersOnline(){
@@ -263,6 +264,7 @@ public class FXMLContactWindowController implements Initializable {
         }
          
     }
+    
     private void imFisrt(){
         webScanner ws = new webScanner();
         singletonServerChat s = singletonServerChat.getInstance();
@@ -409,14 +411,12 @@ public class FXMLContactWindowController implements Initializable {
             this.resultConvert.setText( "only number, Try again" );
         }  
     }
-    
-  
-
-
-    final void cargar( Hashtable Users){
-        Enumeration<String> elemnts = Users.keys();
-        
+   
+    public void cargar( Hashtable Users){
+        singletonServerChat.userOnline  = null;
         singletonServerChat.userOnline = Users;
+        
+        Enumeration<String> elemnts = Users.keys();
         
         TreeItem<String> rootfileItem = new TreeItem<>("Members Online", rootIcon);
         rootfileItem.setExpanded(true);
@@ -433,9 +433,12 @@ public class FXMLContactWindowController implements Initializable {
                     if(event.getButton().equals(MouseButton.PRIMARY)){
                         if(event.getClickCount() == 2){
                             TreeItem<String> ev = (TreeItem) treev.getSelectionModel().getSelectedItem();
-
-                            System.out.println( "La ip es  " +singletonServerChat.userOnline.get(ev.getValue()) + " "); 
-
+                            
+                            try{
+                                System.out.println( "La ip es  " +singletonServerChat.userOnline.get(ev.getValue()) + " "); 
+                            }catch(Exception ex){
+                                checkMembersOnline();
+                            }
                             singletonServerChat sc = singletonServerChat.getInstance();
                             FXMLContactWindowController x =sc.getFXMLContactWindowController();
                             x.makeChat( ev.getValue() , (String) singletonServerChat.userOnline.get(ev.getValue()) , 0);
@@ -446,7 +449,8 @@ public class FXMLContactWindowController implements Initializable {
                 }
             });
         }catch(Exception ex){
-            checkMembersOnline();
+            //
+            System.err.println(ex);
         }
         
         
@@ -541,7 +545,7 @@ public class FXMLContactWindowController implements Initializable {
         
     }
 
-    public void reload(){
+ public void reload(){
     
     Platform.runLater(new Runnable() {
                 @Override
@@ -580,6 +584,7 @@ public class FXMLContactWindowController implements Initializable {
 
     
     }
+ 
  public void over (ActionEvent event) throws IOException {
       
  }

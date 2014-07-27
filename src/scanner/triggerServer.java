@@ -24,7 +24,7 @@ public class triggerServer extends Thread{
         System.out.println("Comenzando scanner");
         try {
             scannerNetwork myServer = new serverScanner();
-            Naming.rebind( "rmi://localhost:1099/scanner" , myServer);
+            Naming.rebind( "rmi://localhost:2099/scanner" , myServer);
             System.out.println("scanner en linea...");
             
         } catch (RemoteException ex) {

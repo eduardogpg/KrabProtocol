@@ -23,7 +23,7 @@ public class triggerScannerServices extends Thread{
             
             try{
                 Thread.sleep(1000);//Only 5 sec
-                scannerNetwork myScanner = (scannerNetwork)Naming.lookup("rmi://localhost:1099/scanner");
+                scannerNetwork myScanner = (scannerNetwork)Naming.lookup("rmi://localhost:2099/scanner");
                 Hashtable ht = myScanner.sendList();
                 
                 if(ht.size()!=0){
@@ -31,7 +31,7 @@ public class triggerScannerServices extends Thread{
                     Enumeration<String> elemnts = ht.keys();
                     
                     while(elemnts.hasMoreElements()){
-
+                        
                         String user = elemnts.nextElement();
                         String address = "rmi://"+ ht.get(user) +":1099/myChat";
 

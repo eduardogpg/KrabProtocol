@@ -22,7 +22,7 @@ public class clientScanner {
         
         scannerNetwork myScanner;
         try {
-            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":1099/scanner");
+            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":2099/scanner");
             Hashtable ht = myScanner.sendList();
             return ht;
         } catch(Exception  ex){
@@ -38,7 +38,7 @@ public class clientScanner {
     
         scannerNetwork myScanner;
         try {
-            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":1099/scanner");
+            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":2099/scanner");
             myScanner.addMe(userName, ip);
             return true;
         } catch(Exception  ex){
@@ -52,7 +52,7 @@ public class clientScanner {
     public boolean removeMe(String userName, String ipServer){
         scannerNetwork myScanner;
         try {
-            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":1099/scanner");
+            myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":2099/scanner");
             myScanner.deleateUser(userName);
             return true;
         } catch(Exception  ex){
