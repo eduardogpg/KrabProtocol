@@ -34,7 +34,7 @@ public class Bob extends UnicastRemoteObject implements Krab{
       
         public Bob(String Bname,String Bpass) throws RemoteException{
             super();
-            LocateRegistry.createRegistry(1099);
+           // LocateRegistry.createRegistry(1099);
             this.BobName=Bname;
             this.BobPass=Bpass;
         }
@@ -64,24 +64,24 @@ public class Bob extends UnicastRemoteObject implements Krab{
     @Override
     public void sendmod(BigInteger Amod) throws RemoteException{
         this.Amod=Amod;
-        System.out.println("getting Alice mod");
+        //System.out.println("getting Alice mod");
     }
 
     @Override
     public void sendexp(BigInteger Aexp) throws RemoteException{
         this.Aexp=Aexp;
-        System.out.println("getting Alice exp");
+       // System.out.println("getting Alice exp");
     }
     
     @Override
     public void sendnounce(byte[] nounce1,byte[]nounce2) throws RemoteException{
         
          PublicKey Apub=k.genpubkey(Amod, Aexp);
-         System.out.println("Alice pub key generated");
+         //System.out.println("Alice pub key generated");
          PrivateKey Bpriv=null;
         try {
              Bpriv=k.getprivKey(BobName,BobPass);
-             System.out.println("Bob Private key generated");
+          //   System.out.println("Bob Private key generated");
              if(Bpriv==null){System.out.println("Failed to get Bob priv key");}
         } catch (IOException ex) {
            ex.printStackTrace();
@@ -141,7 +141,7 @@ public class Bob extends UnicastRemoteObject implements Krab{
       byte[]Fkab=c.Privdecrypt2(Dkab, Bpriv);
       String kab=new String (Fkab);
       System.out.println("Kab: "+kab);
-      System.out.println("KabHash: "+HashKab);
+      //System.out.println("KabHash: "+HashKab);
     }
     
       

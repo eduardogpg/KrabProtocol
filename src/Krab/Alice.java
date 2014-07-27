@@ -27,8 +27,8 @@ import java.util.logging.Logger;
  */
 public class Alice {
     String Na,Nb,Kab;
-    public void init(String name,String pass,String bob,String url) throws NoSuchAlgorithmException{
-//        String url="rmi://localhost:1099/Bob";
+    public void init(String name,String pass,String bob,String host) throws NoSuchAlgorithmException{
+        String url="rmi://"+host+":1099/Bob";
         Keys k=new Keys();
         Cipher c=new Cipher();
         try {     
@@ -38,14 +38,14 @@ public class Alice {
             BigInteger e=b.getexp(bob);
             PublicKey Bpub=k.genpubkey(m,e);
             if(Bpub==null){System.out.println("Failed to generate Bob pub key");}
-            System.out.println("Bob pub key generatedd...");
             PrivateKey Aprivkey=k.getprivKey(name, pass);
             PublicKey Apubkey=k.getPubKey(name);
-          //  System.out.println("A mod "+k.getModulus());
-            //System.out.println("A exp "+k.getExponent());
+            if(Aprivkey==null||Apubkey==null||Bpub==null){
+            System.err.println("Failed to get Key");
+            }else{
             b.sendexp(k.getExponent());
             b.sendmod(k.getModulus());
-            System.out.println("Sending Alice pub Key");
+            //System.out.println("Sending Alice pub Key");
             BigInteger nounce=this.GenNounce();
             Na=nounce.toString();
             System.out.println(Na);
@@ -66,23 +66,26 @@ public class Alice {
             String Nbs=split[1];
          //   System.out.println("Hash Na: "+new String(c.getmd5(Na)));
            //System.out.println("Recibed Na Hash: "+hashNa);
-           // System.out.println("Nb: "+Nbs);
+          if(hashNa.equals(new String(c.getmd5(Na)))){
+            //System.out.println("Na Valid");
             BigInteger kab=generateKab(Na,Nbs);
             Kab=kab.toString();
             String Kabhash=new String(c.getmd5(kab.toString()));
             byte[] enckab=c.PubEncrypt(Kab.getBytes(), Bpub);
             System.out.println("Kab :"+Kab);
-            System.out.println("KabHash :"+Kabhash);
+            //System.out.println("KabHash :"+Kabhash);
             byte[] kabhash=Kabhash.getBytes();
             c.ReEncryptPriv(enckab, Aprivkey);
             byte[] kab1=c.getpart1();
             byte[] kab2=c.getpart2();
             byte[]Enchashkab=c.PrivEncrypt(kabhash,Aprivkey);
             b.sendKab(kab1,kab2,Enchashkab);
+            }else{System.err.println("Invalid Na");}}
         } catch (MalformedURLException | RemoteException | NotBoundException ex) {
-            ex.printStackTrace();
+             System.err.println("Rmi Neg Failed");
+             ex.printStackTrace();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println("Can not open key file");
         } 
     }
        SecureRandom random = new SecureRandom();

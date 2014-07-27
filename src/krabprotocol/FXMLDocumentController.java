@@ -1,9 +1,13 @@
 package krabprotocol;
 
 import Cipher.*;
+import Krab.Bob;
 import chat.triggerChat;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
@@ -40,7 +44,6 @@ public class FXMLDocumentController {
    private TextField userName;
    @FXML
    private PasswordField password;
-   
   
     @FXML
     private void signIn(ActionEvent event) throws IOException, NoSuchAlgorithmException, Exception_Exception {
@@ -61,7 +64,8 @@ public class FXMLDocumentController {
             //Consumimos el servicio en la maquina de Yarib
             webScanner ws = new webScanner();
             
-            if (true){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
+          //  this.listener(userName.getText(),password.getText());
+            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
                 
                 System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
@@ -186,7 +190,7 @@ public class FXMLDocumentController {
     private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException, Exception_Exception{
         myConnection = new DataBaseConnection();
         
-        /*
+        
         Keys k=new Keys();
         Cipher c=new Cipher();
             
@@ -195,8 +199,20 @@ public class FXMLDocumentController {
         boolean res=ac.loginUser(userName.getBytes(),password.getBytes());
         System.out.println(res);
         return res;
-        */
-        return true;
+        
+        //return true;
     }           
+      Bob b;public static String myname,mypass;
+      public void listener(String name,String pass){
+        try {
+            FXMLDocumentController.myname=name;FXMLDocumentController.mypass=pass;
+            b=new Bob(name,pass);// nombre y pass del usuario loggeado
+            String url="rmi://localhost:1099/Bob";
+            Naming.rebind(url,b);
+            System.out.println("Rmi for Krab Waiting...");
+        } catch (RemoteException | MalformedURLException ex) {
+           ex.printStackTrace();
+        }
+   }
     
 }

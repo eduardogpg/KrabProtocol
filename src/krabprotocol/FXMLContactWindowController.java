@@ -475,7 +475,6 @@ public class FXMLContactWindowController implements Initializable {
                             controladorChat.setNameChat(userName);
                             controladorChat.addHeader(ip);
                             
-                            
                             if(opcion == 1){
                                 controladorChat.preparingTextArea();
                                 controladorChat.setChanelSecure();
