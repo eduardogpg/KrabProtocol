@@ -61,7 +61,7 @@ public class FXMLDocumentController {
             //Consumimos el servicio en la maquina de Yarib
             webScanner ws = new webScanner();
             
-            if (true){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
+            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
                 
                 System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
@@ -186,7 +186,7 @@ public class FXMLDocumentController {
     private boolean isValid(String userName, String password) throws IOException, NoSuchAlgorithmException, Exception_Exception{
         myConnection = new DataBaseConnection();
         
-        /*
+        
         Keys k=new Keys();
         Cipher c=new Cipher();
             
@@ -195,8 +195,7 @@ public class FXMLDocumentController {
         boolean res=ac.loginUser(userName.getBytes(),password.getBytes());
         System.out.println(res);
         return res;
-        */
-        return true;
+        
     }           
     
 }

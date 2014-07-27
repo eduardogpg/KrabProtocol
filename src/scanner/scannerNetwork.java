@@ -16,8 +16,9 @@ import java.util.Hashtable;
  */
 public interface scannerNetwork extends Remote{
     
-    public boolean addMe(String userName, String ip) throws RemoteException;
-    //Se agrega a un nuevo conectado 
+
+        public boolean addMe(String userName, String ip) throws RemoteException;
+    //Se agrega a un nuevo equipo conectado 
     
     public Hashtable<String,String> sendList()  throws RemoteException;
     //Se regresan todos los usuarios conectados a la red junto con su ip

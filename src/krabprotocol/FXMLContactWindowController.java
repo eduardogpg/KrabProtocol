@@ -306,7 +306,7 @@ public class FXMLContactWindowController implements Initializable {
     @FXML
     private void confirmarPermisosADropBox(){
         try {
-            String code = autKey.getText();//es el textfield
+            String code = autKey.getText();//Textfield
             DbxAuthFinish authFinish = webAuth.finish(code);
             String accessToken = authFinish.accessToken;
             PrintWriter writer = new PrintWriter(this.pathDrobPox, "UTF-8");

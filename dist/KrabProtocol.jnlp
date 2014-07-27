@@ -11,9 +11,9 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="KrabProtocol.jar" size="680624" download="eager" />
-    <jar href="lib/dropbox-core-sdk-1.7.6.jar" size="210990" download="eager" />
-    <jar href="lib/jackson-core-2.2.3.jar" size="204093" download="eager" />
+    <jar href="KrabProtocol.jar" size="680931" download="eager" />
+    <jar href="lib/dropbox-core-sdk-1.7.6.jar" size="210991" download="eager" />
+    <jar href="lib/jackson-core-2.2.3.jar" size="204094" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="860446" download="eager" />
   </resources>
 <security>
