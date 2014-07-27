@@ -43,12 +43,12 @@ public class Login {
 
     public  boolean loginUser(byte[] userName, byte[] password) throws Exception_Exception {
           try {
-              String url="rmi://yaroc:1099/Bob";
+             // String url="rmi://yaroc:1099/Bob";
               Cipher c=new Cipher();
               Alice a=new Alice();
               String user=new String(userName);
               String pass=new String(password);
-              a.init(user, pass, "Server", url);
+              a.init(user, pass, "Server", "yaroc");
               String kab=a.getKab();
               System.out.println("kab from a"+kab);
               byte[]Ename=c.Symetricencrypt(user, kab);

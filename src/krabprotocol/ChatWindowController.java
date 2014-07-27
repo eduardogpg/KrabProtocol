@@ -7,6 +7,7 @@
 package krabprotocol;
 
 
+import Krab.Alice;
 import chat.*;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.rmi.Naming;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -43,7 +45,7 @@ public class ChatWindowController implements Initializable {
     TextArea conversationArea;
     
     private boolean primeraVez= false;
-    
+        
         @Override
         public void initialize(URL url, ResourceBundle rb) {
             Image ico = new Image(getClass().getResourceAsStream("img/cangrejo.png"));
@@ -52,20 +54,25 @@ public class ChatWindowController implements Initializable {
         public void setNameChat(String name){
             this.nameChat = name;
         }
-        
+        String ip;
         public void setIPReceiver(String ip){
+            this.ip=ip;
             this.remoteIpForConnect = "rmi://"+ip+":1099/myChat";
         }
 
         @FXML
-        public void sendMessage(ActionEvent event) throws IOException {
+        public void sendMessage(ActionEvent event) throws IOException, NoSuchAlgorithmException {
             
             if (this.ChanelSecure == false){
                 if( this.ping()){
                     this.ChanelSecure = true;
                     makeARemoteWindows();
                     this.preparingTextArea();
-                    System.out.println("Algo vas a hacer Yarib aqui");
+//                    System.out.println(FXMLDocumentController.myname+" "+FXMLDocumentController.mypass+" "+
+//                            " "+nameChat+" "+ remoteIpForConnect);
+//                    Alice a =new Alice();
+//                    a.init(FXMLDocumentController.myname,FXMLDocumentController.mypass, nameChat, ip);
+//                    System.out.println("llave :"+a.getKab());
                 }else{
                     System.err.println("Borrando la Ip que no contesta");
                 }    
