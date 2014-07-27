@@ -22,15 +22,14 @@ public class triggerScannerServices extends Thread{
         while(true){
             
             try{
-                Thread.sleep(2000);//Only 5 sec
+                Thread.sleep(1000);//Only 5 sec
                 scannerNetwork myScanner = (scannerNetwork)Naming.lookup("rmi://localhost:1099/scanner");
                 Hashtable ht = myScanner.sendList();
                 
                 if(ht.size()!=0){
                     
                     Enumeration<String> elemnts = ht.keys();
-
-                    System.out.println("A listar : "+ ht.size());
+                    
                     while(elemnts.hasMoreElements()){
 
                         String user = elemnts.nextElement();
@@ -38,10 +37,13 @@ public class triggerScannerServices extends Thread{
 
                         try{
                             chatCommunication newMessage = (chatCommunication)Naming.lookup(address);
-
                             try{
-                                System.out.println(newMessage.connect());
-                                System.out.println("Conexion exitosa con "+user +"ip :" + address);
+                                if(newMessage.connect()){
+                                
+                                }else{
+                                   myScanner.deleateUser(user);
+                                }
+                                
                             }catch (Exception exx){
                                 myScanner.deleateUser(user);
                             }

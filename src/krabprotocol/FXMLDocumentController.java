@@ -64,13 +64,9 @@ public class FXMLDocumentController {
             //Consumimos el servicio en la maquina de Yarib
             webScanner ws = new webScanner();
             
-<<<<<<< HEAD
+
             if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
-=======
-          //  this.listener(userName.getText(),password.getText());
-            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
->>>>>>> ce94dd3147c38f337a252bba1a9336de70ea8e20
-                
+    
                 System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
                 tS.run();//Comenzamos el Scanner
@@ -85,8 +81,8 @@ public class FXMLDocumentController {
             singletonServerChat sc = singletonServerChat.getInstance(); 
             sc.setUserName(  this.userName.getText()  ); 
             sc.setPassword( this.password.getText() );
-            //sc.setIpServer( ws.getFisrtIp());     
-            sc.setIpServer( InetAddress.getLocalHost().getHostAddress() );
+            sc.setIpServer( ws.getFisrtIp());     
+            
             
             //Agregamos al usuario en la red, incluyendo si es el Scanner o no
             clientScanner cS = new clientScanner();
@@ -204,10 +200,7 @@ public class FXMLDocumentController {
         System.out.println(res);
         return res;
         
-<<<<<<< HEAD
-=======
-        //return true;
->>>>>>> ce94dd3147c38f337a252bba1a9336de70ea8e20
+
     }           
       Bob b;public static String myname,mypass;
       public void listener(String name,String pass){
