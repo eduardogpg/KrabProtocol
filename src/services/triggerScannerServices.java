@@ -29,20 +29,15 @@ public class triggerScannerServices extends Thread{
                 if(ht.size()!=0){
                     
                     Enumeration<String> elemnts = ht.keys();
-                    
                     while(elemnts.hasMoreElements()){
-                        
                         String user = elemnts.nextElement();
+                        //System.out.println("LIstando a "+ user);
                         String address = "rmi://"+ ht.get(user) +":1099/myChat";
 
                         try{
                             chatCommunication newMessage = (chatCommunication)Naming.lookup(address);
                             try{
-                                if(newMessage.connect()){
-                                
-                                }else{
-                                   myScanner.deleateUser(user);
-                                }
+                                newMessage.connect();
                                 
                             }catch (Exception exx){
                                 myScanner.deleateUser(user);

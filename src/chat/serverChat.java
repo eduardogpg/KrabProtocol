@@ -40,15 +40,17 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         return true;
     }
 
-    public void sendPublicMessage(String userName, String message) throws RemoteException {
+    public boolean sendPublicMessage(String userName, String message) throws RemoteException {
       
         
         
         if(singletonServerChat.ChatList.containsKey(userName)){
             ChatWindowController controller = singletonServerChat.ChatList.get(userName);
             controller.putMessage("\n"+userName + " : "+ message);
+            return true;
         }else{
-            System.err.println("NOOOOOOOOOOOO ESTAAAAAAAAAAAAA ");
+            System.err.println("Usuario a buscar "+userName);
+            return false;
         }
         
     }

@@ -68,19 +68,12 @@ public class ChatWindowController implements Initializable {
                     this.ChanelSecure = true;
                     makeARemoteWindows();
                     this.preparingTextArea();
-//                    System.out.println(FXMLDocumentController.myname+" "+FXMLDocumentController.mypass+" "+
-//                            " "+nameChat+" "+ remoteIpForConnect);
-//                    Alice a =new Alice();
-//                    a.init(FXMLDocumentController.myname,FXMLDocumentController.mypass, nameChat, ip);
-//                    System.out.println("llave :"+a.getKab());
-                }else{
-                    System.err.println("Borrando la Ip que no contesta");
-                }    
+                }  
             }else{
                 if(!this.messageField.getText().equals(""))
                     sendMessage( this.messageField.getText() );
                 
-                putMessage("\nyou : "+ this.messageField.getText()+"\n");
+                putMessage("\nyou : "+ this.messageField.getText());
                 this.messageField.setText("");
             }
             
@@ -90,10 +83,14 @@ public class ChatWindowController implements Initializable {
             
             try{
                 chatCommunication sendMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
-                sendMessage.sendPublicMessage(nameChat, message);
+                singletonServerChat ssC = singletonServerChat.getInstance();
+                if(sendMessage.sendPublicMessage(ssC.getUserName(), message)){}else{
+                    this.putMessage("El usuario a dejado la conversación, Es necesario crear una nueva sala");
+                }
+                    
                 
             }catch(Exception ex){
-                System.err.println(ex);
+               this.putMessage("El usuario a dejado la red, contacte personalmente con él");
                 
             }
         }

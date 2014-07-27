@@ -23,6 +23,7 @@ public class clientScanner {
         scannerNetwork myScanner;
         try {
             myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":2099/scanner");
+            
             Hashtable ht = myScanner.sendList();
             return ht;
         } catch(Exception  ex){
@@ -36,6 +37,7 @@ public class clientScanner {
     
     public boolean addMeatNetwork(String userName, String ip, String ipServer){
     
+        
         scannerNetwork myScanner;
         try {
             myScanner = (scannerNetwork)Naming.lookup("rmi://"+ipServer+":2099/scanner");

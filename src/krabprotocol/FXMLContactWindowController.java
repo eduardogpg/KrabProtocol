@@ -416,6 +416,8 @@ public class FXMLContactWindowController implements Initializable {
         singletonServerChat.userOnline  = null;
         singletonServerChat.userOnline = Users;
         
+        //System.err.println(Users.size());
+        
         Enumeration<String> elemnts = Users.keys();
         
         TreeItem<String> rootfileItem = new TreeItem<>("Members Online", rootIcon);
@@ -441,7 +443,12 @@ public class FXMLContactWindowController implements Initializable {
                             }
                             singletonServerChat sc = singletonServerChat.getInstance();
                             FXMLContactWindowController x =sc.getFXMLContactWindowController();
-                            x.makeChat( ev.getValue() , (String) singletonServerChat.userOnline.get(ev.getValue()) , 0);
+                            try{
+                                x.makeChat( ev.getValue() , (String) singletonServerChat.userOnline.get(ev.getValue()) , 0);
+                            }catch(Exception ex){
+                                checkMembersOnline();
+                            }
+                            
 
 
                         }
@@ -494,6 +501,7 @@ public class FXMLContactWindowController implements Initializable {
                                 }});
             
                         singletonServerChat.ChatList.put(userName,controladorChat);
+                        System.err.println("Usuario agregado " + userName);
                         
                         
                         secondStage.show();
