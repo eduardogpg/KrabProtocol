@@ -66,7 +66,7 @@ public class FXMLDocumentController {
             webScanner ws = new webScanner();
             
 
-            if (true){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
+            if (true==false){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
     
                 System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
@@ -82,7 +82,12 @@ public class FXMLDocumentController {
             singletonServerChat sc = singletonServerChat.getInstance(); 
             sc.setUserName(  this.userName.getText()  ); 
             sc.setPassword( this.password.getText() );
-            sc.setIpServer( InetAddress.getLocalHost().getHostAddress() );
+            
+            
+            sc.setIpServer("192.168.0.102"); //InetAddress.getLocalHost().getHostAddress() );
+            
+
+
             //sc.setIpServer( ws.getFisrtIp());     
             
             

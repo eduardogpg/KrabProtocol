@@ -84,15 +84,15 @@ public class ChatWindowController implements Initializable {
             try{
                 chatCommunication sendMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);
                 singletonServerChat ssC = singletonServerChat.getInstance();
-                if(sendMessage.sendPublicMessage(ssC.getUserName(), message)){}else{
-                    this.putMessage("El usuario a dejado la conversación, Es necesario crear una nueva sala");
+                if(sendMessage.sendPublicMessage(ssC.getUserName(), message) == true){}else{
+                    this.putMessage("\n\nEl usuario a dejado la conversación, Es necesario crear una nueva sala");
                 }
-                    
                 
             }catch(Exception ex){
-               this.putMessage("El usuario a dejado la red, contacte personalmente con él");
-                
+                //Creo que es necesario crear un hilo, esta pasando lo mismo que paso con el chat de Yarib
+                //Se queda esperando, aun que si llega el true o false 
             }
+            
         }
         
         public boolean ping(){

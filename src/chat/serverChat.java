@@ -50,7 +50,8 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
             return true;
         }else{
             System.err.println("Usuario a buscar "+userName);
-            return false;
+            System.err.println("NOOOOOOOOOOOO ESTAAAAAAAAAAAAA ");
+            return true;
         }
         
     }
