@@ -74,9 +74,11 @@ public class FXMLDocumentController {
                 
                 triggerScannerServices ttS = new triggerScannerServices();
                 ttS.start();
+                singletonServerChat.imScanner = true;
                 
             }else{
                 System.out.println("Iam the Client because Im No the Firts");
+                singletonServerChat.imScanner = false;
             }
             //"Variables de sesión"
             singletonServerChat sc = singletonServerChat.getInstance(); 

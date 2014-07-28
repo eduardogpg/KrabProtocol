@@ -15,6 +15,7 @@ public class singletonServerChat {
     private String password;
     private String ipServer;
     static boolean flagTree = true;
+    static boolean imScanner = false;
     
     private FXMLContactWindowController myController;
     

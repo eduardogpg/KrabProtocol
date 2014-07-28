@@ -257,8 +257,7 @@ public class FXMLContactWindowController implements Initializable {
                 cargar( h );
             else
                imFisrt();
-            
-                
+              
         }catch(Exception ex){
             imFisrt();
         }
@@ -266,25 +265,30 @@ public class FXMLContactWindowController implements Initializable {
     }
     
     private void imFisrt(){
-        webScanner ws = new webScanner();
-        singletonServerChat s = singletonServerChat.getInstance();
-        
-        try { 
-            if (true){//ws.imFirst(s.getUserName(), InetAddress.getLocalHost().getHostAddress() )){
-                  System.out.println("Now Im the firts");
-                  triggerServer tS = new triggerServer();
-                  tS.run();
-            }else{
-                System.out.println("Iam the Client because Im No the Firts");
-                System.out.println( s.getIpServer() );
-            }
-            
-            s.setIpServer( "localhost" );//ws.getFisrtIp());        
+        if(singletonServerChat.imScanner == false){
 
-            clientScanner cS = new clientScanner();
-            cS.addMeatNetwork( s.getUserName() , InetAddress.getLocalHost().getHostAddress() , s.getIpServer());
-        }catch(Exception ex){}      
-            
+            webScanner ws = new webScanner();
+            singletonServerChat s = singletonServerChat.getInstance();
+
+            try { 
+                if (true){//ws.imFirst(s.getUserName(), InetAddress.getLocalHost().getHostAddress() )){
+                      System.out.println("Now Im the firts, entro desde el arbol");
+                      triggerServer tS = new triggerServer();
+                      tS.run();
+                      singletonServerChat.imScanner = true;
+                }else{
+                    System.out.println("Iam the Client because Im No the Firts");
+                    System.out.println( s.getIpServer() );
+                    singletonServerChat.imScanner = false;
+                }
+
+                s.setIpServer( "localhost" );//ws.getFisrtIp());        
+
+                clientScanner cS = new clientScanner();
+                cS.addMeatNetwork( s.getUserName() , InetAddress.getLocalHost().getHostAddress() , s.getIpServer());
+            }catch(Exception ex){}      
+        }else{}
+        
     }
     
     @FXML

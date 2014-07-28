@@ -27,7 +27,7 @@ public class serverScanner extends UnicastRemoteObject implements scannerNetwork
     public boolean addMe(String userName, String ip) throws RemoteException {
         if(!this.dictionariUsers.containsKey(userName)){
             this.dictionariUsers.put(userName, ip);
-            System.err.println("Agregando a nuevo");
+            System.err.println("Agregando a nuevo usuario al árbol "+ userName);
         }
         
         return true;
@@ -38,7 +38,7 @@ public class serverScanner extends UnicastRemoteObject implements scannerNetwork
     }
 
     public boolean deleateUser(String userName) throws RemoteException {
-        System.err.println("Eliminado a "+userName);
+        System.err.println("Eliminado a "+userName+ " del árbol");
         try{
             this.dictionariUsers.remove(userName);
             return true;
