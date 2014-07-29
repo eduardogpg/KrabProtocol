@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -212,6 +213,7 @@ public class FXMLDocumentController {
         return res;
                 
     }           
+    public static Hashtable kabs=new Hashtable();
       Bob b;public static String myname,mypass,Kab;
       public void listener(String name,String pass){
         try {

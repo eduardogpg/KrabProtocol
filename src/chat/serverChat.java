@@ -48,7 +48,7 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         
         if(singletonServerChat.ChatList.containsKey(userName)){
             ChatWindowController controller = singletonServerChat.ChatList.get(userName);
-            String kab=FXMLDocumentController.Kab;
+            String kab=FXMLDocumentController.kabs.get(userName).toString();
             try {
                  Decmsg=c.Symetricdecrypt(Encmessage,kab);
             } catch (Exception ex) {

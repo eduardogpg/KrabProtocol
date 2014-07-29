@@ -17,7 +17,7 @@ import java.rmi.RemoteException;
 public interface Krab extends Remote{
     public BigInteger getmod(String name)throws RemoteException;
     public BigInteger getexp(String name)throws RemoteException;
-    public void sendmod(BigInteger Alicemod)throws RemoteException;
+    public void sendmod(String Alice,BigInteger Alicemod)throws RemoteException;
     public void sendexp(BigInteger AliceExp)throws RemoteException;
     public void sendnounce(byte[]nounce1,byte[]nounce2)throws RemoteException;
     public String sendkey(byte[]nonce)throws RemoteException;

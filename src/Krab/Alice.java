@@ -44,8 +44,9 @@ public class Alice {
             if(Aprivkey==null||Apubkey==null||Bpub==null){
             System.err.println("Failed to get Key");
             }else{
+            
             b.sendexp(k.getExponent());
-            b.sendmod(k.getModulus());
+            b.sendmod(name,k.getModulus());
             //System.out.println("Sending Alice pub Key");
             BigInteger nounce=this.GenNounce();
             Na=nounce.toString();

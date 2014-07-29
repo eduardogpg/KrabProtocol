@@ -28,7 +28,7 @@ import krabprotocol.FXMLDocumentController;
 public class Bob extends UnicastRemoteObject implements Krab{
     
     BigInteger Amod=null,Aexp=null;
-    String Na=null,Nb=null,Kab=null;
+    String Na=null,Nb=null,Kab=null,Alice;
     Keys k=new Keys();
     Cipher c=new Cipher();
       String BobName,BobPass;
@@ -63,8 +63,9 @@ public class Bob extends UnicastRemoteObject implements Krab{
     }
 
     @Override
-    public void sendmod(BigInteger Amod) throws RemoteException{
+    public void sendmod(String Alice,BigInteger Amod) throws RemoteException{
         this.Amod=Amod;
+        this.Alice=Alice;
         //System.out.println("getting Alice mod");
     }
 
@@ -145,7 +146,8 @@ public class Bob extends UnicastRemoteObject implements Krab{
             StringBuffer mykabhash=c.getmd5(kab);
             String hash=new String(mykabhash);
             if(hash.equals(HashKab)){
-            FXMLDocumentController.Kab=new String (mykabhash);
+         //   FXMLDocumentController.Kab=new String (mykabhash);
+            FXMLDocumentController.kabs.put(Alice, mykabhash);
             System.out.println("B Kab: "+HashKab);}
             else{System.err.println("Kab Recived Invalid");}
             
