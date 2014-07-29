@@ -48,7 +48,7 @@ public class Login {
               Alice a=new Alice();
               String user=new String(userName);
               String pass=new String(password);
-              a.init(user, pass, "Server", "yaroc");
+              a.init(user, pass, "Server", "yaroc",2222);
               String kab=a.getKab();
               System.out.println("kab from a"+kab);
               byte[]Ename=c.Symetricencrypt(user, kab);

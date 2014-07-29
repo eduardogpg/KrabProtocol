@@ -7,6 +7,7 @@
 package krabprotocol;
 
 
+import Cipher.Cipher;
 import Krab.Alice;
 import chat.*;
 import java.awt.Color;
@@ -26,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import static krabprotocol.FXMLDocumentController.Kab;
 /**
  * FXML Controller class
  *
@@ -43,7 +45,7 @@ public class ChatWindowController implements Initializable {
     TextField messageField;
     @FXML
     TextArea conversationArea;
-    
+    Cipher c;
     private boolean primeraVez= false;
         
         @Override
@@ -59,27 +61,33 @@ public class ChatWindowController implements Initializable {
             this.ip=ip;
             this.remoteIpForConnect = "rmi://"+ip+":1099/myChat";
         }
-
+            
         @FXML
-        public void sendMessage(ActionEvent event) throws IOException, NoSuchAlgorithmException {
+        public void sendMessage(ActionEvent event) throws IOException, NoSuchAlgorithmException, Exception {
             
             if (this.ChanelSecure == false){
                 if( this.ping()){
+                    Alice a=new Alice();
+                    a.init(FXMLDocumentController.myname, FXMLDocumentController.mypass, nameChat, ip,1099);
+                    Kab=a.getKab();
+                    System.out.println("A kab:"+Kab);
+                     c=new Cipher();
                     this.ChanelSecure = true;
                     makeARemoteWindows();
                     this.preparingTextArea();
                 }  
             }else{
-                if(!this.messageField.getText().equals(""))
-                    sendMessage( this.messageField.getText() );
+                if(!this.messageField.getText().equals("")){
+                    byte[] Encmsg=c.Symetricencrypt(messageField.getText(),Kab);
+                    sendMessage(Encmsg);
                 
                 putMessage("\nyou : "+ this.messageField.getText());
-                this.messageField.setText("");
+                this.messageField.setText("");}
             }
             
         }
         
-        public void sendMessage(String message){
+        public void sendMessage(byte[] message){
             
             try{
                 chatCommunication sendMessage = (chatCommunication)Naming.lookup(this.remoteIpForConnect);

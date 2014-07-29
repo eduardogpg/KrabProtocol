@@ -26,18 +26,19 @@ import java.util.logging.Logger;
  * @author Yarib
  */
 public class Alice {
-    String Na,Nb,Kab;
-    public void init(String name,String pass,String bob,String host) throws NoSuchAlgorithmException{
-        String url="rmi://"+host+":1099/Bob";
+    String Na,Nb,Kab,Kabhash;
+    public void init(String name,String pass,String bob,String host,int port) throws NoSuchAlgorithmException{
+        String url="rmi://"+host+":"+port+"/Bob";
+        System.out.println("looking in "+url);
         Keys k=new Keys();
         Cipher c=new Cipher();
         try {     
-            System.out.println("Alice Started");
+         //   System.out.println("Alice Started");
             Krab b=(Krab)Naming.lookup(url);
             BigInteger m=b.getmod(bob);
             BigInteger e=b.getexp(bob);
             PublicKey Bpub=k.genpubkey(m,e);
-            if(Bpub==null){System.out.println("Failed to generate Bob pub key");}
+           // if(Bpub==null){System.out.println("Failed to generate Bob pub key");}
             PrivateKey Aprivkey=k.getprivKey(name, pass);
             PublicKey Apubkey=k.getPubKey(name);
             if(Aprivkey==null||Apubkey==null||Bpub==null){
@@ -48,7 +49,7 @@ public class Alice {
             //System.out.println("Sending Alice pub Key");
             BigInteger nounce=this.GenNounce();
             Na=nounce.toString();
-            System.out.println(Na);
+          //  System.out.println(Na);
             byte[] nl1=c.PubEncrypt(Na.getBytes(), Bpub);//capa 1 nounce encriptado con llave publica de bob
             c.ReEncryptPriv(nl1, Aprivkey);// capa 2 encriptado con la llave privada de alice
             byte[] npart1=c.getpart1();
@@ -70,9 +71,9 @@ public class Alice {
             //System.out.println("Na Valid");
             BigInteger kab=generateKab(Na,Nbs);
             Kab=kab.toString();
-            String Kabhash=new String(c.getmd5(kab.toString()));
+             Kabhash=new String(c.getmd5(kab.toString()));
             byte[] enckab=c.PubEncrypt(Kab.getBytes(), Bpub);
-            System.out.println("Kab :"+Kab);
+         //   System.out.println("Kab :"+Kab);
             //System.out.println("KabHash :"+Kabhash);
             byte[] kabhash=Kabhash.getBytes();
             c.ReEncryptPriv(enckab, Aprivkey);
@@ -90,11 +91,11 @@ public class Alice {
     }
        SecureRandom random = new SecureRandom();
       private BigInteger GenNounce() {
-       BigInteger n=new BigInteger(80,random);
+       BigInteger n=new BigInteger(90,random);
        return n;
     }
      public String getKab(){
-     return this.Kab;
+     return this.Kabhash;
      }
    
   

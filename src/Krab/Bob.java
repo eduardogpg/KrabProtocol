@@ -19,6 +19,7 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import krabprotocol.FXMLDocumentController;
 
 /**
  *
@@ -89,7 +90,7 @@ public class Bob extends UnicastRemoteObject implements Krab{
          byte[]EncNounce=c.DecryptLayerPub(nounce1, nounce2,Apub);
          byte[]Nounce=c.Privdecrypt2(EncNounce,Bpriv);
          Na=new String(Nounce);
-         System.out.println(Na);
+       //  System.out.println(Na);
     }
     byte[]part1,part2; 
     PublicKey Apub;PrivateKey Bpriv;
@@ -97,7 +98,7 @@ public class Bob extends UnicastRemoteObject implements Krab{
     public void Step2()throws RemoteException{
         try {
             Nb=GenNounce().toString();
-            System.out.println("Nb: "+Nb);
+            //System.out.println("Nb: "+Nb);
             Apub=k.genpubkey(Amod, Aexp);
             Bpriv=k.getprivKey(BobName, BobPass);
             StringBuffer hashNa=c.getmd5(Na);
@@ -120,7 +121,7 @@ public class Bob extends UnicastRemoteObject implements Krab{
     
      SecureRandom random = new SecureRandom();
       private BigInteger GenNounce() {
-       BigInteger n=new BigInteger(80,random);
+       BigInteger n=new BigInteger(90,random);
        return n;
     }
 
@@ -135,13 +136,22 @@ public class Bob extends UnicastRemoteObject implements Krab{
     }
     @Override
     public void sendKab(byte []Kab1,byte []Kab2,byte[] KabHash1){
-      byte[] kabhash=c.Pubdecrypt2(KabHash1,Apub);
-      String HashKab=new String (kabhash);
-      byte[] Dkab=c.DecryptLayerPub(Kab1, Kab2, Apub);
-      byte[]Fkab=c.Privdecrypt2(Dkab, Bpriv);
-      String kab=new String (Fkab);
-      System.out.println("Kab: "+kab);
-      //System.out.println("KabHash: "+HashKab);
+        try {
+            byte[] kabhash=c.Pubdecrypt2(KabHash1,Apub);
+            String HashKab=new String (kabhash);
+            byte[] Dkab=c.DecryptLayerPub(Kab1, Kab2, Apub);
+            byte[]Fkab=c.Privdecrypt2(Dkab, Bpriv);
+            String kab=new String (Fkab);
+            StringBuffer mykabhash=c.getmd5(kab);
+            String hash=new String(mykabhash);
+            if(hash.equals(HashKab)){
+            FXMLDocumentController.Kab=new String (mykabhash);
+            System.out.println("B Kab: "+HashKab);}
+            else{System.err.println("Kab Recived Invalid");}
+            
+        } catch (IOException | NoSuchAlgorithmException ex) {
+            System.err.println("failed to Decrypt kab");
+        }
     }
     
       

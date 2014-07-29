@@ -64,7 +64,7 @@ public class FXMLDocumentController {
         
             //Consumimos el servicio en la maquina de Yarib
             webScanner ws = new webScanner();
-            
+            this.listener(userName.getText(), password.getText());
 
             if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
     
@@ -212,7 +212,7 @@ public class FXMLDocumentController {
         return res;
                 
     }           
-      Bob b;public static String myname,mypass;
+      Bob b;public static String myname,mypass,Kab;
       public void listener(String name,String pass){
         try {
             FXMLDocumentController.myname=name;FXMLDocumentController.mypass=pass;

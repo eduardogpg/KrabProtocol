@@ -1,6 +1,7 @@
 
 package chat;
 
+import Cipher.Cipher;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import krabprotocol.ChatWindowController;
 import krabprotocol.FXMLContactWindowController;
+import krabprotocol.FXMLDocumentController;
 import krabprotocol.singletonServerChat;
 /**
  *
@@ -40,13 +42,19 @@ public class serverChat  extends UnicastRemoteObject implements chatCommunicatio
         return true;
     }
 
-    public boolean sendPublicMessage(String userName, String message) throws RemoteException {
-      
+      String Decmsg;Cipher c=new Cipher();
+    public boolean sendPublicMessage(String userName,byte[]Encmessage) throws RemoteException { 
         
         
         if(singletonServerChat.ChatList.containsKey(userName)){
             ChatWindowController controller = singletonServerChat.ChatList.get(userName);
-            controller.putMessage("\n"+userName + " : "+ message);
+            String kab=FXMLDocumentController.Kab;
+            try {
+                 Decmsg=c.Symetricdecrypt(Encmessage,kab);
+            } catch (Exception ex) {
+              ex.printStackTrace();
+            }
+            controller.putMessage("\n"+userName + " :  "+ Decmsg);
             return true;
         }else{
             System.err.println("Usuario a buscar "+userName);
