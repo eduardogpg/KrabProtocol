@@ -66,7 +66,7 @@ public class FXMLDocumentController {
             webScanner ws = new webScanner();
             
 
-            if (true==false){//ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
+            if (ws.imFirst(userName.getText(), InetAddress.getLocalHost().getHostAddress() )){ 
     
                 System.out.println("Iam the Scanner because Im the First");
                 triggerServer tS = new triggerServer();
@@ -86,7 +86,7 @@ public class FXMLDocumentController {
             sc.setPassword( this.password.getText() );
             
             
-            sc.setIpServer("192.168.0.102"); //InetAddress.getLocalHost().getHostAddress() );
+            sc.setIpServer(InetAddress.getLocalHost().getHostAddress() );
             
 
 
@@ -128,8 +128,8 @@ public class FXMLDocumentController {
                         secondStage.close();
                         
                         
-                        //webScanner wS = new webScanner();
-                        //wS.removeUser( sS.getUserName() );
+                        webScanner wS = new webScanner();
+                        wS.removeUser( sS.getUserName() );
                             
                         System.exit(1);
                             
@@ -201,7 +201,7 @@ public class FXMLDocumentController {
         
         myConnection = new DataBaseConnection();
         
-        /*
+        
         Keys k=new Keys();
         Cipher c=new Cipher();
             
@@ -210,9 +210,7 @@ public class FXMLDocumentController {
         boolean res=ac.loginUser(userName.getBytes(),password.getBytes());
         System.out.println(res);
         return res;
-                */
-        return true;
-
+                
     }           
       Bob b;public static String myname,mypass;
       public void listener(String name,String pass){

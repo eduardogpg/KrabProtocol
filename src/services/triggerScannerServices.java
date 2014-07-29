@@ -22,7 +22,7 @@ public class triggerScannerServices extends Thread{
         while(true){
             
             try{
-                Thread.sleep(1000);//Only 5 sec
+                Thread.sleep(3000);//Only 5 sec
                 scannerNetwork myScanner = (scannerNetwork)Naming.lookup("rmi://localhost:2099/scanner");
                 Hashtable ht = myScanner.sendList();
                 

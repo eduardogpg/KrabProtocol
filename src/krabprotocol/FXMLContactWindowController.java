@@ -271,7 +271,7 @@ public class FXMLContactWindowController implements Initializable {
             singletonServerChat s = singletonServerChat.getInstance();
 
             try { 
-                if (true){//ws.imFirst(s.getUserName(), InetAddress.getLocalHost().getHostAddress() )){
+                if (ws.imFirst(s.getUserName(), InetAddress.getLocalHost().getHostAddress() )){
                       System.out.println("Now Im the firts, entro desde el arbol");
                       triggerServer tS = new triggerServer();
                       tS.run();
@@ -282,7 +282,7 @@ public class FXMLContactWindowController implements Initializable {
                     singletonServerChat.imScanner = false;
                 }
 
-                s.setIpServer( "localhost" );//ws.getFisrtIp());        
+                s.setIpServer( ws.getFisrtIp());        
 
                 clientScanner cS = new clientScanner();
                 cS.addMeatNetwork( s.getUserName() , InetAddress.getLocalHost().getHostAddress() , s.getIpServer());
