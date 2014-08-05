@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import krabprotocol.FXMLDocumentController;
 import static krabprotocol.FXMLDocumentController.Kab;
 /**
  * FXML Controller class
@@ -45,7 +46,7 @@ public class ChatWindowController implements Initializable {
     TextField messageField;
     @FXML
     TextArea conversationArea;
-    Cipher c;
+    Cipher c=new Cipher();
     private boolean primeraVez= false;
         
         @Override
@@ -78,7 +79,10 @@ public class ChatWindowController implements Initializable {
                 }  
             }else{
                 if(!this.messageField.getText().equals("")){
+                    Kab=FXMLDocumentController.kabs.get(this.nameChat).toString();
+                    System.out.println("A kab:"+Kab);
                     byte[] Encmsg=c.Symetricencrypt(messageField.getText(),Kab);
+                    System.out.println(Encmsg.toString()+"  "+Kab);
                     sendMessage(Encmsg);
                 
                 putMessage("\nyou : "+ this.messageField.getText());

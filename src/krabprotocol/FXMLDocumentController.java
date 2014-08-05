@@ -87,11 +87,11 @@ public class FXMLDocumentController {
             sc.setPassword( this.password.getText() );
             
             
-            sc.setIpServer(InetAddress.getLocalHost().getHostAddress() );
+            //sc.setIpServer(InetAddress.getLocalHost().getHostAddress() );
             
 
 
-            //sc.setIpServer( ws.getFisrtIp());     
+            sc.setIpServer( ws.getFisrtIp());     
             
             
             //Agregamos al usuario en la red, incluyendo si es el Scanner o no
@@ -99,7 +99,7 @@ public class FXMLDocumentController {
             if(cS.addMeatNetwork( userName.getText() , InetAddress.getLocalHost().getHostAddress() , sc.getIpServer())){
                 System.err.println("Comenzamos el servior de chat");
                 this.serverChat(); //Comenzamos el servidor de Chat
-                //this.sesion( ); //Comenzamos la sesion
+                this.sesion( ); //Comenzamos la sesion
             
             }
             
